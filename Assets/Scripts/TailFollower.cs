@@ -1,16 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class TailFollower : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void MoveTo(Vector3 targetPosition, float moveDelay)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.DOMove(targetPosition, moveDelay)
+            .SetEase(Ease.OutQuad);
     }
 }
