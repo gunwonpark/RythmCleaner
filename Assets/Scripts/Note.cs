@@ -22,6 +22,15 @@ public class Note : MonoBehaviour
                 // 왼쪽 노드: 오른쪽으로 이동
                 transform.Translate(Vector3.right * (speed * Time.deltaTime));
                 
+                // 중앙에 도착했는지 확인 (타겟존을 지나쳤을 때)
+                if (transform.position.x >= targetX)
+                {
+                    // 중앙에 도착했으므로 실패 처리 후 삭제
+                    NodeSpawnManager.Instance.OnNoteMissed(noteType);
+                    Destroy(gameObject);
+                    return;
+                }
+                
                 // 화면을 벗어나면 삭제
                 if (transform.position.x > targetX + 10f)
                 {
@@ -32,6 +41,15 @@ public class Note : MonoBehaviour
             {
                 // 오른쪽 노드: 왼쪽으로 이동
                 transform.Translate(Vector3.left * (speed * Time.deltaTime));
+                
+                // 중앙에 도착했는지 확인 (타겟존을 지나쳤을 때)
+                if (transform.position.x <= targetX)
+                {
+                    // 중앙에 도착했으므로 실패 처리 후 삭제
+                    NodeSpawnManager.Instance.OnNoteMissed(noteType);
+                    Destroy(gameObject);
+                    return;
+                }
                 
                 // 화면을 벗어나면 삭제
                 if (transform.position.x < targetX - 10f)
