@@ -12,9 +12,6 @@ public class NodeSpawnManager : MonoBehaviour
     public float spawnInterval = 0.5f;
     public float hitRange      = 0.5f;
     
-    public  float failDelay     = 0.5f;
-    private float failDelayTimer;
-    
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI resultText;
@@ -44,42 +41,6 @@ public class NodeSpawnManager : MonoBehaviour
         InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
     }
     
-    void Update()
-    {
-        // 실패 입력 불가
-        failDelayTimer -= Time.deltaTime;
-        if (failDelayTimer >= 0)
-            return;
-        
-        // 성공 노드 색 복구
-        if(successNodePrefab.color != Color.white)
-            successNodePrefab.color = Color.white;
-        
-        // 공격 노드 => 왼쪽 마우스 클릭
-        if (Input.GetMouseButtonDown(0))
-        {
-            CheckHit(NoteType.LeftNote, "mouse click");
-        }
-        
-        // 무브 노드 => ASDW 각각 구분
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            CheckHit(NoteType.RightNote, "A");
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            CheckHit(NoteType.RightNote, "S");
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            CheckHit(NoteType.RightNote, "D");
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            CheckHit(NoteType.RightNote, "W");
-        }
-    }
-    
     void SpawnNote()
     {
         // 왼쪽 공격 노드 생성
@@ -105,7 +66,7 @@ public class NodeSpawnManager : MonoBehaviour
         }
     }
     
-    void CheckHit(NoteType inputType, string keyPressed)
+    public bool CheckHit(NoteType inputType, string keyPressed)
     {
         // 타겟 존 근처에 있는 노드들을 찾기
         GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
@@ -136,12 +97,41 @@ public class NodeSpawnManager : MonoBehaviour
         if (!hit)
         {
             successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
-            failDelayTimer = failDelay; // 타이머 ON
+            InputManager.instance.failDelayTimer = InputManager.instance.failDelay; // 타이머 ON
             ShowResult($"Fail! ({keyPressed} key)");
+            return false;
         }
         
         // UI
         UpdateScoreUI();
+
+        return true;
+    }
+    
+    // 노드가 중앙에 도착했을 때 호출되는 실패 처리 메서드
+    public void OnNoteMissed(NoteType noteType)
+    {
+        if (noteType == NoteType.LeftNote)
+        {
+            // 왼쪽 노드 실패: 실패 처리 + 이전 방향으로 이동
+            successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
+            InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
+            ShowResult("Fail! (Missed Attack Node)");
+            
+            // 이전 방향으로 플레이어 이동
+            if (InputManager.instance.previousDirection != Vector3Int.zero)
+            {
+                TestManager.Instance.player.Move(InputManager.instance.previousDirection, TestManager.Instance.player.MoveDelay);
+            }
+        }
+        else if (noteType == NoteType.RightNote)
+        {
+            // 오른쪽 노드 실패: 이전 방향으로 이동만
+            if (InputManager.instance.previousDirection != Vector3Int.zero)
+            {
+                TestManager.Instance.player.Move(InputManager.instance.previousDirection, TestManager.Instance.player.MoveDelay);
+            }
+        }
     }
     
     void UpdateScoreUI()
