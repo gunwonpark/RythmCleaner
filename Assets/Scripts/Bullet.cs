@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
 
     public Rigidbody2D rb;
 
+    public bool IsAttack = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,8 +23,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (IsAttack) return; // 이미 한번의 공격이 되었으면 추가적으로 공격을 적용하지 않는다.
         if (other.CompareTag(monsterTag))
         {
+            IsAttack = true;
+
             Debug.Log(other.name + " 몬스터와 충돌!");
             other.GetComponent<Monster>().TakeDamage(1);
 
