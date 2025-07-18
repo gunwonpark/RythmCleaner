@@ -38,35 +38,6 @@ public class PlayerController : MonoBehaviour
         // test
         if (IsTestMode == false)
             return;
-
-        moveDirection = Vector3Int.zero; // 매 프레임 초기화
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            moveDirection = Vector3Int.up;
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            moveDirection = Vector3Int.down;
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            moveDirection = Vector3Int.left;
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            moveDirection = Vector3Int.right;
-        }
-
-        Move(moveDirection, MoveDelay);
-
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = (mousePosition - transform.position).normalized;
-            AttackDirection = direction;
-
-            Attack(AttackDelay, AttackDirection);
-        }
     }
 
     public void LookAtMousePointer()
@@ -126,7 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         AttackDelay = attackDelay;
         AttackDirection = attackDirection;
-
+        
         Animator.SetTrigger("Attack");
     }
 

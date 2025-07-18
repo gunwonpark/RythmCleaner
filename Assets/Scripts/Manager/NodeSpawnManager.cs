@@ -84,6 +84,7 @@ public class NodeSpawnManager : MonoBehaviour
             
             if (distance <= hitRange)
             {
+                Debug.Log("성공!");
                 // 성공!
                 score += 100;
                 ShowResult($"Success! ({keyPressed} key)");
@@ -96,6 +97,7 @@ public class NodeSpawnManager : MonoBehaviour
         // 실패
         if (!hit)
         {
+            Debug.Log("실패!");
             successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
             InputManager.instance.failDelayTimer = InputManager.instance.failDelay; // 타이머 ON
             ShowResult($"Fail! ({keyPressed} key)");
