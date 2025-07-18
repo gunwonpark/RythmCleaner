@@ -1,32 +1,31 @@
 using DG.Tweening;
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("ÀÌµ¿ ·ÎÁ÷")]
-    public float MoveDelay = 0.15f; // ¿òÁ÷ÀÓ¿¡ °É¸®´Â ½Ã°£
-    public float MoveDistance = 1f; // ÀÌµ¿ÇÒ °Å¸®
+    [Header("ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public float MoveDelay = 0.15f; // ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float MoveDistance = 1f; // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
 
-    private Vector3Int moveDirection; // ÀÌ¹ø ºñÆ®¿¡ ÀÌµ¿ÇÒ ¹æÇâ
+    private Vector3Int moveDirection; // ï¿½Ì¹ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    [Header("°ø°Ý·ÎÁ÷")]
+    [Header("ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½")]
     public Bullet AttackBullet;
-    public float AttackDelay = 0.5f; // °ø°Ý¿¡ °É¸®´Â ½Ã°£
-    public Vector2 AttackDirection = Vector2.right; // °ø°Ý ¹æÇâ
+    public float AttackDelay = 0.5f; // ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public Vector2 AttackDirection = Vector2.right; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
-    [Header("¾²·¹±â ²¿¸®")]
-    public List<TailFollower> followers; // ÇÃ·¹ÀÌ¾î¸¦ µû¶ó´Ù´Ò ¿ÀºêÁ§Æ®µé
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public List<TailFollower> followers; // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½
     public List<Vector3> positionHistory = new List<Vector3>();
 
     void Update()
     {
-        // test¿ë
-        moveDirection = Vector3Int.zero; // ¸Å ÇÁ·¹ÀÓ ÃÊ±âÈ­
+        // testï¿½ï¿½
+        moveDirection = Vector3Int.zero; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         if (Input.GetKeyDown(KeyCode.W))
         {
             moveDirection = Vector3Int.up;
@@ -56,26 +55,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ¾îÃ³ÇÇ ¿òÁ÷ÀÓÀº moveDuration¿¡ µû¶ó °áÁ¤µÇ¹Ç·Î ¿òÁ÷ÀÌ´Â Áß¿¡ ¿òÁ÷ÀÌ´Â °æ¿ì´Â ¾øÀ»°ÍÀÌ´Ù
-    // moveDurationÀº ºñÆ®ÀÇ ¼Óµµ¿¡ µû¶ó ÀÚµ¿À¸·Î Á¶Á¤µÇ¾î¾ß ÇÑ´Ù.
+    // ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ moveDurationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½
+    // moveDurationï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
     public void Move(Vector3Int moveDirection, float moveDuration)
     {
         if(IsMoving || moveDirection == Vector3Int.zero)
         {
-            return; // ÀÌµ¿ ¹æÇâÀÌ ¾øÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+            return; // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         IsMoving = true;
         Debug.Log("Player IsMoving");
 
-        // 1. ¸ñÇ¥ À§Ä¡ °è»ê (ÇöÀç À§Ä¡ + ¹æÇâ)
+        // 1. ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ + ï¿½ï¿½ï¿½ï¿½)
         Vector3 targetPosition = transform.position + moveDirection;
 
         transform.DOMove(targetPosition, moveDuration)
             .SetEase(moveEase)
             .OnComplete(() =>
             {
-                IsMoving = false; // ÀÌµ¿ ¿Ï·á ÈÄ IsMoving »óÅÂ ÇØÁ¦
+                IsMoving = false; // ï¿½Ìµï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ IsMoving ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             });
     }
 
