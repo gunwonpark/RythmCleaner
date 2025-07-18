@@ -23,7 +23,11 @@ public class NodeSpawnManager : MonoBehaviour
     public Transform      rightSpawnPoint;  // 오른쪽 스폰 포인트
     public Transform      spawnPoint;       // 왼쪽 스폰 포인트
     public GameObject     moveNotePrefab;   // 오른쪽 노드 프리팹
-    
+
+    [Header("피드백 효과")]
+    public GameObject successEffectPrefab; // 성공 프리팹
+    public GameObject failEffectPrefab;    // 실패 프리팹
+
     private int score = 0;
 
     private void Awake()
@@ -88,6 +92,8 @@ public class NodeSpawnManager : MonoBehaviour
                 // 성공!
                 score += 100;
                 ShowResult($"Success! ({keyPressed} key)");
+                // 성공 노드 생성
+                Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
                 Destroy(noteObj);
                 hit = true;
                 break;

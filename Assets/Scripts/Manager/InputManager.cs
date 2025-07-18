@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public float failDelayTimer;
 
     public Vector3Int previousDirection = Vector3Int.zero;
-    
+
     private void Awake()
     {
         instance = this;
