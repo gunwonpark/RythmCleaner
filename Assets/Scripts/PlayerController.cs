@@ -22,14 +22,19 @@ public class PlayerController : MonoBehaviour
     public float AttackDelay = 0.5f; // 공격에 걸리는 시간
     public Vector2 AttackDirection = Vector2.right; // 공격 방향
     public float spreadAngle = 15f;
+    public Transform AttackPoint; // 공격이 시작되는 위치
 
     [Header("쓰레기 꼬리")]
     public TailFollower tailPrefab;
     public List<TailFollower> followers; // 플레이어를 따라다닐 오브젝트들
     public List<Vector3> positionHistory = new List<Vector3>();
 
+    [Header("플레이어 애니메이션")]
+    public Animator Animator;
     void Update()
     {
+        LookAtMousePointer();
+
         // test
         if (IsTestMode == false)
             return;
@@ -62,6 +67,18 @@ public class PlayerController : MonoBehaviour
 
             Attack(AttackDelay, AttackDirection);
         }
+    }
+
+    public void LookAtMousePointer()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // 2. 플레이어 위치에서 마우스 위치를 향하는 방향 벡터 계산
+        Vector2 direction = mousePosition - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90f);
+
+        transform.rotation = targetRotation; // 플레이어를 마우스 방향으로 회전시킴
     }
 
     // 어처피 움직임은 moveDelay 따라 결정되므로 움직이는 중에 움직이는 경우는 없을것이다
@@ -107,6 +124,15 @@ public class PlayerController : MonoBehaviour
     // 플레이어의 쓰레기 봉투 개수에 따라 한번에 여러개의 불렛을 원뿔 각도로 발사하도록 수정해야 된다.
     public void Attack(float attackDelay, Vector2 attackDirection)
     {
+        AttackDelay = attackDelay;
+        AttackDirection = attackDirection;
+
+        Animator.SetTrigger("Attack");
+    }
+
+    // Attack애니메이션의 이벤트로 등록해둠 -> 애니메이션이 끝나기 전에 비트가 호출될 가능성이 없다
+    public void AttackEvent()
+    {
         int bulletCount = followers.Count;
 
         if (bulletCount <= 0 && IsTestMode == false)
@@ -114,22 +140,22 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if(UseTestBullet && IsTestMode)
+        if (UseTestBullet && IsTestMode)
         {
-            bulletCount = TestBulletCount;    
+            bulletCount = TestBulletCount;
         }
 
         // 꼬리가 1개일때는 그냥 한발만 발사
         if (bulletCount == 1)
         {
-            float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(AttackDirection.y, AttackDirection.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.Euler(0, 0, angle - 90f);
-            Bullet singleBullet = Instantiate(AttackBullet, transform.position, rotation);
-            singleBullet.Shoot(attackDirection);
+            Bullet singleBullet = Instantiate(AttackBullet, AttackPoint.position, rotation);
+            singleBullet.Shoot(AttackDirection);
             return;
         }
 
-        float centerAngle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+        float centerAngle = Mathf.Atan2(AttackDirection.y, AttackDirection.x) * Mathf.Rad2Deg;
         float totalSpreadAngle = (bulletCount - 1) * spreadAngle;
         float startAngle = centerAngle - totalSpreadAngle / 2f;
 
@@ -141,7 +167,7 @@ public class PlayerController : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0, 0, currentAngle - 90f);
 
             // 총알 생성
-            Bullet bullet = Instantiate(AttackBullet, transform.position, rotation);
+            Bullet bullet = Instantiate(AttackBullet, AttackPoint.position, rotation);
 
             // 해당 각도로 발사
             float currentAngleRad = currentAngle * Mathf.Deg2Rad;

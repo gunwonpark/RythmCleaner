@@ -468,40 +468,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: IsTestMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: followers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: 'followers.Array.data[0]'
       value: 
       objectReference: {fileID: 1504664435}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: 'followers.Array.data[1]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: 'followers.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: 'followers.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: 'followers.Array.data[4]'
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2598949
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.z
