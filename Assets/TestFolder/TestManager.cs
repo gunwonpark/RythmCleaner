@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TestManager : MonoBehaviour
@@ -10,13 +11,17 @@ public class TestManager : MonoBehaviour
             return _instance;
         }
     }
+    // 현재 플레이어
     public PlayerController player;
+    // 몬스터 데이터
+    public MonsterDatas MonsterDatas;
 
+    public List<Monster> Monsters = new List<Monster>();
     private void Awake()
     {
         _instance = this;
     }
-
+   
     public void OnMonsterDie()
     {
         player.AddTail();
