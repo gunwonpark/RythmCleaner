@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("ì´ì•Œ ì†ë„")]
     public float speed = 15f;
-    public string monsterTag = "Monster"; // Ãæµ¹À» °¨ÁöÇÒ ´ë»óÀÇ ÅÂ±×
+    public string monsterTag = "Monster"; // ì¶©ëŒì„ ê°ì§€í•  ëŒ€ìƒì˜ íƒœê·¸
 
     public Rigidbody2D rb;
 
@@ -15,15 +16,17 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(Vector2 direction)
     {
-        rb.linearVelocity = direction.normalized * speed; // ¹æÇâÀ» Á¤±ÔÈ­ÇÏ¿© ¼Óµµ Àû¿ë
+        rb.linearVelocity = direction.normalized * speed; // ë°©í–¥ì„ ì •ê·œí™”í•˜ì—¬ ì†ë„ ì ìš©
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(monsterTag))
         {
-            Debug.Log(other.name + " ¸ó½ºÅÍ¿Í Ãæµ¹!");
-            Destroy(gameObject); // Ãæµ¹ ½Ã ÃÑ¾Ë Á¦°Å
+            Debug.Log(other.name + " ëª¬ìŠ¤í„°ì™€ ì¶©ëŒ!");
+            other.GetComponent<Monster>().TakeDamage(1);
+
+            Destroy(gameObject); // ì¶©ëŒ ì‹œ ì´ì•Œ ì œê±°
         }
     }
 }

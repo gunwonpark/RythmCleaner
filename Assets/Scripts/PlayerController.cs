@@ -5,28 +5,36 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("ÀÌµ¿ ·ÎÁ÷")]
-    public float MoveDelay = 0.15f; // ¿òÁ÷ÀÓ¿¡ °É¸®´Â ½Ã°£
-    public float MoveDistance = 1f; // ÀÌµ¿ÇÒ °Å¸®
+    [Header("Test Modeì¼ê²½ìš°")]
+    public bool IsTestMode = false;
+    public bool UseTestBullet = false; // í…ŒìŠ¤íŠ¸ ëª¨ë“œì¼ë•Œ ê¼¬ë¦¬ê°œìˆ˜ë§Œí¼ ì´ì•Œì„ ë°œì‚¬í• ì§€ í…ŒìŠ¤íŠ¸ ì´ì•Œê°œìˆ˜ë¥¼ ë°œì‚¬í• ì§€
+    public int TestBulletCount = 3; // í…ŒìŠ¤íŠ¸ ëª¨ë“œì¼ ë•Œ ë°œì‚¬í•  ì´ì•Œ ê°œìˆ˜
+
+    [Header("ì´ë™ ë¡œì§")]
+    public float MoveDelay = 0.15f; // ì›€ì§ì„ì— ê±¸ë¦¬ëŠ” ì‹œê°„
+    public float MoveDistance = 1f; // ì´ë™í•  ê±°ë¦¬
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
+    private Vector3Int moveDirection; // ì´ë²ˆ ë¹„íŠ¸ì— ì´ë™í•  ë°©í–¥
 
-    private Vector3Int moveDirection; // ÀÌ¹ø ºñÆ®¿¡ ÀÌµ¿ÇÒ ¹æÇâ
-
-    [Header("°ø°İ·ÎÁ÷")]
+    [Header("ê³µê²©ë¡œì§")]
     public Bullet AttackBullet;
-    public float AttackDelay = 0.5f; // °ø°İ¿¡ °É¸®´Â ½Ã°£
-    public Vector2 AttackDirection = Vector2.right; // °ø°İ ¹æÇâ
+    public float AttackDelay = 0.5f; // ê³µê²©ì— ê±¸ë¦¬ëŠ” ì‹œê°„
+    public Vector2 AttackDirection = Vector2.right; // ê³µê²© ë°©í–¥
+    public float spreadAngle = 15f;
 
-
-    [Header("¾²·¹±â ²¿¸®")]
-    public List<TailFollower> followers; // ÇÃ·¹ÀÌ¾î¸¦ µû¶ó´Ù´Ò ¿ÀºêÁ§Æ®µé
+    [Header("ì“°ë ˆê¸° ê¼¬ë¦¬")]
+    public TailFollower tailPrefab;
+    public List<TailFollower> followers; // í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ë‹¤ë‹ ì˜¤ë¸Œì íŠ¸ë“¤
     public List<Vector3> positionHistory = new List<Vector3>();
 
     void Update()
     {
-        // test¿ë
-        moveDirection = Vector3Int.zero; // ¸Å ÇÁ·¹ÀÓ ÃÊ±âÈ­
+        // test
+        if (IsTestMode == false)
+            return;
+
+        moveDirection = Vector3Int.zero; // ë§¤ í”„ë ˆì„ ì´ˆê¸°í™”
         if (Input.GetKeyDown(KeyCode.W))
         {
             moveDirection = Vector3Int.up;
@@ -56,35 +64,118 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ¾îÃ³ÇÇ ¿òÁ÷ÀÓÀº moveDuration¿¡ µû¶ó °áÁ¤µÇ¹Ç·Î ¿òÁ÷ÀÌ´Â Áß¿¡ ¿òÁ÷ÀÌ´Â °æ¿ì´Â ¾øÀ»°ÍÀÌ´Ù
-    // moveDurationÀº ºñÆ®ÀÇ ¼Óµµ¿¡ µû¶ó ÀÚµ¿À¸·Î Á¶Á¤µÇ¾î¾ß ÇÑ´Ù.
-    public void Move(Vector3Int moveDirection, float moveDuration)
+    // ì–´ì²˜í”¼ ì›€ì§ì„ì€ moveDelay ë”°ë¼ ê²°ì •ë˜ë¯€ë¡œ ì›€ì§ì´ëŠ” ì¤‘ì— ì›€ì§ì´ëŠ” ê²½ìš°ëŠ” ì—†ì„ê²ƒì´ë‹¤
+    // moveDelay ë¹„íŠ¸ì˜ ì†ë„ì— ë”°ë¼ ìë™ìœ¼ë¡œ ì¡°ì •ë˜ì–´ì•¼ í•œë‹¤.
+    public void Move(Vector3Int moveDirection, float moveDelay)
     {
         if(IsMoving || moveDirection == Vector3Int.zero)
         {
-            return; // ÀÌµ¿ ¹æÇâÀÌ ¾øÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+            return; // ì´ë™ ë°©í–¥ì´ ì—†ìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŒ
         }
 
         IsMoving = true;
-        Debug.Log("Player IsMoving");
+        //Debug.Log("Player IsMoving");
+        
+        positionHistory.Insert(0, transform.position);
 
-        // 1. ¸ñÇ¥ À§Ä¡ °è»ê (ÇöÀç À§Ä¡ + ¹æÇâ)
+        if (positionHistory.Count > followers.Count + 1)
+        {
+            positionHistory.RemoveAt(positionHistory.Count - 1);
+        }
+
+        for (int i = 0; i < followers.Count; i++)
+        {
+            if(i >= positionHistory.Count)
+            {
+                break; 
+            }
+            Vector3 targetPos = positionHistory[i];
+            followers[i].MoveTo(targetPos, moveDelay);
+        }
+
+        // 1. ëª©í‘œ ìœ„ì¹˜ ê³„ì‚° (í˜„ì¬ ìœ„ì¹˜ + ë°©í–¥)
         Vector3 targetPosition = transform.position + moveDirection;
 
-        transform.DOMove(targetPosition, moveDuration)
+        transform.DOMove(targetPosition, moveDelay)
             .SetEase(moveEase)
             .OnComplete(() =>
             {
-                IsMoving = false; // ÀÌµ¿ ¿Ï·á ÈÄ IsMoving »óÅÂ ÇØÁ¦
+                IsMoving = false; // ì´ë™ ì™„ë£Œ í›„ IsMoving ìƒíƒœ í•´ì œ
             });
     }
 
+    // í”Œë ˆì´ì–´ì˜ ì“°ë ˆê¸° ë´‰íˆ¬ ê°œìˆ˜ì— ë”°ë¼ í•œë²ˆì— ì—¬ëŸ¬ê°œì˜ ë¶ˆë ›ì„ ì›ë¿” ê°ë„ë¡œ ë°œì‚¬í•˜ë„ë¡ ìˆ˜ì •í•´ì•¼ ëœë‹¤.
     public void Attack(float attackDelay, Vector2 attackDirection)
     {
-        float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.Euler(0, 0, angle - 90f);
+        int bulletCount = followers.Count;
 
-        Bullet bullet = Instantiate(AttackBullet, transform.position, rotation);
-        bullet.Shoot(attackDirection);
+        if (bulletCount <= 0 && IsTestMode == false)
+        {
+            return;
+        }
+
+        if(UseTestBullet && IsTestMode)
+        {
+            bulletCount = TestBulletCount;    
+        }
+
+        // ê¼¬ë¦¬ê°€ 1ê°œì¼ë•ŒëŠ” ê·¸ëƒ¥ í•œë°œë§Œ ë°œì‚¬
+        if (bulletCount == 1)
+        {
+            float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle - 90f);
+            Bullet singleBullet = Instantiate(AttackBullet, transform.position, rotation);
+            singleBullet.Shoot(attackDirection);
+            return;
+        }
+
+        float centerAngle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+        float totalSpreadAngle = (bulletCount - 1) * spreadAngle;
+        float startAngle = centerAngle - totalSpreadAngle / 2f;
+
+        // ê¼¬ë¦¬ ê°œìˆ˜ë§Œí¼ ì´ì•Œ ë°œì‚¬
+        for (int i = 0; i < bulletCount; i++)
+        {
+            // í˜„ì¬ ì´ì•Œì˜ ë°œì‚¬ ê°ë„ ê³„ì‚°
+            float currentAngle = startAngle + i * spreadAngle;
+            Quaternion rotation = Quaternion.Euler(0, 0, currentAngle - 90f);
+
+            // ì´ì•Œ ìƒì„±
+            Bullet bullet = Instantiate(AttackBullet, transform.position, rotation);
+
+            // í•´ë‹¹ ê°ë„ë¡œ ë°œì‚¬
+            float currentAngleRad = currentAngle * Mathf.Deg2Rad;
+            Vector2 bulletDirection = new Vector2(Mathf.Cos(currentAngleRad), Mathf.Sin(currentAngleRad));
+            bullet.Shoot(bulletDirection);
+        }
+    }
+
+    // ëª¬ìŠ¤í„°ê°€ ì£½ì€ê²½ìš° ê¼¬ë¦¬ë¥¼ ì¶”ê°€í•´ ì£¼ê¸° ë•Œë¬¸ì— Managerë‹¨ì—ì„œ ì´ ì´ë²¤íŠ¸ë¥¼ í˜¸ì¶œí•˜ë©´ ì¢‹ì„ê±° ê°™ë‹¤
+    public void AddTail()
+    {
+        Vector3 spawnPosition;
+
+        // íˆìŠ¤í† ë¦¬ê°€ ë¶€ì¡±í•  ê²½ìš°, ë§ˆì§€ë§‰ê¼¬ë¦¬ ìœ„ì¹˜ì— ì¤‘ì²©í•´ì„œ ìƒì„±í•´ë‘”ë‹¤
+        if (positionHistory.Count <= followers.Count)
+        {
+            // ê¼¬ë¦¬ê°€ ì—†ë‹¤ë©´ í”Œë ˆì´ì–´ ë°”ë¡œ ë’¤ ìœ„ì¹˜ì— ìƒì„±
+            if (followers.Count == 0)
+            {
+                spawnPosition = transform.position - Vector3.right * MoveDistance; // í”Œë ˆì´ì–´ ìœ„ì¹˜ì—ì„œ ì™¼ìª½ìœ¼ë¡œ ì´ë™
+            }
+            else
+            {
+                spawnPosition = followers[followers.Count - 1].transform.position; // ë§ˆì§€ë§‰ ê¼¬ë¦¬ ìœ„ì¹˜ì— ìƒì„±
+            }
+        }
+        else
+        {
+            // íˆìŠ¤í† ë¦¬ê°€ ì¶©ë¶„í•˜ë©´ ê¸°ì¡´ ë°©ì‹ëŒ€ë¡œ ìœ„ì¹˜ ê³„ì‚°
+            spawnPosition = positionHistory[followers.Count];
+        }
+
+        TailFollower newTailObject = Instantiate(tailPrefab, spawnPosition, Quaternion.identity);
+
+        followers.Add(newTailObject);
     }
 }
