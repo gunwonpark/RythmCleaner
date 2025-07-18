@@ -37,11 +37,11 @@ public class InputManager : MonoBehaviour
                 Vector2 direction  = (mousePosition - TestManager.Instance.player.transform.position).normalized;
                 TestManager.Instance.player.AttackDirection = direction;
                 TestManager.Instance.player.Attack(TestManager.Instance.player.AttackDelay, direction);
-                Debug.Log("공격 true");
+                //Debug.Log("공격 true");
             }
             else
             {
-                Debug.Log("공격 false");
+                //Debug.Log("공격 false");
                 // 공격 실패
             }
         }

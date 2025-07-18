@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8f943037ca1684a45ab1aeb1d1c44bae
+guid: c200ebdf1423c9648817a56374825ee0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3384411708189302445
-    second: Node_0
+      213: -1984049885866873280
+    second: trashbag_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Node_0
+      name: trashbag_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 44
-        height: 67
+        x: 108
+        y: 124
+        width: 282
+        height: 296
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35124b79b772801d0800000000000000
-      internalID: -3384411708189302445
+      spriteID: 04e2048042d3774e0800000000000000
+      internalID: -1984049885866873280
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Node_0: -3384411708189302445
+      trashbag_0: -1984049885866873280
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
