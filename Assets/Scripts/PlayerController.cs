@@ -34,34 +34,34 @@ public class PlayerController : MonoBehaviour
         if (IsTestMode == false)
             return;
 
-        // moveDirection = Vector3Int.zero; // 매 프레임 초기화
-        // if (Input.GetKeyDown(KeyCode.W))
-        // {
-        //     moveDirection = Vector3Int.up;
-        // }
-        // else if (Input.GetKeyDown(KeyCode.S))
-        // {
-        //     moveDirection = Vector3Int.down;
-        // }
-        // else if (Input.GetKeyDown(KeyCode.A))
-        // {
-        //     moveDirection = Vector3Int.left;
-        // }
-        // else if (Input.GetKeyDown(KeyCode.D))
-        // {
-        //     moveDirection = Vector3Int.right;
-        // }
-        //
-        // Move(moveDirection, MoveDelay);
+        moveDirection = Vector3Int.zero; // 매 프레임 초기화
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            moveDirection = Vector3Int.up;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            moveDirection = Vector3Int.down;
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            moveDirection = Vector3Int.left;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            moveDirection = Vector3Int.right;
+        }
 
-        // if(Input.GetMouseButtonDown(0))
-        // {
-        //     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //     Vector2 direction = (mousePosition - transform.position).normalized;
-        //     AttackDirection = direction;
-        //
-        //     Attack(AttackDelay, AttackDirection);
-        // }
+        Move(moveDirection, MoveDelay);
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (mousePosition - transform.position).normalized;
+            AttackDirection = direction;
+
+            Attack(AttackDelay, AttackDirection);
+        }
     }
 
     // 어처피 움직임은 moveDelay 따라 결정되므로 움직이는 중에 움직이는 경우는 없을것이다
