@@ -105,7 +105,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -147,3 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f341b365da7fb514eb85240242f19c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data:
+    ID: 0
+    HP: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
+  MoveEase: 6
+  IsMoving: 0
+  MoveDistance: 1
+  MoveDelay: 0.15
+  PerMoveInterval: 0
+  currentMoveInterval: 0
+  LimitMoveDistance: 0

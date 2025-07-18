@@ -26,7 +26,6 @@ public class Monster : MonoBehaviour
     }
 
     [Header("어떻게 움직이는지 보여주는 변수들")] 
-    public int gridSize;
     public Vector3Int MoveDirection;
     public Ease MoveEase = Ease.OutQuad;
     public bool IsMoving = false;
@@ -35,13 +34,16 @@ public class Monster : MonoBehaviour
     public int PerMoveInterval; // 몇번 비트에 한번씩 움직일지
     public int currentMoveInterval = 0; // 현재 몇번 비트인지
 
+    public int LimitMoveDistance;
+
     // 처음 세팅해 줄때 왼쪽에서 생성된 오브젝트면 moveDirection을 오른쪽으로 해주면 된다
     // string에 있는 id에 따라 몬스터 데이터를 설정해 준다
     public void SetMonsterData(Vector3Int moveDirection, int id, int perMoveInterval, int gridSize)
     {
-        MoveDirection = moveDirection;
+        MoveDirection = moveDirection * MoveDistance;
         Data = TestManager.Instance.MonsterDatas.GetMonsterData(id);
         PerMoveInterval = perMoveInterval;
+        LimitMoveDistance = gridSize;
     }
 
     public void Move(float moveDelay)

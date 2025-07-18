@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("이동 로직")]
     public float MoveDelay = 0.15f; // 움직임에 걸리는 시간
-    public float MoveDistance = 1f; // 이동할 거리
+    public int MoveDistance = 1; // 이동할 거리
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
     private Vector3Int moveDirection; // 이번 비트에 이동할 방향
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 1. 목표 위치 계산 (현재 위치 + 방향)
-        Vector3 targetPosition = transform.position + moveDirection;
+        Vector3 targetPosition = transform.position + moveDirection * MoveDistance;
 
         transform.DOMove(targetPosition, moveDelay)
             .SetEase(moveEase)
@@ -174,5 +174,15 @@ public class PlayerController : MonoBehaviour
         TailFollower newTailObject = Instantiate(tailPrefab, spawnPosition, Quaternion.identity);
 
         followers.Add(newTailObject);
+    }
+
+    // 몬스터, 자기 꼬리, 벽 충돌 시 게임 종료 -> 벽에 충돌은 Move부분에서 처리할수도 있다 미관상을 위하여
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Monster") || collision.CompareTag("Wall") || collision.CompareTag("Tail"))
+        {
+            Debug.Log("Game Over! Player collided with " + collision.gameObject.name);
+            //TODO : GameManager에서 게임 오버 처리 로직을 구현해야 한다
+        }
     }
 }
