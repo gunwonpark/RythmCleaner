@@ -314,6 +314,8 @@ MonoBehaviour:
   rightSpawnPoint: {fileID: 0}
   spawnPoint: {fileID: 0}
   moveNotePrefab: {fileID: 6312974342316710025, guid: 24d88a28ad74df6448dbf8a25faa9751, type: 3}
+  successEffectPrefab: {fileID: 0}
+  failEffectPrefab: {fileID: 0}
 --- !u!4 &764565977
 Transform:
   m_ObjectHideFlags: 0
@@ -560,6 +562,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9725e9f53928e428528b97b323983b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1626148000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626148002}
+  - component: {fileID: 1626148001}
+  m_Layer: 0
+  m_Name: CursorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1626148001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626148000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11bdc870c7b4fbf4db80eea58da39c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackCursurTexture: {fileID: 2800000, guid: 6547fc10afca88d46afd6570dbedffa5, type: 3}
+--- !u!4 &1626148002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626148000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.294206, y: 1.3063847, z: 0.009951963}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1668394795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -821,3 +868,4 @@ SceneRoots:
   - {fileID: 20053161004825842}
   - {fileID: 1347342108}
   - {fileID: 764565977}
+  - {fileID: 1626148002}

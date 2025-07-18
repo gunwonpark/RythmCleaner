@@ -14,16 +14,12 @@ public class FeedbackEffect : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // DOTween 시퀀스 생성
         Sequence mySequence = DOTween.Sequence();
 
-        // 1. 위로 이동하는 애니메이션
         mySequence.Join(transform.DOMoveY(transform.position.y + moveAmount, duration).SetEase(moveEase));
 
-        // 2. 투명해지며 사라지는 애니메이션
         mySequence.Join(spriteRenderer.material.DOFade(0, duration));
 
-        // 3. 애니메이션이 모두 끝나면 오브젝트 파괴
         mySequence.OnComplete(() =>
         {
             Destroy(gameObject);
