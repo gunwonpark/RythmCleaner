@@ -56,12 +56,4 @@ public class Note : MonoBehaviour
     {
         return noteType;
     }
-    
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Target"))
-        {
-            // 타겟 존에 도달했을 때의 로직 (필요시 추가)
-        }
-    }
 } 

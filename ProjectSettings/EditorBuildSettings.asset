@@ -8,6 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Node.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Loading Scene/Loading Scene 1.unity
+    guid: bf7ed5868241d2649b055f08218f8313
+  - enabled: 1
+    path: Assets/Scenes/Merge.unity
+    guid: 58fa50d670a08db48acdbb4ad558dea1
+  - enabled: 1
+    path: Assets/Scenes/PlayerTestScene.unity
+    guid: aa12e417ba0ce27459947b59280b4690
+  - enabled: 1
+    path: Assets/Scenes/Loading Scene/Loading Scene 2.unity
+    guid: d3b5648793b6ecf4b956c30ad4dd1218
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 12e6263dc88f4b34da30554cc1bc823f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
