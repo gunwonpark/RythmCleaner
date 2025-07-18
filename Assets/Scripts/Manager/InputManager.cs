@@ -34,12 +34,14 @@ public class InputManager : MonoBehaviour
             {
                 // 성공: 마우스 방향으로 공격 실행
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction = (mousePosition - TestManager.Instance.player.transform.position).normalized;
+                Vector2 direction  = (mousePosition - TestManager.Instance.player.transform.position).normalized;
                 TestManager.Instance.player.AttackDirection = direction;
                 TestManager.Instance.player.Attack(TestManager.Instance.player.AttackDelay, direction);
+                Debug.Log("공격 true");
             }
             else
             {
+                Debug.Log("공격 false");
                 // 공격 실패
             }
         }
