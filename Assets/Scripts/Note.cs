@@ -26,7 +26,8 @@ public class Note : MonoBehaviour
                 if (transform.position.x >= targetX)
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
-                    NodeSpawnManager.Instance.OnNoteMissed(noteType);
+                    NodeSpawnManager.Instance.OnNoteMissed();
+                    GameManager.instance.CurrnetNodeDestoryCheck(noteType);  // 현재 노트 삭제 체크
                     Destroy(gameObject);
                     return;
                 }
@@ -46,7 +47,8 @@ public class Note : MonoBehaviour
                 if (transform.position.x <= targetX)
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
-                    NodeSpawnManager.Instance.OnNoteMissed(noteType);
+                    NodeSpawnManager.Instance.OnNoteMissed();
+                    GameManager.instance.CurrnetNodeDestoryCheck(noteType); // 현재 노트 삭제 체크
                     Destroy(gameObject);
                     return;
                 }

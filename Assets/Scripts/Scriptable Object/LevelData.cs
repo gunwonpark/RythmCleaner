@@ -11,23 +11,21 @@ public class LevelData : ScriptableObject
 
     public int countBeat;               // 생성 및 이동 비트 간격
     
-    public int gridSize;                // 열 제한
-    
     public List<StringData> stringData; // 스트링 배열 패턴
 }
 
 [Serializable]
 public class StringData
 {
-    [DynamicTextArea("gridSize", 1)]
+    [TextArea(10, 1)]
     public string upData;
     
-    [DynamicTextArea("gridSize", 1)]
+    [TextArea(10, 1)]
     public string downData;
     
-    [DynamicTextArea("gridSize", 1)]
+    [TextArea(10, 1)]
     public string leftData;
     
-    [DynamicTextArea("gridSize", 1)]
+    [TextArea(10, 1)]
     public string rightData;
 }

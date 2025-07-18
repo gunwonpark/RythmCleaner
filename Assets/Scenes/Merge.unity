@@ -667,6 +667,56 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &248227467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248227469}
+  - component: {fileID: 248227468}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &248227468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248227467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bf23ffa72541db80fa8b9e4f327d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameStart: 0
+  isGameOver: 0
+  beatCounter: 0
+  leftNodeDestory: 0
+  rightNodeDestory: 0
+  playerMoveInterval: 0.5
+--- !u!4 &248227469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248227467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251897430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,7 +2713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 948888060}
-  MonsterDatas: {fileID: 0}
+  MonsterDatas: {fileID: 11400000, guid: 88228e85a9de42c4282bcb477d7fc8a1, type: 2}
   Monsters: []
 --- !u!4 &855524190
 Transform:
@@ -2862,6 +2912,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: moveDirection.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: 'followers.Array.data[0]'
       value: 
@@ -4157,7 +4211,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   failDelay: 0.1
   failDelayTimer: 0
-  previousDirection: {x: 0, y: 0, z: 0}
 --- !u!4 &1595762002
 Transform:
   m_ObjectHideFlags: 0
@@ -4953,7 +5006,6 @@ MonoBehaviour:
   levelData: {fileID: 11400000, guid: 74824cf65baabb84099a897bd531aad1, type: 2}
   circlePrefab: {fileID: 4196824138133104825, guid: e4b516ffae036ea48ae6b3928c7b503d, type: 3}
   centerPoint: {fileID: 1307860644}
-  spacing: 2
   distanceFromCenter: 11
 --- !u!1 &2082139742
 GameObject:
@@ -5137,6 +5189,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 683885144}
   - {fileID: 606575716}
+  - {fileID: 248227469}
   - {fileID: 1536721463}
   - {fileID: 2027039560}
   - {fileID: 855524190}

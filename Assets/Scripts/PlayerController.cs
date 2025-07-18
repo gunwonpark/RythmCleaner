@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float MoveDistance = 1f; // 이동할 거리
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
-    private Vector3Int moveDirection; // 이번 비트에 이동할 방향
+    public Vector3Int moveDirection = Vector3Int.down; // 이번 비트에 이동할 방향(처음은 아래로 이동)
 
     [Header("공격로직")]
     public Bullet AttackBullet;
