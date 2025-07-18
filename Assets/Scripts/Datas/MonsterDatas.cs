@@ -7,6 +7,7 @@ public class MonsterData
 {
     public int ID;
     public int HP;
+    public Sprite Sprite;
 }
 
 [CreateAssetMenu(fileName = "MonsterDatas", menuName = "Scriptable Objects/MonsterDatas")]

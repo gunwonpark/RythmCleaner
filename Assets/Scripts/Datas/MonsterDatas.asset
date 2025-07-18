@@ -15,5 +15,10 @@ MonoBehaviour:
   monsterDataList:
   - ID: 1
     HP: 1
+    Sprite: {fileID: -6451323889677427503, guid: c0dcc0ec93985c04aa58ded97853a76d, type: 3}
   - ID: 2
-    HP: 2
+    HP: 1
+    Sprite: {fileID: -5294822208287963272, guid: df5681ba11c097b43a10c756be899e30, type: 3}
+  - ID: 3
+    HP: 1
+    Sprite: {fileID: -3149471208900704733, guid: 8ff85486e67980e4ba23f8c31ead90d6, type: 3}

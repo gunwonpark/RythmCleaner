@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Monster : MonoBehaviour
 {
+    public SpriteRenderer SpriteRenderer;
+
     [Header("참조되고 있는 몬스터 데이터")]
     public MonsterData Data;
 
@@ -36,6 +38,11 @@ public class Monster : MonoBehaviour
 
     public int LimitMoveDistance;
 
+    private void Awake()
+    {
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     // 처음 세팅해 줄때 왼쪽에서 생성된 오브젝트면 moveDirection을 오른쪽으로 해주면 된다
     // string에 있는 id에 따라 몬스터 데이터를 설정해 준다
     public void SetMonsterData(Vector3Int moveDirection, int id, int perMoveInterval, int gridSize)
@@ -44,6 +51,7 @@ public class Monster : MonoBehaviour
         Data = TestManager.Instance.MonsterDatas.GetMonsterData(id);
         PerMoveInterval = perMoveInterval;
         LimitMoveDistance = gridSize;
+        SpriteRenderer.sprite = Data.Sprite;
     }
 
     public void Move(float moveDelay)
