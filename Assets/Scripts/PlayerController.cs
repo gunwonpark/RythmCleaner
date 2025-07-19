@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public TailFollower tailPrefab;
     public List<TailFollower> followers; // 플레이어를 따라다닐 오브젝트들
     public List<Vector3> positionHistory = new List<Vector3>();
+    public int PerCreateTailCount = 4; // 몇개의 몬스터를 잡아야 꼬리를 생성할지
+    public int curCatchedMonsterCount = 0; // 현재 잡은 몬스터 개수
 
     [Header("플레이어 애니메이션")]
     public Animator Animator;
@@ -151,6 +153,14 @@ public class PlayerController : MonoBehaviour
     // 몬스터가 죽은경우 꼬리를 추가해 주기 때문에 Manager단에서 이 이벤트를 호출하면 좋을거 같다
     public void AddTail()
     {
+        curCatchedMonsterCount++;
+        if (curCatchedMonsterCount < PerCreateTailCount)
+        {
+            return; // 꼬리를 추가할 조건이 안되면 그냥 리턴
+        }
+
+        curCatchedMonsterCount = 0; // 꼬리 추가 조건이 충족되었으므로 초기화
+
         Vector3 spawnPosition;
 
         // 히스토리가 부족할 경우, 마지막꼬리 위치에 중첩해서 생성해둔다
