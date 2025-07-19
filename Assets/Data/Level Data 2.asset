@@ -18,13 +18,13 @@ MonoBehaviour:
   createAndMoveCountBeat: 6
   nodeSpeed: 6.8
   stringData:
-  - upData: 01101110110
-    downData: 01101110110
+  - upData: 01101120110
+    downData: 01101110130
     leftData: '0
 
       1
 
-      1
+      4
 
       0
 
@@ -150,8 +150,8 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 01000100010
-    downData: 01000100010
+  - upData: 01000100040
+    downData: 02000100010
     leftData: '0
 
       1
@@ -162,7 +162,7 @@ MonoBehaviour:
 
       0
 
-      1
+      3
 
       0
 
@@ -175,7 +175,7 @@ MonoBehaviour:
       0'
     rightData: '0
 
-      1
+      2
 
       0
 
@@ -194,9 +194,9 @@ MonoBehaviour:
       1
 
       0'
-  - upData: 10101010101
+  - upData: 10101010104
     downData: 10101010101
-    leftData: '1
+    leftData: '2
 
       0
 
@@ -204,7 +204,7 @@ MonoBehaviour:
 
       0
 
-      1
+      2
 
       0
 
@@ -225,7 +225,7 @@ MonoBehaviour:
 
       0
 
-      1
+      3
 
       0
 
@@ -238,11 +238,11 @@ MonoBehaviour:
       0
 
       1'
-  - upData: 11101110111
-    downData: 11101110111
+  - upData: 11301120111
+    downData: 11102410111
     leftData: '1
 
-      1
+      2
 
       1
 
@@ -258,11 +258,19 @@ MonoBehaviour:
 
       1
 
-      1
+      4
 
       1'
     rightData: '1
 
+      3
+
+      3
+
+      0
+
+      1
+
       1
 
       1
@@ -273,15 +281,7 @@ MonoBehaviour:
 
       1
 
-      1
-
-      0
-
-      1
-
-      1
-
-      1'
+      2'
   - upData: 00000000000
     downData: 00000000000
     leftData: '0
@@ -370,13 +370,13 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 01110001110
-    downData: 01110001110
+  - upData: 01210001120
+    downData: 01120001140
     leftData: '0
 
       1
 
-      1
+      3
 
       1
 
@@ -386,7 +386,7 @@ MonoBehaviour:
 
       0
 
-      1
+      2
 
       1
 
@@ -409,7 +409,7 @@ MonoBehaviour:
 
       1
 
-      1
+      2
 
       1
 
@@ -458,19 +458,19 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 00011111000
-    downData: 00011111000
+  - upData: 00011121000
+    downData: 00014411000
     leftData: '0
 
       0
 
       0
 
-      1
+      4
 
       1
 
-      1
+      3
 
       1
 
@@ -487,7 +487,7 @@ MonoBehaviour:
 
       0
 
-      1
+      2
 
       1
 
@@ -502,15 +502,15 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 00110001100
-    downData: 00110001100
+  - upData: 00110001400
+    downData: 00120001100
     leftData: '0
 
       0
 
-      1
+      2
 
-      1
+      3
 
       0
 
@@ -531,7 +531,7 @@ MonoBehaviour:
 
       1
 
-      1
+      4
 
       0
 
@@ -546,7 +546,7 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 0110000110
+  - upData: 0120000110
     downData: 0110000110
     leftData: '0
 
@@ -571,7 +571,7 @@ MonoBehaviour:
 
       1
 
-      1
+      4
 
       0
 
@@ -586,9 +586,9 @@ MonoBehaviour:
       1
 
       0'
-  - upData: 11000000011
-    downData: 11000000011
-    leftData: '1
+  - upData: 11000000012
+    downData: 11000000032
+    leftData: '4
 
       1
 
@@ -606,12 +606,12 @@ MonoBehaviour:
 
       0
 
-      1
+      3
 
-      1'
+      2'
     rightData: '1
 
-      1
+      2
 
       0
 
@@ -627,39 +627,35 @@ MonoBehaviour:
 
       0
 
-      1
+      4
 
-      1'
-  - upData: 11111111111
-    downData: 11111111111
-    leftData: '1
+      3'
+  - upData: 41324211411
+    downData: 33122141441
+    leftData: '2
 
-      1
-
-      1
+      3
 
       1
 
-      1
+      4
+
+      4
 
       1
 
-      1
+      3
+
+      2
+
+      3
 
       1
 
-      1
+      4'
+    rightData: '2
 
-      1
-
-      1'
-    rightData: '1
-
-      1
-
-      1
-
-      1
+      2
 
       1
 
@@ -667,13 +663,17 @@ MonoBehaviour:
 
       1
 
-      1
+      4
+
+      3
+
+      2
 
       1
 
       1
 
-      1'
+      4'
   - upData: 00000000000
     downData: 00000000000
     leftData: '0
