@@ -12,6 +12,8 @@ public class LevelData : ScriptableObject
     public int countBeat;               // 생성 및 이동 비트 간격
     
     public List<StringData> stringData; // 스트링 배열 패턴
+
+    public int monsterCount;             // 생성될 몬스터 수
 }
 
 [Serializable]
