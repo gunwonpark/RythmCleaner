@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
         yield return WaitAndGo(); // 게임 시작 대기
         // 커서 변환 적용
         SetAttackCursor();
-        StartCoroutine(NodeSpawnManager.Instance.SpawnNotesOnBeat()); // 노드 생성 시작
 
         yield return null;
         

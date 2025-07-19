@@ -46,9 +46,6 @@ public class NodeSpawnManager : MonoBehaviour
 
     void Start()
     {
-        ShowResult("");
-        
-        // GameManager 사운드 시작 신호 대기
         StartCoroutine(WaitForSoundStart());
     }
 
@@ -184,7 +181,7 @@ public class NodeSpawnManager : MonoBehaviour
             if (distance <= hitRange)
             {
                 // 성공!
-                Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                Instantiate(successEffectPrefab, nodeScript.transform.position, Quaternion.identity);
                 
                 // 이동 무브는 파괴 전 먼저 방향 바꿔줘야 함!
                 if(inputType == NodeType.RightNode)
@@ -202,7 +199,7 @@ public class NodeSpawnManager : MonoBehaviour
             // 실패 시 이펙트 호출
             else if(distance <= hitRange + failRange)
             {
-                Instantiate(failEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                Instantiate(failEffectPrefab, nodeScript.transform.position, Quaternion.identity);
                 
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
                 
