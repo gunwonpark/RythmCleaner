@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
 
     public bool IsAttack = false;
 
+    public GameObject DamageEffect;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,7 +31,8 @@ public class Bullet : MonoBehaviour
 
             Debug.Log(other.name + " 몬스터와 충돌!");
             other.GetComponent<Monster>().TakeDamage(1);
-
+            
+            Instantiate(DamageEffect, transform.position, Quaternion.identity); // 데미지 이펙트 생성
             Destroy(gameObject); // 충돌 시 총알 제거
         }
     }
