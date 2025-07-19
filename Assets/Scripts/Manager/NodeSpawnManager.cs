@@ -11,6 +11,7 @@ public class NodeSpawnManager : MonoBehaviour
     public float noteSpeed     = 5f;
     public float spawnInterval = 0.5f;
     public float hitRange      = 0.5f;
+    public float failRange     = 0.2f;
     
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
@@ -100,6 +101,17 @@ public class NodeSpawnManager : MonoBehaviour
                 Destroy(noteObj);
                 hit = true;
                 break;
+            }
+            // input시 노드 실패시 이펙트 호출
+            else if(distance <= hitRange + failRange)
+            {
+                ShowResult($"Fail! ({keyPressed} key)");
+
+                Instantiate(failEffectPrefab, noteScript.transform.position, Quaternion.identity);
+
+                GameManager.instance.CurrnetNodeDestoryCheck(inputType);
+                Destroy(noteObj);
+                return false;
             }
         }
         
