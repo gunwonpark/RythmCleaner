@@ -2611,6 +2611,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &696062858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696062860}
+  - component: {fileID: 696062859}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &696062859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696062858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfa4b79fe7db724fb90b726de4b78f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip:
+  - {fileID: 8300000, guid: a545106ed3828f244847f57415b5c5b6, type: 3}
+  bgmVolume: 1
+  sfxClips:
+  - {fileID: 8300000, guid: 7815275c581705644827638a8b592fd6, type: 3}
+  - {fileID: 8300000, guid: eb1630301e9df6946b06e17ccca0be94, type: 3}
+  - {fileID: 8300000, guid: 308388aec5b9b6d41b9cc8daf1be6bc2, type: 3}
+  - {fileID: 8300000, guid: 145591c986cd60c47b2e8242415882bf, type: 3}
+  - {fileID: 8300000, guid: a1b0c3f9a80d8624d917ade7fa70cda7, type: 3}
+  - {fileID: 8300000, guid: 83407a28066fc5b4b893553ab67218ab, type: 3}
+  sfxVolume: 0.5
+  channelNumber: 10
+--- !u!4 &696062860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696062858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &720182081
 GameObject:
   m_ObjectHideFlags: 0
@@ -7529,6 +7585,7 @@ SceneRoots:
   - {fileID: 2027039560}
   - {fileID: 855524190}
   - {fileID: 1595762002}
+  - {fileID: 696062860}
   - {fileID: 1579918169}
   - {fileID: 511039736}
   - {fileID: 1049607581}

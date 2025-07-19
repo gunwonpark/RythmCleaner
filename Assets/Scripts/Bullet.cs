@@ -28,8 +28,9 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag(monsterTag))
         {
             IsAttack = true;
-
+            
             Debug.Log(other.name + " 몬스터와 충돌!");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Water_Crashed);
            
             // 🚀 최적화: GetComponent 캐싱과 null 체크 추가
             Monster monster = other.GetComponent<Monster>();

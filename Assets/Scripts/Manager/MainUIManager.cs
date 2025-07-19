@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MainUIManager : MonoBehaviour
@@ -5,7 +6,13 @@ public class MainUIManager : MonoBehaviour
     public GameObject titleCanvas;
     public GameObject levelSelectCanvas;
     public GameObject explanationCanvas;
-    
+
+    private void Start()
+    {
+        // 배경화면 사운드 재생
+        AudioManager.instance.PlayBgm(0,true);
+    }
+
     public void LevelSelectCanvasOn()
     {
         titleCanvas.gameObject.SetActive(false);
@@ -19,7 +26,9 @@ public class MainUIManager : MonoBehaviour
     }
 
     public void ReturnToMainMenu()
-    {
+    {   
+        AudioManager.instance.PlaySfx(0);
+        
         titleCanvas.gameObject.SetActive(true);
         levelSelectCanvas.gameObject.SetActive(false);
         explanationCanvas.gameObject.SetActive(false);

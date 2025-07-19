@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitAndGo()
     {
         midText.transform.DOScale(1, 1f).SetEase(Ease.OutBounce);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.RoundNumber);
         yield return new WaitForSeconds(2f);
         midText.text = "START!";
         midText.DOFade(0, 1f).SetEase(Ease.Linear);
@@ -193,6 +194,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over);
         isGameOver = true;
         
         // 🚀 사운드 정지 최적화
@@ -264,6 +266,8 @@ public class GameManager : MonoBehaviour
             SaveManager.instance.Round3RemainTime = (int)RemainTime;
             SaveManager.instance.TotalScore = (int)(360f + SaveManager.instance.Round1RemainTime + SaveManager.instance.Round2RemainTime + 
                 SaveManager.instance.Round3RemainTime) * 100;
+            
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Clear);
         }
 
         SaveManager.instance.TotalClearRound = CurrentRound; // 현재 라운드 저장
