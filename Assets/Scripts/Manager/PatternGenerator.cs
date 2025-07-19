@@ -14,8 +14,8 @@ public class PatternGenerator : MonoBehaviour
     // 각 방향별 현재 인덱스
     private int currentUpRow;           // 위: 행 인덱스 (마지막→0으로 감소)
     private int currentDownRow = 0;     // 아래: 행 인덱스 (0→마지막으로 증가)
-    private int currentLeftCol = 0;     // 왼쪽: 열 인덱스 (0→마지막으로 증가)
-    private int currentRightCol;        // 오른쪽: 열 인덱스 (마지막→0으로 감소)
+    private int currentLeftCol;         // 왼쪽: 열 인덱스 (마지막→0으로 감소)
+    private int currentRightCol = 0;    // 오른쪽: 열 인덱스 (0→마지막으로 증가)
     
     // StringData 인덱스 관리
     private int currentStringDataIndex = 0; // 현재 사용 중인 StringData 인덱스
@@ -79,8 +79,8 @@ public class PatternGenerator : MonoBehaviour
         // 시작 인덱스 설정
         currentUpRow    = upLines.Length - 1;   // 위: 마지막 행부터 시작
         currentDownRow  = 0;                    // 아래: 첫 번째 행부터 시작
-        currentLeftCol  = 0;                    // 왼쪽: 첫 번째 열부터 시작
-        currentRightCol = maxRightCols - 1;     // 오른쪽: 마지막 열부터 시작
+        currentLeftCol  = maxLeftCols - 1;     // 왼쪽: 마지막 열부터 시작
+        currentRightCol = 0;                    // 오른쪽: 첫 번째 열부터 시작
         
         // Debug.Log($"패턴 로드 완료 - Up:{upLines.Length}행, Down:{downLines.Length}행, Left:{maxLeftCols}열, Right:{maxRightCols}열");
     }
@@ -103,8 +103,8 @@ public class PatternGenerator : MonoBehaviour
         // 다음 줄/열로 이동 (각 방향별로 다르게)
         currentUpRow--;     // 위: 감소 (마지막→0)
         currentDownRow++;   // 아래: 증가 (0→마지막)
-        currentLeftCol++;   // 왼쪽: 증가 (0→마지막)
-        currentRightCol--;  // 오른쪽: 감소 (마지막→0)
+        currentLeftCol--;   // 왼쪽: 감소 (마지막→0)
+        currentRightCol++;  // 오른쪽: 증가 (0→마지막)
         
         // Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
         
@@ -119,8 +119,8 @@ public class PatternGenerator : MonoBehaviour
     {
         bool upFinished    = (currentUpRow < 0);
         bool downFinished  = (currentDownRow >= downLines.Length);
-        bool leftFinished  = (currentLeftCol >= maxLeftCols);
-        bool rightFinished = (currentRightCol < 0);
+        bool leftFinished  = (currentLeftCol < 0);
+        bool rightFinished = (currentRightCol >= maxRightCols);
         
         bool allFinished = upFinished && downFinished && leftFinished && rightFinished;
         
