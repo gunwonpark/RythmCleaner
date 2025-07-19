@@ -30,6 +30,7 @@ public class UI_GameEnd : MonoBehaviour
 
     public UI_TotalRanking rankingPanel; // 전체랭킹 확인 창
 
+    public Animator animator;
     public void SetData()
     {
         // 최종 점수 설정
@@ -67,5 +68,10 @@ public class UI_GameEnd : MonoBehaviour
         Debug.Log("게임 종료 버튼 클릭됨");
         SaveManager.instance.ResetData();
         SceneManager.LoadScene("Main"); // 메인 메뉴로 이동
+    }
+
+    public void DoAnimation()
+    {
+        animator.SetTrigger("FallingPlayer");
     }
 }

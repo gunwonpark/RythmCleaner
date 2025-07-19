@@ -223,7 +223,10 @@ public class GameManager : MonoBehaviour
 
         // 실패 UI 띄어 주기
         EndUI.SetData();
-        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce);
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            EndUI.DoAnimation();
+        });
 
     }
 
@@ -264,7 +267,10 @@ public class GameManager : MonoBehaviour
         SaveManager.instance.TotalDustCount += KillDustCount;
         // UI 띄우기
         EndUI.SetData();
-        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce);
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            EndUI.DoAnimation();
+        });
 
         // 커서 초기화
         ResetCursor();
@@ -286,7 +292,7 @@ public class GameManager : MonoBehaviour
     {
         if (remainTimeText != null)
         {
-            remainTimeText.text = $"남은시간 : {Mathf.Max(0, remainTIme):F2}"; //
+            remainTimeText.text = $"남은 업무 시간 : {Mathf.Max(0, remainTIme):F2}"; //
         }
     }
 
