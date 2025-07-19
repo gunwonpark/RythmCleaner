@@ -22,3 +22,6 @@ MonoBehaviour:
   - ID: 3
     HP: 1
     Sprite: {fileID: -3149471208900704733, guid: 8ff85486e67980e4ba23f8c31ead90d6, type: 3}
+  - ID: 4
+    HP: 1
+    Sprite: {fileID: 4230987427176001272, guid: 2c699ff811462ec47b7a3d1f7fe37fdb, type: 3}

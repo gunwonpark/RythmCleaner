@@ -147,13 +147,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f341b365da7fb514eb85240242f19c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 0}
   Data:
     ID: 0
     HP: 0
+    Sprite: {fileID: 0}
   MoveDirection: {x: 0, y: 0, z: 0}
   MoveEase: 6
   IsMoving: 0
   MoveDistance: 1
+  JumpHeight: 0.3
   MoveDelay: 0.15
   PerMoveInterval: 0
   currentMoveInterval: 0
+  CurrentMoveCount: 0
+  IsEnd: 0
+  LimitMoveDistance: 0
+  minScale: 0.3
+  IsMoveOnce: 0

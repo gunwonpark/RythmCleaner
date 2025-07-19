@@ -19,9 +19,6 @@ public class NodeSpawnManager : MonoBehaviour
     public Transform      spawnPoint;       // 왼쪽 스폰 포인트
     public GameObject     moveNotePrefab;   // 오른쪽 노드 프리팹
 
-    [Header("UI References")]
-    public TextMeshProUGUI resultText;
-
     [Header("피드백 효과")]
     public GameObject successEffectPrefab; // 성공 프리팹
     public GameObject failEffectPrefab;    // 실패 프리팹
@@ -37,16 +34,7 @@ public class NodeSpawnManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        ShowResult("");
-        
-        // ★ 노드 생성 시작(=> 이것도 나중에 중앙 gamemanager 관리로 이동)
-        // InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
-        StartCoroutine(SpawnNotesOnBeat());
-    }
-
-    IEnumerator SpawnNotesOnBeat()
+    public IEnumerator SpawnNotesOnBeat()
     {
         // 🚀 최적화: BPM을 기반으로 1비트당 시간 간격 계산
         float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 레벨에 따라 변경됨
@@ -113,8 +101,6 @@ public class NodeSpawnManager : MonoBehaviour
             if (distance <= hitRange)
             {
                 // 성공!
-                GameManager.instance.Score += 100f;
-                ShowResult($"Success! ({keyPressed} key)");
                 Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
                 
                 // 이동 무브는 파괴 전 먼저 방향 바꿔줘야 함!
@@ -133,7 +119,6 @@ public class NodeSpawnManager : MonoBehaviour
             // 실패 시 이펙트 호출
             else if(distance <= hitRange + failRange)
             {
-                ShowResult($"Fail! ({keyPressed} key)");
                 Instantiate(failEffectPrefab, noteScript.transform.position, Quaternion.identity);
                 
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
@@ -151,7 +136,6 @@ public class NodeSpawnManager : MonoBehaviour
         {
             successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
             InputManager.instance.failColorDelayTimer = InputManager.instance.failColorDelay; // 타이머 ON
-            ShowResult($"Fail! ({keyPressed} key)");
             return false;
         }
         
@@ -164,7 +148,6 @@ public class NodeSpawnManager : MonoBehaviour
         // 왼쪽 노드 실패: 실패 처리 + 이전 방향으로 이동
         successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
         InputManager.instance.failColorDelayTimer = InputManager.instance.failColorDelay;
-        ShowResult("Fail! (Missed Attack Node)");
     }
     
     // 🚀 노트가 삭제될 때 리스트에서도 제거하는 메서드
@@ -174,21 +157,5 @@ public class NodeSpawnManager : MonoBehaviour
             leftNotes.Remove(note);
         else
             rightNotes.Remove(note);
-    }
-
-    void ShowResult(string result)
-    {
-        if (resultText != null)
-        {
-            resultText.text = result;
-        }
-    }
-    
-    void ClearResult()
-    {
-        if (resultText != null)
-        {
-            resultText.text = "";
-        }
     }
 } 

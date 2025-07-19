@@ -77,9 +77,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 566344899
+  m_SortingLayer: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: -3009594519342399884, guid: d5cdebe7cea33d649867b5a62d1da492, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb5fdea69e00be4ba2028fb5406206f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 20
   monsterTag: Monster
   rb: {fileID: 0}
   IsAttack: 0
