@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b0406e0f83082d54c920b3e716ecde54
+guid: 6b2e271d69674be40817de6276bb91f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3439088099209019345
-    second: gauge_icon_2_0
+      213: -3470979627378472657
+    second: sweat_2_0
+  - first:
+      213: -5867073915437439843
+    second: sweat_2_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -96,40 +99,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gauge_icon_2_0
+      name: sweat_2_0
       rect:
         serializedVersion: 2
-        x: 418
-        y: 805
-        width: 271
-        height: 143
+        x: 94
+        y: 23
+        width: 398
+        height: 466
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f208f574897e540d0800000000000000
-      internalID: -3439088099209019345
+      spriteID: f290d7f3b6a94dfc0800000000000000
+      internalID: -3470979627378472657
       vertices: []
       indices: 
       edges: []
@@ -138,7 +128,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a026f0d7fd6ad50408a37d860aa75765
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +138,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gauge_icon_2_0: -3439088099209019345
+      sweat_2_0: -3470979627378472657
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

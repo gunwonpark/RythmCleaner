@@ -31,6 +31,9 @@ public class UI_GameEnd : MonoBehaviour
     public UI_TotalRanking rankingPanel; // 전체랭킹 확인 창
 
     public Animator animator;
+    public Animator SuccessAnimator;
+
+    public GameObject SuccessObject;
     public void SetData()
     {
         // 최종 점수 설정
@@ -38,7 +41,7 @@ public class UI_GameEnd : MonoBehaviour
         // 역대 최고 점수 설정
         List<ScoreEntry> topScores = SaveManager.instance.GetTopScores(1);
         if (topScores.Count > 0)
-            bestScoreText.text = "최고 점수: " + topScores[0].score.ToString();
+            bestScoreText.text = topScores[0].score.ToString();
         else
             bestScoreText.text = "역대 최고 점수: " + 0;
         // 완료한 라운드 수 설정
@@ -51,6 +54,16 @@ public class UI_GameEnd : MonoBehaviour
         exitButton.onClick.AddListener(OnExitButtonClicked);
         // 점수 등록 가능하게 표시
         registerButton.onClick.AddListener(RegisterScore);
+    }
+
+    public void Win()
+    {
+        SuccessObject.SetActive(true);
+    }
+
+    public void SuccessAnimation()
+    {
+        SuccessAnimator.SetTrigger("Success");
     }
 
     private void RegisterScore()
