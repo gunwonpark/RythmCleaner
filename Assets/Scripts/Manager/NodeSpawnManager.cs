@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -38,9 +39,26 @@ public class NodeSpawnManager : MonoBehaviour
         ShowResult("");
         
         // ★ 노드 생성 시작(=> 이것도 나중에 중앙 gamemanager 관리로 이동)
-        InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
+        // InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
+        StartCoroutine(SpawnNotesOnBeat());
     }
-    
+
+    IEnumerator SpawnNotesOnBeat()
+    {
+        // 1. BPM을 기반으로 1비트당 시간 간격을 계산
+        float beatInterval = 60f / 100f;
+
+        // 게임이 시작되고 끝나기 전까지 무한 반복
+        while (GameManager.instance.isGameStart && !GameManager.instance.isGameOver)
+        {
+            // 2. 다음 비트까지 대기
+            yield return new WaitForSeconds(beatInterval);
+
+            // 3. 비트 시간에 맞춰 노드 생성 함수 호출
+            SpawnNote();
+        }
+    }
+
     void SpawnNote()
     {
         // 왼쪽 공격 노드 생성

@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [Header("현재 게임 정보")]
     public float EnableTime = 60f; // 라운드당 가능한 시간
     private float remainTIme; // 현재 남아있는 시간
+
+    [Header("사운드 시작 관리")]
+    public bool isSountStart = false;
     public float RemainTime
     {
         get { return remainTIme; }
@@ -149,6 +152,14 @@ public class GameManager : MonoBehaviour
             EnemyBeatMove();     // 적 비트 이동
             
             Debug.Log($"✅ beatCounter 증가! 현재: {beatCounter} | 목표: {PatternGenerator.instance.levelData.countBeat}");
+
+            //사운드 시작 추가
+            if (!isSountStart)
+            {
+                isSountStart = true;
+                Debug.Log("사운드 시작!");
+                SoundManager.Instance.Play("100bpm_Round3", Sound.Bgm);
+            }
         }
     }
 
