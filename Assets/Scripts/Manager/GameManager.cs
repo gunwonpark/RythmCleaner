@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour
 
         // 실패 UI 띄어 주기
         EndUI.SetData();
-        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce);
+        EndUI.transform.DOMove(new Vector2(960, 559), 1f).SetEase(Ease.OutBounce);
         EndUI.DoAnimation();
     }
 

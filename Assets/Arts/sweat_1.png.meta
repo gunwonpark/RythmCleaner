@@ -106,10 +106,10 @@ TextureImporter:
       name: sweat_1_1
       rect:
         serializedVersion: 2
-        x: 116
+        x: 94
         y: 23
-        width: 376
-        height: 459
+        width: 398
+        height: 477
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

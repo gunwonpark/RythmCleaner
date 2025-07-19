@@ -41,7 +41,7 @@ public class UI_GameEnd : MonoBehaviour
         // 역대 최고 점수 설정
         List<ScoreEntry> topScores = SaveManager.instance.GetTopScores(1);
         if (topScores.Count > 0)
-            bestScoreText.text = "최고 점수: " + topScores[0].score.ToString();
+            bestScoreText.text = topScores[0].score.ToString();
         else
             bestScoreText.text = "역대 최고 점수: " + 0;
         // 완료한 라운드 수 설정
