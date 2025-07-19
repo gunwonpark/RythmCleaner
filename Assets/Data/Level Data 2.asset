@@ -1,0 +1,720 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ffc8820ba371bd4a8a544315fe147e3, type: 3}
+  m_Name: Level Data 2
+  m_EditorClassIdentifier: 
+  level: 2
+  audioClip: {fileID: 8300000, guid: 2d328f84fa2aa4640a5e586dac07fe17, type: 3}
+  soundBeat: 95
+  createAndMoveCountBeat: 6
+  nodeSpeed: 6.8
+  stringData:
+  - upData: 01101120110
+    downData: 01101110130
+    leftData: '0
+
+      1
+
+      4
+
+      0
+
+      1
+
+      1
+
+      1
+
+      0
+
+      1
+
+      1
+
+      0'
+    rightData: '0
+
+      1
+
+      1
+
+      0
+
+      1
+
+      1
+
+      1
+
+      0
+
+      1
+
+      1
+
+      0'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 01000100040
+    downData: 02000100010
+    leftData: '0
+
+      1
+
+      0
+
+      0
+
+      0
+
+      3
+
+      0
+
+      0
+
+      0
+
+      1
+
+      0'
+    rightData: '0
+
+      2
+
+      0
+
+      0
+
+      0
+
+      1
+
+      0
+
+      0
+
+      0
+
+      1
+
+      0'
+  - upData: 10101010104
+    downData: 10101010101
+    leftData: '2
+
+      0
+
+      1
+
+      0
+
+      2
+
+      0
+
+      1
+
+      0
+
+      1
+
+      0
+
+      1'
+    rightData: '1
+
+      0
+
+      1
+
+      0
+
+      3
+
+      0
+
+      1
+
+      0
+
+      1
+
+      0
+
+      1'
+  - upData: 11301120111
+    downData: 11102410111
+    leftData: '1
+
+      2
+
+      1
+
+      0
+
+      1
+
+      1
+
+      1
+
+      0
+
+      1
+
+      4
+
+      1'
+    rightData: '1
+
+      3
+
+      3
+
+      0
+
+      1
+
+      1
+
+      1
+
+      0
+
+      1
+
+      1
+
+      2'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 01210001120
+    downData: 01120001140
+    leftData: '0
+
+      1
+
+      3
+
+      1
+
+      0
+
+      0
+
+      0
+
+      2
+
+      1
+
+      1
+
+      0'
+    rightData: '0
+
+      1
+
+      1
+
+      1
+
+      0
+
+      0
+
+      0
+
+      1
+
+      2
+
+      1
+
+      0'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 00011121000
+    downData: 00014411000
+    leftData: '0
+
+      0
+
+      0
+
+      4
+
+      1
+
+      3
+
+      1
+
+      1
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      2
+
+      1
+
+      1
+
+      1
+
+      1
+
+      0
+
+      0
+
+      0'
+  - upData: 00110001400
+    downData: 00120001100
+    leftData: '0
+
+      0
+
+      2
+
+      3
+
+      0
+
+      0
+
+      0
+
+      1
+
+      1
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      1
+
+      4
+
+      0
+
+      0
+
+      0
+
+      1
+
+      1
+
+      0
+
+      0'
+  - upData: 0120000110
+    downData: 0110000110
+    leftData: '0
+
+      1
+
+      1
+
+      0
+
+      0
+
+      0
+
+      0
+
+      1
+
+      1
+
+      0'
+    rightData: '0
+
+      1
+
+      4
+
+      0
+
+      0
+
+      0
+
+      0
+
+      1
+
+      1
+
+      0'
+  - upData: 11000000012
+    downData: 11000000032
+    leftData: '4
+
+      1
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      3
+
+      2'
+    rightData: '1
+
+      2
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      4
+
+      3'
+  - upData: 41324211411
+    downData: 33122141441
+    leftData: '2
+
+      3
+
+      1
+
+      4
+
+      4
+
+      1
+
+      3
+
+      2
+
+      3
+
+      1
+
+      4'
+    rightData: '2
+
+      2
+
+      1
+
+      1
+
+      1
+
+      4
+
+      3
+
+      2
+
+      1
+
+      1
+
+      4'
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
