@@ -18,8 +18,8 @@ MonoBehaviour:
   createAndMoveCountBeat: 8
   nodeSpeed: 6.8
   stringData:
-  - upData: 00011111000
-    downData: 00011111000
+  - upData: 00011121000
+    downData: 00031111000
     leftData: '0
 
       0
@@ -51,7 +51,7 @@ MonoBehaviour:
 
       1
 
-      1
+      2
 
       1
 
@@ -150,11 +150,11 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 01111111110
-    downData: 01111111110
+  - upData: 01111141120
+    downData: 01112411110
     leftData: '0
 
-      1
+      3
 
       1
 
@@ -166,7 +166,7 @@ MonoBehaviour:
 
       1
 
-      1
+      4
 
       1
 
@@ -177,7 +177,7 @@ MonoBehaviour:
 
       1
 
-      1
+      2
 
       1
 
@@ -185,7 +185,7 @@ MonoBehaviour:
 
       1
 
-      1
+      2
 
       1
 
@@ -282,13 +282,13 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 11110001111
-    downData: 11110001111
+  - upData: 11120001114
+    downData: 11310001111
     leftData: '1
 
-      1
+      3
 
-      1
+      2
 
       1
 
@@ -300,14 +300,14 @@ MonoBehaviour:
 
       1
 
-      1
+      2
 
       1
 
       1'
-    rightData: '1
+    rightData: '4
 
-      1
+      4
 
       1
 
@@ -321,7 +321,7 @@ MonoBehaviour:
 
       1
 
-      1
+      4
 
       1
 
@@ -414,50 +414,50 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 11111111111
-    downData: 11111111111
+  - upData: 13214112314
+    downData: 24311124321
     leftData: '1
 
-      1
+      3
+
+      4
+
+      2
 
       1
 
       1
 
-      1
+      3
 
       1
 
-      1
+      4
 
-      1
-
-      1
-
-      1
+      2
 
       1'
-    rightData: '1
+    rightData: '2
 
       1
 
       1
 
-      1
+      4
+
+      3
 
       1
 
-      1
+      3
+
+      4
+
+      2
 
       1
 
-      1
-
-      1
-
-      1
-
-      1'
+      2'
   - upData: 00000000000
     downData: 00000000000
     leftData: '0
