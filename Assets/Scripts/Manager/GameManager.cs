@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     [Header("사운드 시작 관리")]
     public bool isSountStart = false;
+    public AudioSource audioSource;
     public float RemainTime
     {
         get { return remainTIme; }
@@ -158,7 +159,8 @@ public class GameManager : MonoBehaviour
             {
                 isSountStart = true;
                 Debug.Log("사운드 시작!");
-                SoundManager.Instance.Play("100bpm_Round3", Sound.Bgm);
+                audioSource.Play();
+                
             }
         }
     }
