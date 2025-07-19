@@ -1,10 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI RoundText;
     public TextMeshProUGUI remainTimeText;
-    public TextMeshProUGUI midText; 
+    public TextMeshProUGUI midText;
+    public Slider remainTimeSlider;
+    public Slider tailSlider;
     
     [Header("현재 게임 정보")]
-    public  float  EnableTime = 60f; // 라운드당 가능한 시간
+    public float EnableTime = 60f; // 라운드당 가능한 시간
     private float remainTIme; // 현재 남아있는 시간
-    public UnityEngine.UI.Slider remainTimeSlider;
-    public UnityEngine.UI.Slider trashSlider;
 
     [Header("사운드 시작 관리")]
     public bool isSountStart = false;
@@ -187,6 +187,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateTailUI(int currentCount, int maxCount)
+    {
+        tailSlider.value = (float)currentCount / maxCount;
+    }
+
     public void GameOver()
     {
         if(isGameOver)
@@ -294,15 +299,9 @@ public class GameManager : MonoBehaviour
     {
         if (remainTimeText != null)
         {
-            remainTimeSlider.value = remainTIme / 60;    // float
-            int intText = (int)remainTIme;               // int
-            remainTimeText.text = intText.ToString();    // string
+            remainTimeText.text = $"{(int)Mathf.Max(0, remainTIme)}"; 
         }
-
-        if (trashSlider != null)
-        {
-            
-        }
+        remainTimeSlider.value = Mathf.Clamp01(remainTIme / EnableTime); // 슬라이더 값 업데이트
     }
 
     #region 커서 변경 함수

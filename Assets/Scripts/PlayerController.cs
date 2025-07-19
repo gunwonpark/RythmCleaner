@@ -154,6 +154,7 @@ public class PlayerController : MonoBehaviour
     public void AddTail()
     {
         curCatchedMonsterCount++;
+        GameManager.instance.UpdateTailUI(curCatchedMonsterCount, PerCreateTailCount);
         if (curCatchedMonsterCount < PerCreateTailCount)
         {
             return; // 꼬리를 추가할 조건이 안되면 그냥 리턴
@@ -161,7 +162,8 @@ public class PlayerController : MonoBehaviour
 
         curCatchedMonsterCount = 0; // 꼬리 추가 조건이 충족되었으므로 초기화
         PerCreateTailIndex++;
-        PerCreateTailCount = (PerCreateTailCount * (PerCreateTailIndex - 1)) / PerCreateTailIndex + PerCreateTailIndex; 
+        PerCreateTailCount = (PerCreateTailCount * (PerCreateTailIndex - 1)) / PerCreateTailIndex + PerCreateTailIndex;
+        GameManager.instance.UpdateTailUI(curCatchedMonsterCount, PerCreateTailCount);
         Vector3 spawnPosition;
 
         // 히스토리가 부족할 경우, 마지막꼬리 위치에 중첩해서 생성해둔다
