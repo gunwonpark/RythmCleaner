@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,6 +22,36 @@ public class GameManager : MonoBehaviour
     [Header("커서 관리")]
     public Texture2D AttackCursurTexture;
 
+    [Header("UI References")]
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI remainTimeText;
+
+    [Header("현재 게임 정보")]
+    public float EnableTime = 60f; // 라운드당 가능한 시간
+    private float remainTIme; // 현재 남아있는 시간
+    public float RemainTime
+    {
+        get { return remainTIme; }
+        set
+        {
+            remainTIme = value;
+            UpdateRemainTime(); // UI 업데이트
+        }
+    }
+    public int CurrentRound;
+    public float TotalCunsumTime = 0f; // 마지막에 총 소모된 시간 보여주는 변수
+
+    private float score = 0f;
+    public float Score
+    {
+        get { return score; }
+        set
+        {
+            score = value;
+            UpdateScoreUI(); // UI 업데이트
+        }
+    }
+
     private void Awake()
     {
         instance = this;
@@ -33,9 +64,27 @@ public class GameManager : MonoBehaviour
         //
         
         isGameStart = true;
-
+        remainTIme = 60f;
         StartCoroutine(BeatManagement()); // 비트 관리
         StartCoroutine(PlayerMoveCo());   // 플레이어 계속 움직이기
+    }
+
+    private void Update()
+    {
+        // 게임이 시작되지 않았거나, 게임 오버 상태라면 아무것도 하지 않음
+        if (!isGameStart || isGameOver)
+            return;
+
+        // 남은 시간이 0보다 크면 계속 시간을 감소시킴
+        if (RemainTime > 0)
+        {
+            RemainTime -= Time.deltaTime; // Time.deltaTime은 한 프레임당 걸린 시간
+        }
+        else
+        {
+            // 남은 시간이 0 이하가 되면 게임 클리어 처리
+            GameClear();
+        }
     }
 
     // 지속 비트 체크 및 비트 작업 진행
@@ -108,6 +157,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if(isGameOver)
+        {
+            return;
+        }
         isGameOver = true;
         Debug.Log("게임 오버!");
         
@@ -116,6 +169,40 @@ public class GameManager : MonoBehaviour
 
         // TODO : 다른 필요한 로직들 ex) 노드 생성 중지, UI 팝업 띄어주기 등
         // 로직을 보았을때 노드 생성을 중지 하면 몬스터 움직임도 멈춤
+    }
+
+    public void GameClear()
+    {
+        // 이미 게임이 종료된 상태라면 중복 실행 방지
+        if (isGameOver) return;
+
+        isGameOver = true;
+
+        float consumedTime = EnableTime - Mathf.Max(0, RemainTime);
+
+        TotalCunsumTime += consumedTime;
+        Debug.Log($"이번 라운드 소모 시간: {consumedTime}, 총 소모 시간: {TotalCunsumTime}");
+
+        // 커서 초기화
+        ResetCursor();
+
+        // TODO: 게임 클리어 UI 팝업, 다음 라운드로 넘어가는 로직 등 추가
+    }
+
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score : " + score.ToString();
+        }
+    }
+
+    void UpdateRemainTime()
+    {
+        if (remainTimeText != null)
+        {
+            remainTimeText.text = "Remain Time : " + Mathf.Max(0, remainTIme).ToString("F2");
+        }
     }
 
     #region 커서 변경 함수
