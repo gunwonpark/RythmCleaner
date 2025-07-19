@@ -114,9 +114,8 @@ public class GameManager : MonoBehaviour
         // 커서 초기화
         ResetCursor();
 
-        //TODO : 다른 필요한 로직들 ex) 노드 생성 중지, UI 팝업 띄어주기 등
-
-
+        // TODO : 다른 필요한 로직들 ex) 노드 생성 중지, UI 팝업 띄어주기 등
+        // 로직을 보았을때 노드 생성을 중지 하면 몬스터 움직임도 멈춤
     }
 
     #region 커서 변경 함수

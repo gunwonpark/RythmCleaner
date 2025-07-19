@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public int MoveDistance = 1; // 이동할 거리
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
-    public Vector3Int moveDirection = Vector3Int.down; // 이번 비트에 이동할 방향(처음은 아래로 이동)
+    public Vector3Int moveDirection = Vector3Int.up; // 이번 비트에 이동할 방향(처음은 위로 이동)
 
     [Header("공격로직")]
     public Bullet AttackBullet;
@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Game Over! Player collided with " + collision.gameObject.name);
             //TODO : GameManager에서 게임 오버 처리 로직을 구현해야 한다
+            GameManager.instance.GameOver();
         }
     }
 }

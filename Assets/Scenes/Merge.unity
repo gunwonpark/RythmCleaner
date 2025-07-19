@@ -2915,7 +2915,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: moveDirection.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2215431998016276295, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: 'followers.Array.data[0]'
