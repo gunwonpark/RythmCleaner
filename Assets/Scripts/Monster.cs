@@ -36,6 +36,8 @@ public class Monster : MonoBehaviour
     public float MoveDelay = 0.15f; // 움직임에 걸리는 시간
     public int PerMoveInterval; // 몇번 비트에 한번씩 움직일지
     public int currentMoveInterval = 0; // 현재 몇번 비트인지
+    public int CurrentMoveCount = 0; // 현재 몇번 움직였는지
+    public bool IsEnd = false; // 움직임이 끝났는지 체크하는 변수
 
     public int LimitMoveDistance;
     public float minScale = 0.3f; // 최소 크기
@@ -72,6 +74,20 @@ public class Monster : MonoBehaviour
         {
             IsMoveOnce = true;
             currentMoveInterval = 0;
+            CurrentMoveCount++;
+            if (CurrentMoveCount == LimitMoveDistance + 1)
+            {
+                Sequence sequence = DOTween.Sequence();
+                sequence.Join(transform.DOJump(transform.position + MoveDirection, JumpHeight, 1, moveDelay)
+                    .SetEase(MoveEase));
+                sequence.Join(transform.DOScale(0, moveDelay)).SetEase(MoveEase);
+                sequence.OnComplete(() =>
+                                {
+                   Destroy(gameObject); // 몬스터가 죽으면 오브젝트 제거
+                                });
+
+                return;
+            }
         }
         else
         {

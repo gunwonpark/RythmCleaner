@@ -281,7 +281,7 @@ public class PatternGenerator : MonoBehaviour
             circle.transform.SetParent(transform);
             Monster _monster = circle.GetComponent<Monster>();
             if (_monster != null)
-                _monster.SetMonsterData(direction,1,levelData.createAndMoveCountBeat,100);
+                _monster.SetMonsterData(direction,1,levelData.createAndMoveCountBeat,11);
             TestManager.Instance.Monsters.Add(_monster);
         }
     }
