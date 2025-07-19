@@ -15,7 +15,7 @@ public class TestManager : MonoBehaviour
     public PlayerController player;
     // 몬스터 데이터
     public MonsterDatas MonsterDatas;
-
+    
     public List<Monster> Monsters = new List<Monster>();
     private void Awake()
     {

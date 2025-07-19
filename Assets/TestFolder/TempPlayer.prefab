@@ -135,13 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a10f16d062922640b4a742205326f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestMode: 1
+  IsTestMode: 0
   UseTestBullet: 0
   TestBulletCount: 3
   MoveDelay: 0.15
   MoveDistance: 2
   moveEase: 6
   IsMoving: 0
+  moveDirection: {x: 0, y: 1, z: 0}
   AttackBullet: {fileID: 6438880239008984544, guid: dd8aa420e2c1e0046b219bc140a37b2f, type: 3}
   AttackDelay: 0.5
   AttackDirection: {x: 1, y: 0}

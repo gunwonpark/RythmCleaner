@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6959564746984488648}
   - component: {fileID: 1496629694493770080}
   - component: {fileID: 6809200743807100870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack Node
-  m_TagString: Note
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

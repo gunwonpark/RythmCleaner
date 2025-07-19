@@ -15,9 +15,6 @@ public class GameManager : MonoBehaviour
     public int  beatCounter      = 0;       // 노드 생성 때, 카운트 증가
     public bool leftNodeDestory  = false;   // 좌우 노드 다 삭제되야, 비트 증가
     public bool rightNodeDestory = false;   // 좌우 노드 다 삭제되야, 비트 증가
-    
-    [Header("플레이어 이동 관리")]
-    public float playerMoveInterval = 0.25f;
 
     [Header("커서 관리")]
     public Texture2D AttackCursurTexture;
@@ -25,7 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI remainTimeText;
-
+    
     [Header("현재 게임 정보")]
     public float EnableTime = 60f; // 라운드당 가능한 시간
     private float remainTIme; // 현재 남아있는 시간
@@ -64,9 +61,9 @@ public class GameManager : MonoBehaviour
         //
         
         isGameStart = true;
-        remainTIme = 60f;
+        remainTIme  = 60f;
+        
         StartCoroutine(BeatManagement()); // 비트 관리
-        StartCoroutine(PlayerMoveCo());   // 플레이어 계속 움직이기
     }
 
     private void Update()
@@ -95,7 +92,6 @@ public class GameManager : MonoBehaviour
 
         while (isGameStart && !isGameOver)
         {
-            Debug.Log("실행 중");
             if (beatCounter >= PatternGenerator.instance.levelData.countBeat)
             {
                 Debug.Log($"🎯 Beat 목표 달성! beatCounter:{beatCounter} >= countBeat:{PatternGenerator.instance.levelData.countBeat}");
@@ -111,14 +107,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerMoveCo()
+    private void PlayerBeatMove()
     {
-        // 게임 시작하고, 게임 끝나기 전 까지 이동
-        while (isGameStart && !isGameOver)
+        TestManager.Instance.player.Move(TestManager.Instance.player.moveDirection, TestManager.Instance.player.MoveDelay);
+    }
+
+    private void EnemyBeatMove()
+    {
+        // 기존 몬스터 모두 각자 방향으로 이동(monster.Move에서 beatCounter 체크)
+        if (TestManager.Instance.Monsters.Count != 0)
         {
-            TestManager.Instance.player.Move(TestManager.Instance.player.moveDirection, TestManager.Instance.player.MoveDelay);
-            
-            yield return new WaitForSeconds(playerMoveInterval);
+            foreach (Monster monster in TestManager.Instance.Monsters)
+            {
+                if(monster != null)
+                    monster.Move(0.15f);
+            }
         }
     }
     
@@ -141,16 +144,10 @@ public class GameManager : MonoBehaviour
             leftNodeDestory  = false;
             rightNodeDestory = false;
             beatCounter++;
+
+            PlayerBeatMove();    // 플레이어 비트 이동
+            EnemyBeatMove();     // 적 비트 이동
             
-            // 기존 몬스터 모두 각자 방향으로 이동(monster.Move에서 beatCounter 체크)
-            if (TestManager.Instance.Monsters.Count != 0)
-            {
-                foreach (Monster monster in TestManager.Instance.Monsters)
-                {
-                    if(monster != null)
-                        monster.Move(0.15f);
-                }
-            }
             Debug.Log($"✅ beatCounter 증가! 현재: {beatCounter} | 목표: {PatternGenerator.instance.levelData.countBeat}");
         }
     }
@@ -209,7 +206,7 @@ public class GameManager : MonoBehaviour
     public void SetAttackCursor()
     {
         Vector2 centerHotspot = new Vector2(AttackCursurTexture.width / 2f, AttackCursurTexture.height / 2f);
-        Cursor.SetCursor(AttackCursurTexture, centerHotspot, CursorMode.Auto);
+        Cursor.SetCursor(AttackCursurTexture, centerHotspot, CursorMode.ForceSoftware);
     }
 
     public void ResetCursor()

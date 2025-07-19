@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
         // 공격 노드 => 왼쪽 마우스 클릭
         if (Input.GetMouseButtonDown(0))
         {
-            bool attackHitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.LeftNote, "mouse click");
+            bool attackHitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.LeftNote, "mouse click");  // 공격 무브 방향 미사용 
             
             if (attackHitSuccess)
             {
@@ -49,43 +49,46 @@ public class InputManager : MonoBehaviour
         }
         
         // 무브 노드 => ASDW 각각 구분 (최적화된 버전)
-        Vector3Int moveDirection = Vector3Int.zero;
+        Vector3Int playerMoveDirection = Vector3Int.zero;
         string keyPressed = "";
         
         if (Input.GetKeyDown(KeyCode.A))
         {
-            moveDirection = Vector3Int.left;
+            playerMoveDirection = Vector3Int.left;
             keyPressed = "A";
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            moveDirection = Vector3Int.down;
+            playerMoveDirection = Vector3Int.down;
             keyPressed = "S";
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            moveDirection = Vector3Int.right;
+            playerMoveDirection = Vector3Int.right;
             keyPressed = "D";
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
-            moveDirection = Vector3Int.up;
+            playerMoveDirection = Vector3Int.up;
             keyPressed = "W";
         }
         
         // 키가 눌렸다면 처리
         if (keyPressed != "")
         {
-            bool hitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed);
-            
-            if (hitSuccess)
-            {
-                TestManager.Instance.player.moveDirection = moveDirection;
-            }
-            else
-            {
-                // 실패
-            }
+            // 키를 누르면, CheckHit를 하는데, CheckHit에서 노드가 삭제되기 전에 방향을 먼저 바꿔줘야
+            // moveDirection이 먼저 바뀌어야, 알맞게 이동 비트에 맞춰서 이동함
+            NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed, playerMoveDirection);
+            // bool hitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed);
+            //
+            // if (hitSuccess)
+            // {
+            //     TestManager.Instance.player.moveDirection = moveDirection;
+            // }
+            // else
+            // {
+            //     // 실패
+            // }
         }
     }
 }

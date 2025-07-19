@@ -1,7 +1,5 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class NodeSpawnManager : MonoBehaviour
 {
@@ -68,7 +66,7 @@ public class NodeSpawnManager : MonoBehaviour
         }
     }
     
-    public bool CheckHit(NoteType inputType, string keyPressed)
+    public bool CheckHit(NoteType inputType, string keyPressed, Vector3Int playerMoveDirection = default)
     {
         // 타겟 존 근처에 있는 노드들을 찾기
         GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
@@ -91,6 +89,10 @@ public class NodeSpawnManager : MonoBehaviour
                 ShowResult($"Success! ({keyPressed} key)");
                 // 성공 이펙트 생성
                 Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                
+                // 이동 무브는 파괴 전(이동 전) 먼저 방향 바꿔줘야 함...!
+                if(inputType == NoteType.RightNote)
+                    TestManager.Instance.player.moveDirection = playerMoveDirection;
                 
                 // 현재 노드 파괴 체크
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
