@@ -703,6 +703,11 @@ MonoBehaviour:
   rightNodeDestory: 0
   playerMoveInterval: 0.5
   AttackCursurTexture: {fileID: 2800000, guid: 6547fc10afca88d46afd6570dbedffa5, type: 3}
+  scoreText: {fileID: 0}
+  remainTimeText: {fileID: 0}
+  EnableTime: 60
+  CurrentRound: 0
+  TotalCunsumTime: 0
 --- !u!4 &248227469
 Transform:
   m_ObjectHideFlags: 0
@@ -2921,6 +2926,10 @@ PrefabInstance:
       propertyPath: 'followers.Array.data[0]'
       value: 
       objectReference: {fileID: 36579979}
+    - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4109,14 +4118,13 @@ MonoBehaviour:
   spawnInterval: 1
   hitRange: 1
   failRange: 0.2
-  scoreText: {fileID: 648940702}
-  resultText: {fileID: 774850538}
   successNodePrefab: {fileID: 2012939955}
   targetZone: {fileID: 2012939956}
   attackNodePrefab: {fileID: 6312974342316710025, guid: 6929d6bfde806374a9fb90d1cf696c26, type: 3}
   rightSpawnPoint: {fileID: 1396559123}
   spawnPoint: {fileID: 1430504902}
   moveNotePrefab: {fileID: 6312974342316710025, guid: 24d88a28ad74df6448dbf8a25faa9751, type: 3}
+  resultText: {fileID: 774850538}
   successEffectPrefab: {fileID: 4660366030024482369, guid: b3b296e496b29e5428f8522cbd1f1da7, type: 3}
   failEffectPrefab: {fileID: 6369941880252170291, guid: 143088760d36620458ba833cf8da3d6a, type: 3}
 --- !u!1 &1579918168

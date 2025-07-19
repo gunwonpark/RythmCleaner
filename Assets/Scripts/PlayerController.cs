@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("이동 로직")]
     public float MoveDelay = 0.15f; // 움직임에 걸리는 시간
+    public float JumpHeight = 0.3f; // 점프 높이
     public int MoveDistance = 1; // 이동할 거리
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
         // 1. 목표 위치 계산 (현재 위치 + 방향)
         Vector3 targetPosition = transform.position + moveDirection * MoveDistance;
 
-        transform.DOMove(targetPosition, moveDelay)
+        transform.DOJump(targetPosition, JumpHeight, 1, moveDelay)
             .SetEase(moveEase)
             .OnComplete(() =>
             {
