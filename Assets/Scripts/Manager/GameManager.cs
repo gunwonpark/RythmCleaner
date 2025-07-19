@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,7 +17,10 @@ public class GameManager : MonoBehaviour
     
     [Header("플레이어 이동 관리")]
     public float playerMoveInterval = 0.25f;
-    
+
+    [Header("커서 관리")]
+    public Texture2D AttackCursurTexture;
+
     private void Awake()
     {
         instance = this;
@@ -38,6 +41,9 @@ public class GameManager : MonoBehaviour
     // 지속 비트 체크 및 비트 작업 진행
     IEnumerator BeatManagement()
     {
+        // 커서 변환 적용
+        SetAttackCursor();
+
         while (isGameStart && !isGameOver)
         {
             Debug.Log("실행 중");
@@ -99,4 +105,30 @@ public class GameManager : MonoBehaviour
             Debug.Log($"✅ beatCounter 증가! 현재: {beatCounter} | 목표: {PatternGenerator.instance.levelData.countBeat}");
         }
     }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        Debug.Log("게임 오버!");
+        
+        // 커서 초기화
+        ResetCursor();
+
+        //TODO : 다른 필요한 로직들 ex) 노드 생성 중지, UI 팝업 띄어주기 등
+
+
+    }
+
+    #region 커서 변경 함수
+    public void SetAttackCursor()
+    {
+        Vector2 centerHotspot = new Vector2(AttackCursurTexture.width / 2f, AttackCursurTexture.height / 2f);
+        Cursor.SetCursor(AttackCursurTexture, centerHotspot, CursorMode.Auto);
+    }
+
+    public void ResetCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+    #endregion
 }
