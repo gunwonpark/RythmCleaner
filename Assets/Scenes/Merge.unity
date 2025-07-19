@@ -702,6 +702,7 @@ MonoBehaviour:
   leftNodeDestory: 0
   rightNodeDestory: 0
   playerMoveInterval: 0.5
+  AttackCursurTexture: {fileID: 2800000, guid: 6547fc10afca88d46afd6570dbedffa5, type: 3}
 --- !u!4 &248227469
 Transform:
   m_ObjectHideFlags: 0
@@ -4107,6 +4108,7 @@ MonoBehaviour:
   noteSpeed: 5
   spawnInterval: 1
   hitRange: 1
+  failRange: 0.2
   scoreText: {fileID: 648940702}
   resultText: {fileID: 774850538}
   successNodePrefab: {fileID: 2012939955}
@@ -4897,12 +4899,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7739539963352513270, guid: 75c9bc34db01acc4fa3d6151f9a151eb, type: 3}
+  m_Sprite: {fileID: 2921595062378236947, guid: 7763ddfca13c5834cb70749937bd2716, type: 3}
   m_Color: {r: 1, g: 0.8700229, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.63, y: 1.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
