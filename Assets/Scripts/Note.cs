@@ -27,7 +27,8 @@ public class Note : MonoBehaviour
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
                     NodeSpawnManager.Instance.OnNoteMissed();
-                    GameManager.instance.CurrnetNodeDestoryCheck(noteType);  // 현재 노트 삭제 체크
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    GameManager.instance.CurrnetNodeDestoryCheck(noteType);
                     Destroy(gameObject);
                     return;
                 }
@@ -35,6 +36,7 @@ public class Note : MonoBehaviour
                 // 화면을 벗어나면 삭제
                 if (transform.position.x > targetX + 10f)
                 {
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
                     Destroy(gameObject);
                 }
             }
@@ -48,7 +50,8 @@ public class Note : MonoBehaviour
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
                     NodeSpawnManager.Instance.OnNoteMissed();
-                    GameManager.instance.CurrnetNodeDestoryCheck(noteType); // 현재 노트 삭제 체크
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    GameManager.instance.CurrnetNodeDestoryCheck(noteType);
                     Destroy(gameObject);
                     return;
                 }
@@ -56,6 +59,7 @@ public class Note : MonoBehaviour
                 // 화면을 벗어나면 삭제
                 if (transform.position.x < targetX - 10f)
                 {
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
                     Destroy(gameObject);
                 }
             }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -27,6 +28,10 @@ public class NodeSpawnManager : MonoBehaviour
     public GameObject successEffectPrefab; // 성공 프리팹
     public GameObject failEffectPrefab;    // 실패 프리팹
 
+    [Header("최적화 - 노트 관리")]
+    private List<Note> leftNotes = new List<Note>();   // 왼쪽 노트들 캐싱
+    private List<Note> rightNotes = new List<Note>();  // 오른쪽 노트들 캐싱
+
     private int score = 0;
 
     private void Awake()
@@ -45,14 +50,15 @@ public class NodeSpawnManager : MonoBehaviour
 
     IEnumerator SpawnNotesOnBeat()
     {
-        // 1. BPM을 기반으로 1비트당 시간 간격을 계산
-        float beatInterval = 60f / 100f;
+        // 🚀 최적화: BPM을 기반으로 1비트당 시간 간격 계산
+        float beatInterval = 60f / 100f; // BPM 100 기준
+        WaitForSeconds waitTime = new WaitForSeconds(beatInterval); // 캐싱으로 GC 방지
 
         // 게임이 시작되고 끝나기 전까지 무한 반복
         while (GameManager.instance.isGameStart && !GameManager.instance.isGameOver)
         {
-            // 2. 다음 비트까지 대기
-            yield return new WaitForSeconds(beatInterval);
+            // 2. 다음 비트까지 대기 (캐싱된 WaitForSeconds 사용)
+            yield return waitTime;
 
             // 3. 비트 시간에 맞춰 노드 생성 함수 호출
             SpawnNote();
@@ -69,6 +75,7 @@ public class NodeSpawnManager : MonoBehaviour
             if (leftNoteScript != null)
             {
                 leftNoteScript.Initialize(noteSpeed, targetZone.position.x, NoteType.LeftNote);
+                leftNotes.Add(leftNoteScript); // 리스트에 추가하여 캐싱
             }
         }
         
@@ -80,54 +87,59 @@ public class NodeSpawnManager : MonoBehaviour
             if (rightNoteScript != null)
             {
                 rightNoteScript.Initialize(noteSpeed, targetZone.position.x, NoteType.RightNote);
+                rightNotes.Add(rightNoteScript); // 리스트에 추가하여 캐싱
             }
         }
     }
     
     public bool CheckHit(NoteType inputType, string keyPressed, Vector3Int playerMoveDirection = default)
     {
-        // 타겟 존 근처에 있는 노드들을 찾기
-        GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
+        // 🚀 최적화: 캐싱된 리스트 사용 (FindGameObjectsWithTag 제거!)
+        List<Note> targetNotes = (inputType == NoteType.LeftNote) ? leftNotes : rightNotes;
         bool hit = false;
         
-        foreach (GameObject noteObj in notes)
+        // 역순으로 순회하여 삭제 시 인덱스 문제 방지
+        for (int i = targetNotes.Count - 1; i >= 0; i--)
         {
-            Note noteScript = noteObj.GetComponent<Note>();
-            if (noteScript == null) continue;
+            Note noteScript = targetNotes[i];
+            if (noteScript == null || noteScript.gameObject == null)
+            {
+                targetNotes.RemoveAt(i); // null 참조 제거
+                continue;
+            }
             
-            // 입력 타입과 노드 타입이 일치하는지 확인
-            if (noteScript.GetNoteType() != inputType) continue;
-            
-            float distance = Mathf.Abs(noteObj.transform.position.x - targetZone.position.x);
+            float distance = Mathf.Abs(noteScript.transform.position.x - targetZone.position.x);
             
             if (distance <= hitRange)
             {
                 // 성공!
-                GameManager.instance.Score += 100f; // 점수 증가
+                GameManager.instance.Score += 100f;
                 ShowResult($"Success! ({keyPressed} key)");
-                // 성공 이펙트 생성
                 Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
                 
-                // 이동 무브는 파괴 전(이동 전) 먼저 방향 바꿔줘야 함...!
+                // 이동 무브는 파괴 전 먼저 방향 바꿔줘야 함!
                 if(inputType == NoteType.RightNote)
                     TestManager.Instance.player.moveDirection = playerMoveDirection;
                 
-                // 현재 노드 파괴 체크
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
                 
-                Destroy(noteObj);
+                // 리스트에서 제거 후 오브젝트 삭제
+                targetNotes.RemoveAt(i);
+                Destroy(noteScript.gameObject);
                 hit = true;
                 break;
             }
-            // input시 노드 실패시 이펙트 호출
+            // 실패 시 이펙트 호출
             else if(distance <= hitRange + failRange)
             {
                 ShowResult($"Fail! ({keyPressed} key)");
-
                 Instantiate(failEffectPrefab, noteScript.transform.position, Quaternion.identity);
-
+                
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
-                Destroy(noteObj);
+                
+                // 리스트에서 제거 후 오브젝트 삭제
+                targetNotes.RemoveAt(i);
+                Destroy(noteScript.gameObject);
                 return false;
             }
         }
@@ -151,6 +163,15 @@ public class NodeSpawnManager : MonoBehaviour
         successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
         InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
         ShowResult("Fail! (Missed Attack Node)");
+    }
+    
+    // 🚀 노트가 삭제될 때 리스트에서도 제거하는 메서드
+    public void RemoveNoteFromList(Note note)
+    {
+        if (note.GetNoteType() == NoteType.LeftNote)
+            leftNotes.Remove(note);
+        else
+            rightNotes.Remove(note);
     }
 
     void ShowResult(string result)
