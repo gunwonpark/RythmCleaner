@@ -29,7 +29,8 @@ public class PlayerController : MonoBehaviour
     public TailFollower tailPrefab;
     public List<TailFollower> followers; // 플레이어를 따라다닐 오브젝트들
     public List<Vector3> positionHistory = new List<Vector3>();
-    public int PerCreateTailCount = 4; // 몇개의 몬스터를 잡아야 꼬리를 생성할지
+    public int PerCreateTailIndex = 1;
+    public int PerCreateTailCount = 2; // 몇개의 몬스터를 잡아야 꼬리를 생성할지
     public int curCatchedMonsterCount = 0; // 현재 잡은 몬스터 개수
 
     [Header("플레이어 애니메이션")]
@@ -160,7 +161,8 @@ public class PlayerController : MonoBehaviour
         }
 
         curCatchedMonsterCount = 0; // 꼬리 추가 조건이 충족되었으므로 초기화
-
+        PerCreateTailIndex++;
+        PerCreateTailCount = (PerCreateTailCount * (PerCreateTailIndex - 1)) / PerCreateTailIndex + PerCreateTailIndex; 
         Vector3 spawnPosition;
 
         // 히스토리가 부족할 경우, 마지막꼬리 위치에 중첩해서 생성해둔다

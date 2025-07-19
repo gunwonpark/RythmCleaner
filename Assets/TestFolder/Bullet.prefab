@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7050413945859777485}
   - component: {fileID: 8726751918381507827}
   - component: {fileID: 6438880239008984544}
+  - component: {fileID: 1687326806187523212}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -76,10 +77,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 566344899
-  m_SortingLayer: 4
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: -3009594519342399884, guid: d5cdebe7cea33d649867b5a62d1da492, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,8 +125,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0.00000035762787, y: 0}
+  m_Size: {x: 0.6238129, y: 0.7878399}
   m_Direction: 0
 --- !u!50 &8726751918381507827
 Rigidbody2D:
@@ -170,3 +171,26 @@ MonoBehaviour:
   monsterTag: Monster
   rb: {fileID: 0}
   IsAttack: 0
+  DamageEffect: {fileID: 6651096795463725096, guid: 3f606713b6956e74ea8080b55db2a099, type: 3}
+--- !u!95 &1687326806187523212
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3491577947686242817}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 13d447853d029f24b93bbd23e76c6483, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
