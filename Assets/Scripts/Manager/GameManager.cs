@@ -223,11 +223,8 @@ public class GameManager : MonoBehaviour
 
         // 실패 UI 띄어 주기
         EndUI.SetData();
-        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
-        {
-            EndUI.DoAnimation();
-        });
-
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce);
+        EndUI.DoAnimation();
     }
 
     [ContextMenu("GameClear")]
@@ -267,10 +264,12 @@ public class GameManager : MonoBehaviour
         SaveManager.instance.TotalDustCount += KillDustCount;
         // UI 띄우기
         EndUI.SetData();
-        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
-        {
-            EndUI.DoAnimation();
-        });
+        EndUI.Win();
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce)
+            .OnComplete(() => 
+            {
+                EndUI.SuccessAnimator.SetTrigger("Success");
+            });
 
         // 커서 초기화
         ResetCursor();
