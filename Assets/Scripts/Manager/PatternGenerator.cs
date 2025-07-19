@@ -83,7 +83,7 @@ public class PatternGenerator : MonoBehaviour
         currentLeftCol  = 0;                    // 왼쪽: 첫 번째 열부터 시작
         currentRightCol = maxRightCols - 1;     // 오른쪽: 마지막 열부터 시작
         
-        Debug.Log($"패턴 로드 완료 - Up:{upLines.Length}행, Down:{downLines.Length}행, Left:{maxLeftCols}열, Right:{maxRightCols}열");
+        // Debug.Log($"패턴 로드 완료 - Up:{upLines.Length}행, Down:{downLines.Length}행, Left:{maxLeftCols}열, Right:{maxRightCols}열");
     }
     
     // 비트 관리에서 실행
@@ -92,8 +92,8 @@ public class PatternGenerator : MonoBehaviour
     {
         Vector3 center = centerPoint ? centerPoint.position : transform.position;
         
-        Debug.Log($"=== Beat {levelData.countBeat} 도달! 패턴 생성 ===");
-        Debug.Log($"현재 인덱스 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
+        // Debug.Log($"=== Beat {levelData.createAndMoveCountBeat} 도달! 패턴 생성 ===");
+        // Debug.Log($"현재 인덱스 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
         
         // 각 방향별로 현재 줄/열 생성
         GenerateUpLine(center);      // 위: 행 우선
@@ -107,7 +107,7 @@ public class PatternGenerator : MonoBehaviour
         currentLeftCol++;   // 왼쪽: 증가 (0→마지막)
         currentRightCol--;  // 오른쪽: 감소 (마지막→0)
         
-        Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
+        // Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
         
         // 현재 패턴이 모두 끝났는지 확인
         if (IsCurrentPatternFinished())
@@ -127,8 +127,8 @@ public class PatternGenerator : MonoBehaviour
         
         if (allFinished)
         {
-            Debug.Log($"✅ 현재 StringData [{currentStringDataIndex}] 패턴 완료!");
-            Debug.Log($"   - Up: {upFinished}, Down: {downFinished}, Left: {leftFinished}, Right: {rightFinished}");
+            // Debug.Log($"✅ 현재 StringData [{currentStringDataIndex}] 패턴 완료!");
+            // Debug.Log($"   - Up: {upFinished}, Down: {downFinished}, Left: {leftFinished}, Right: {rightFinished}");
         }
         
         return allFinished;
@@ -137,17 +137,17 @@ public class PatternGenerator : MonoBehaviour
     void MoveToNextStringData()
     {
         currentStringDataIndex++;
-        Debug.Log($"🔄 다음 StringData [{currentStringDataIndex}]로 이동 시도...");
+       // Debug.Log($"🔄 다음 StringData [{currentStringDataIndex}]로 이동 시도...");
         
         if (currentStringDataIndex >= levelData.stringData.Count)
         {
-            Debug.Log("🏁 모든 StringData 패턴이 종료되었습니다!");
+            //Debug.Log("🏁 모든 StringData 패턴이 종료되었습니다!");
             CancelInvoke("GenerateNextPattern");
         }
         else
         {
             LoadCurrentStringData();
-            Debug.Log($"🆕 StringData [{currentStringDataIndex}] 시작!");
+            // Debug.Log($"🆕 StringData [{currentStringDataIndex}] 시작!");
         }
     }
     
@@ -155,18 +155,18 @@ public class PatternGenerator : MonoBehaviour
     {
         if (upLines == null || currentUpRow < 0 || currentUpRow >= upLines.Length) 
         {
-            Debug.Log($"[위쪽] 생성 중단 - currentUpRow: {currentUpRow}, 총 행 수: {(upLines != null ? upLines.Length : 0)}");
+            // Debug.Log($"[위쪽] 생성 중단 - currentUpRow: {currentUpRow}, 총 행 수: {(upLines != null ? upLines.Length : 0)}");
             return;
         }
         
         string line = upLines[currentUpRow].Trim();
         if (string.IsNullOrEmpty(line)) 
         {
-            Debug.Log($"[위쪽] 빈 줄 - Row {currentUpRow}");
+            //Debug.Log($"[위쪽] 빈 줄 - Row {currentUpRow}");
             return;
         }
         
-        Debug.Log($"[위쪽] Row {currentUpRow} 생성 - 패턴: '{line}'");
+        //Debug.Log($"[위쪽] Row {currentUpRow} 생성 - 패턴: '{line}'");
         int circleCount = 0;
         
         for (int col = 0; col < line.Length; col++)
@@ -181,14 +181,14 @@ public class PatternGenerator : MonoBehaviour
                 //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
         }
-        Debug.Log($"[위쪽] 총 {circleCount}개 원 생성 완료");
+        //Debug.Log($"[위쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateDownLine(Vector3 center)
     {
         if (downLines == null || currentDownRow < 0 || currentDownRow >= downLines.Length) 
         {
-            Debug.Log($"[아래쪽] 생성 중단 - currentDownRow: {currentDownRow}, 총 행 수: {(downLines != null ? downLines.Length : 0)}");
+            //Debug.Log($"[아래쪽] 생성 중단 - currentDownRow: {currentDownRow}, 총 행 수: {(downLines != null ? downLines.Length : 0)}");
             return;
         }
         
@@ -199,7 +199,7 @@ public class PatternGenerator : MonoBehaviour
             return;
         }
         
-        Debug.Log($"[아래쪽] Row {currentDownRow} 생성 - 패턴: '{line}'");
+        //Debug.Log($"[아래쪽] Row {currentDownRow} 생성 - 패턴: '{line}'");
         int circleCount = 0;
         
         for (int col = 0; col < line.Length; col++)
@@ -214,18 +214,18 @@ public class PatternGenerator : MonoBehaviour
                 //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
         }
-        Debug.Log($"[아래쪽] 총 {circleCount}개 원 생성 완료");
+        //Debug.Log($"[아래쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateLeftColumn(Vector3 center)
     {
         if (leftLines == null || currentLeftCol < 0 || currentLeftCol >= maxLeftCols) 
         {
-            Debug.Log($"[왼쪽] 생성 중단 - currentLeftCol: {currentLeftCol}, 최대 열 수: {maxLeftCols}");
+            //Debug.Log($"[왼쪽] 생성 중단 - currentLeftCol: {currentLeftCol}, 최대 열 수: {maxLeftCols}");
             return;
         }
         
-        Debug.Log($"[왼쪽] Col {currentLeftCol} 생성 시작");
+        //Debug.Log($"[왼쪽] Col {currentLeftCol} 생성 시작");
         int circleCount = 0;
         
         // 현재 열(currentLeftCol)에 해당하는 모든 행을 세로로 처리
@@ -242,18 +242,18 @@ public class PatternGenerator : MonoBehaviour
                 //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentLeftCol]}'), 위치 ({x:F1}, {y:F1})");
             }
         }
-        Debug.Log($"[왼쪽] 총 {circleCount}개 원 생성 완료");
+        //Debug.Log($"[왼쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateRightColumn(Vector3 center)
     {
         if (rightLines == null || currentRightCol < 0 || currentRightCol >= maxRightCols) 
         {
-            Debug.Log($"[오른쪽] 생성 중단 - currentRightCol: {currentRightCol}, 최대 열 수: {maxRightCols}");
+            //Debug.Log($"[오른쪽] 생성 중단 - currentRightCol: {currentRightCol}, 최대 열 수: {maxRightCols}");
             return;
         }
         
-        Debug.Log($"[오른쪽] Col {currentRightCol} 생성 시작");
+        //Debug.Log($"[오른쪽] Col {currentRightCol} 생성 시작");
         int circleCount = 0;
         
         // 현재 열(currentRightCol)에 해당하는 모든 행을 세로로 처리
@@ -270,7 +270,7 @@ public class PatternGenerator : MonoBehaviour
                 //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentRightCol]}'), 위치 ({x:F1}, {y:F1})");
             }
         }
-        Debug.Log($"[오른쪽] 총 {circleCount}개 원 생성 완료");
+        //Debug.Log($"[오른쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void CreateCircle(Vector3 position, Vector3Int direction)
@@ -281,7 +281,7 @@ public class PatternGenerator : MonoBehaviour
             circle.transform.SetParent(transform);
             Monster _monster = circle.GetComponent<Monster>();
             if (_monster != null)
-                _monster.SetMonsterData(direction,1,levelData.countBeat,100);
+                _monster.SetMonsterData(direction,1,levelData.createAndMoveCountBeat,100);
             TestManager.Instance.Monsters.Add(_monster);
         }
     }

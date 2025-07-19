@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ffc8820ba371bd4a8a544315fe147e3, type: 3}
-  m_Name: Level Data 1
+  m_Name: Level Data 3
   m_EditorClassIdentifier: 
-  level: 1
-  audioClip: {fileID: 0}
-  countBeat: 4
-  nodeSpeed: 0
+  level: 3
+  audioClip: {fileID: 8300000, guid: 68c236dc7da524e4cb7471797f436db0, type: 3}
+  soundBeat: 100
+  createAndMoveCountBeat: 2
+  nodeSpeed: 6.8
   stringData:
   - upData: '00000000000
 

@@ -484,8 +484,8 @@ MonoBehaviour:
   leftNodeDestory: 0
   rightNodeDestory: 0
   AttackCursurTexture: {fileID: 2800000, guid: 6547fc10afca88d46afd6570dbedffa5, type: 3}
-  scoreText: {fileID: 0}
-  remainTimeText: {fileID: 0}
+  scoreText: {fileID: 648940702}
+  remainTimeText: {fileID: 774850538}
   EnableTime: 60
   isSountStart: 0
   audioSource: {fileID: 248227470}
@@ -1120,7 +1120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &559619886
 Grid:
   m_ObjectHideFlags: 0
@@ -4311,7 +4311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1506358052
 Grid:
   m_ObjectHideFlags: 0
@@ -4384,7 +4384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e72ef1147c15d49afe67ed4d918bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteSpeed: 5
+  noteSpeed: 6.8
   spawnInterval: 1
   hitRange: 1
   failRange: 0.2

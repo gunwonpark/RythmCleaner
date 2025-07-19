@@ -60,10 +60,9 @@ public class Monster : MonoBehaviour
 
     public void Move(float moveDelay)
     {
-        // 이게 가능하지 못할거다
+        // 🚀 최적화: 불필요한 에러 로그 제거 (성능 향상)
         if (IsMoving || MoveDirection == Vector3Int.zero)
         {
-            Debug.LogError("Monster 이 영역에 들어오는 것은 불가능하다");
             return; 
         }
         

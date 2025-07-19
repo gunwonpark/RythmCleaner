@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+    
         instance = this;
     }
 
@@ -66,6 +68,9 @@ public class GameManager : MonoBehaviour
         
         isGameStart = true;
         remainTIme  = 60f;
+        
+        // 커서 변환 적용
+        SetAttackCursor();
         
         StartCoroutine(BeatManagement()); // 비트 관리
     }
@@ -88,26 +93,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 지속 비트 체크 및 비트 작업 진행
+    // 🚀 최적화된 비트 관리 - 더 효율적인 대기 시간
     IEnumerator BeatManagement()
     {
-        // 커서 변환 적용
-        SetAttackCursor();
-
+        // 60fps 기준으로 적절한 대기 시간 설정 (매 프레임 체크는 과도함)
+        WaitForSeconds waitTime = new WaitForSeconds(0.016f); // 대략 60fps
+        
         while (isGameStart && !isGameOver)
         {
-            if (beatCounter >= PatternGenerator.instance.levelData.countBeat)
+            if (beatCounter >= PatternGenerator.instance.levelData.createAndMoveCountBeat)
             {
-                Debug.Log($"🎯 Beat 목표 달성! beatCounter:{beatCounter} >= countBeat:{PatternGenerator.instance.levelData.countBeat}");
-                
                 // 쓰레기 이동 진행
                 PatternGenerator.instance.GenerateNextPattern();
                 
                 // 비트 초기화
                 beatCounter = 0;
-                Debug.Log($"🔄 beatCounter 리셋: {beatCounter}");
             }
-            yield return null;
+            yield return waitTime; // 🚀 고정된 대기 시간으로 최적화
         }
     }
 
@@ -118,50 +120,43 @@ public class GameManager : MonoBehaviour
 
     private void EnemyBeatMove()
     {
-        // 기존 몬스터 모두 각자 방향으로 이동(monster.Move에서 beatCounter 체크)
-        if (TestManager.Instance.Monsters.Count != 0)
+        // 🚀 최적화: null 체크와 역순 순회로 안전하게 처리
+        var monsters = TestManager.Instance.Monsters;
+        for (int i = monsters.Count - 1; i >= 0; i--)
         {
-            foreach (Monster monster in TestManager.Instance.Monsters)
-            {
-                if(monster != null)
-                    monster.Move(0.15f);
-            }
+            if (monsters[i] != null)
+                monsters[i].Move(0.15f);
+            else
+                monsters.RemoveAt(i); // null 참조 제거
         }
     }
     
     // 좌우 노드 체크(=> 비트 관리)
     public void CurrnetNodeDestoryCheck(NoteType inputType)
     {
-        Debug.Log($"🎵 NodeDestroy 체크: {inputType} | Left:{leftNodeDestory} | Right:{rightNodeDestory}");
-        
         // 좌우 노드 삭제 체크 
         if (inputType == NoteType.LeftNote)
             leftNodeDestory  = true;
         else if (inputType == NoteType.RightNote)
             rightNodeDestory = true;
-            
-        Debug.Log($"📋 업데이트 후: Left:{leftNodeDestory} | Right:{rightNodeDestory}");
         
         // 초기화
         if (rightNodeDestory && leftNodeDestory)
         {
+            //🚀 사운드 시작 최적화 (중복 호출 방지)
+            if (!isSountStart && audioSource != null && !audioSource.isPlaying)
+            {
+                isSountStart = true;
+                Debug.Log("🎵 사운드 시작!");
+                audioSource.Play();
+            }
+            
             leftNodeDestory  = false;
             rightNodeDestory = false;
             beatCounter++;
 
             PlayerBeatMove();    // 플레이어 비트 이동
             EnemyBeatMove();     // 적 비트 이동
-            
-            Debug.Log($"✅ beatCounter 증가! 현재: {beatCounter} | 목표: {PatternGenerator.instance.levelData.countBeat}");
-
-            //사운드 시작 추가
-            if (!isSountStart)
-            {
-                isSountStart = true;
-                Debug.Log("사운드 시작!");
-                audioSource.Play();
-                
-            }
         }
     }
 
@@ -172,7 +167,14 @@ public class GameManager : MonoBehaviour
             return;
         }
         isGameOver = true;
-        Debug.Log("게임 오버!");
+        
+        // 🚀 사운드 정지 최적화
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        
+        Debug.Log("🔴 게임 오버!");
         
         // 커서 초기화
         ResetCursor();
@@ -189,9 +191,15 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         float consumedTime = EnableTime - Mathf.Max(0, RemainTime);
-
         TotalCunsumTime += consumedTime;
-        Debug.Log($"이번 라운드 소모 시간: {consumedTime}, 총 소모 시간: {TotalCunsumTime}");
+        
+        // 🚀 사운드 정지 최적화
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        
+        Debug.Log($"🎉 게임 클리어! 소모 시간: {consumedTime:F2}초, 총 시간: {TotalCunsumTime:F2}초");
 
         // 커서 초기화
         ResetCursor();
@@ -203,7 +211,7 @@ public class GameManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score : " + score.ToString();
+            scoreText.text = $"Score : {score:F0}"; // 🚀 string interpolation으로 최적화
         }
     }
 
@@ -211,7 +219,7 @@ public class GameManager : MonoBehaviour
     {
         if (remainTimeText != null)
         {
-            remainTimeText.text = "Remain Time : " + Mathf.Max(0, remainTIme).ToString("F2");
+            remainTimeText.text = $"Remain Time : {Mathf.Max(0, remainTIme):F2}"; // 🚀 string interpolation으로 최적화
         }
     }
 
