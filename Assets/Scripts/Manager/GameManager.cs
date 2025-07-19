@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI remainTimeText;
     
     [Header("현재 게임 정보")]
-    public float EnableTime = 60f; // 라운드당 가능한 시간
-    private float remainTIme; // 현재 남아있는 시간
+    public  float EnableTime = 60f; // 라운드당 가능한 시간
+    private float remainTIme;       // 현재 남아있는 시간
 
     [Header("사운드 시작 관리")]
     public bool isSountStart = false;

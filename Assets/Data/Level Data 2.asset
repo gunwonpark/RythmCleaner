@@ -15,8 +15,13 @@ MonoBehaviour:
   level: 2
   audioClip: {fileID: 8300000, guid: 2d328f84fa2aa4640a5e586dac07fe17, type: 3}
   soundBeat: 95
+<<<<<<< Updated upstream
   createAndMoveCountBeat: 6
   nodeSpeed: 6.8
+=======
+  createAndMoveCountBeat: 4
+  nodeSpeed: 10
+>>>>>>> Stashed changes
   stringData:
   - upData: 01101110110
     downData: 01101110110

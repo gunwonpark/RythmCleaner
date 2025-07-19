@@ -30,6 +30,15 @@ public class NodeSpawnManager : MonoBehaviour
     private List<Note> leftNotes = new List<Note>();   // 왼쪽 노트들 캐싱
     private List<Note> rightNotes = new List<Note>();  // 오른쪽 노트들 캐싱
 
+    // 🎯 타이밍 측정용 변수들
+    [Header("타이밍 디버그")]
+    private float lastSpawnTime = 0f;        // 마지막 생성 시간
+    private float expectedInterval = 0f;     // 예상 간격
+    private int spawnCount = 0;              // 생성 횟수
+    private float totalError = 0f;           // 총 오차
+    private float maxError = 0f;             // 최대 오차
+    private float minError = float.MaxValue; // 최소 오차
+
     private int score = 0;
 
     private void Awake()
@@ -52,6 +61,16 @@ public class NodeSpawnManager : MonoBehaviour
         float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 레벨에 따라 변경됨
         WaitForSeconds waitTime = new WaitForSeconds(beatInterval);                 // 캐싱으로 GC 방지
 
+        // 🎯 타이밍 측정 초기화
+        expectedInterval = beatInterval;
+        lastSpawnTime = Time.time;
+        spawnCount = 0;
+        totalError = 0f;
+        maxError = 0f;
+        minError = float.MaxValue;
+        
+        Debug.Log($"📊 [타이밍 측정] 시작 - 예상 간격: {expectedInterval:F4}초 ({GameManager.instance.currentLevelData.soundBeat} BPM)");
+
         // 게임이 시작되고 끝나기 전까지 무한 반복
         while (GameManager.instance.isGameStart && !GameManager.instance.isGameOver)
         {
@@ -61,10 +80,49 @@ public class NodeSpawnManager : MonoBehaviour
             // 3. 비트 시간에 맞춰 노드 생성 함수 호출
             SpawnNote();
         }
+        
+        // 🎯 최종 통계 출력
+        if (spawnCount > 1)
+        {
+            float avgError = totalError / (spawnCount - 1);
+            Debug.Log($"📊 [최종 타이밍 통계] 총 생성: {spawnCount}회, 평균 오차: {avgError * 1000:F2}ms, " +
+                      $"최대 오차: {maxError * 1000:F2}ms, 최소 오차: {minError * 1000:F2}ms");
+        }
     }
 
     void SpawnNote()
     {
+        // 🎯 타이밍 측정 및 오차 계산
+        float currentTime = Time.time;
+        spawnCount++;
+        
+        if (spawnCount > 1) // 첫 번째는 기준점이므로 제외
+        {
+            float actualInterval = currentTime - lastSpawnTime;
+            float error = Mathf.Abs(actualInterval - expectedInterval);
+            
+            totalError += error;
+            maxError = Mathf.Max(maxError, error);
+            minError = Mathf.Min(minError, error);
+            
+            // 🎯 실시간 오차 로그 (매 5번째마다 출력)
+            if (spawnCount % 5 == 0)
+            {
+                float avgError = totalError / (spawnCount - 1);
+                Debug.Log($"📊 [타이밍 #{spawnCount:D2}] 실제간격: {actualInterval * 1000:F2}ms, " +
+                          $"예상간격: {expectedInterval * 1000:F2}ms, " +
+                          $"오차: {error * 1000:F2}ms, " +
+                          $"평균오차: {avgError * 1000:F2}ms");
+            }
+        }
+        
+        lastSpawnTime = currentTime;
+
+        // 🎯 비트에 맞는 정확한 이동 시간 계산
+        float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 1비트당 시간
+        
+        Debug.Log($"🎵 BPM: {GameManager.instance.currentLevelData.soundBeat}, 이동시간: {beatInterval:F3}초");
+        
         // 왼쪽 공격 노드 생성
         if (attackNodePrefab != null && spawnPoint != null)
         {
@@ -73,7 +131,8 @@ public class NodeSpawnManager : MonoBehaviour
             leftNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
             if (leftNoteScript != null)
             {
-                leftNoteScript.Initialize(GameManager.instance.currentLevelData.nodeSpeed, targetZone.position.x, NoteType.LeftNote);
+                // 시작위치, 목표위치, 이동시간으로 초기화
+                leftNoteScript.InitializeWithTime(spawnPoint.position, new Vector3(targetZone.position.x, spawnPoint.position.y, spawnPoint.position.z), beatInterval, NoteType.LeftNote);
                 leftNotes.Add(leftNoteScript); // 리스트에 추가하여 캐싱
             }
         }
@@ -86,7 +145,8 @@ public class NodeSpawnManager : MonoBehaviour
             rightNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
             if (rightNoteScript != null)
             {
-                rightNoteScript.Initialize(GameManager.instance.currentLevelData.nodeSpeed, targetZone.position.x, NoteType.RightNote);
+                // 시작위치, 목표위치, 이동시간으로 초기화
+                rightNoteScript.InitializeWithTime(rightSpawnPoint.position, new Vector3(targetZone.position.x, rightSpawnPoint.position.y, rightSpawnPoint.position.z), beatInterval, NoteType.RightNote);
                 rightNotes.Add(rightNoteScript); // 리스트에 추가하여 캐싱
             }
         }
