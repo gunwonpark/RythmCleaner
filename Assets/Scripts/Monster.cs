@@ -38,6 +38,7 @@ public class Monster : MonoBehaviour
     public int currentMoveInterval = 0; // 현재 몇번 비트인지
 
     public int LimitMoveDistance;
+    public float minScale = 0.3f; // 최소 크기
 
 
     public bool IsMoveOnce = false; // 한번 움직였는지 체크하는 변수
@@ -81,13 +82,9 @@ public class Monster : MonoBehaviour
 
             if (!IsMoveOnce)
             {
-                float targetScale = 0f;
-                switch (currentMoveInterval)
-                {
-                    case 1: targetScale = 0.3f; break;
-                    case 2: targetScale = 0.6f; break;
-                    case 3: targetScale = 1f; break;
-                }
+                float progress = (float)currentMoveInterval / (PerMoveInterval - 1);
+                float targetScale = Mathf.Lerp(minScale, 1f, progress);
+
                 sequence.Join(transform.DOScale(targetScale, moveDelay).SetEase(MoveEase));
             }
 
