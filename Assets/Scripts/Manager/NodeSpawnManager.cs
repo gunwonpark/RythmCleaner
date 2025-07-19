@@ -41,7 +41,7 @@ public class NodeSpawnManager : MonoBehaviour
         UpdateScoreUI();
         ShowResult("");
         
-        // 노드 생성 시작
+        // ★ 노드 생성 시작(=> 이것도 나중에 중앙 gamemanager 관리로 이동)
         InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
     }
     
@@ -91,8 +91,12 @@ public class NodeSpawnManager : MonoBehaviour
                 // 성공!
                 score += 100;
                 ShowResult($"Success! ({keyPressed} key)");
-                // 성공 노드 생성
+                // 성공 이펙트 생성
                 Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                
+                // 현재 노드 파괴 체크
+                GameManager.instance.CurrnetNodeDestoryCheck(inputType);
+                
                 Destroy(noteObj);
                 hit = true;
                 break;
@@ -115,29 +119,12 @@ public class NodeSpawnManager : MonoBehaviour
     }
     
     // 노드가 중앙에 도착했을 때 호출되는 실패 처리 메서드
-    public void OnNoteMissed(NoteType noteType)
+    public void OnNoteMissed()
     {
-        if (noteType == NoteType.LeftNote)
-        {
-            // 왼쪽 노드 실패: 실패 처리 + 이전 방향으로 이동
-            successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
-            InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
-            ShowResult("Fail! (Missed Attack Node)");
-            
-            // 이전 방향으로 플레이어 이동
-            if (InputManager.instance.previousDirection != Vector3Int.zero)
-            {
-                TestManager.Instance.player.Move(InputManager.instance.previousDirection, TestManager.Instance.player.MoveDelay);
-            }
-        }
-        else if (noteType == NoteType.RightNote)
-        {
-            // 오른쪽 노드 실패: 이전 방향으로 이동만
-            if (InputManager.instance.previousDirection != Vector3Int.zero)
-            {
-                TestManager.Instance.player.Move(InputManager.instance.previousDirection, TestManager.Instance.player.MoveDelay);
-            }
-        }
+        // 왼쪽 노드 실패: 실패 처리 + 이전 방향으로 이동
+        successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
+        InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
+        ShowResult("Fail! (Missed Attack Node)");
     }
     
     void UpdateScoreUI()
@@ -153,12 +140,6 @@ public class NodeSpawnManager : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = result;
-            
-            // // 2초 후에 결과 텍스트 지우기
-            // if (result != "")
-            // {
-            //     Invoke("ClearResult", 2f);
-            // }
         }
     }
     

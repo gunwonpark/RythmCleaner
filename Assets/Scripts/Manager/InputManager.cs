@@ -1,17 +1,21 @@
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
 
-    public float failDelay = 0.5f;
+    public float failDelay = 0.1f;
     [HideInInspector] public float failDelayTimer;
-
-    public Vector3Int previousDirection = Vector3Int.zero;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void Update()
@@ -37,11 +41,9 @@ public class InputManager : MonoBehaviour
                 Vector2 direction  = (mousePosition - TestManager.Instance.player.transform.position).normalized;
                 TestManager.Instance.player.AttackDirection = direction;
                 TestManager.Instance.player.Attack(TestManager.Instance.player.AttackDelay, direction);
-                //Debug.Log("공격 true");
             }
             else
             {
-                //Debug.Log("공격 false");
                 // 공격 실패
             }
         }
@@ -78,17 +80,11 @@ public class InputManager : MonoBehaviour
             
             if (hitSuccess)
             {
-                // 성공: 새로운 방향으로 이동
-                TestManager.Instance.player.Move(moveDirection, TestManager.Instance.player.MoveDelay);
-                previousDirection = moveDirection;
+                TestManager.Instance.player.moveDirection = moveDirection;
             }
             else
             {
-                // 실패: 이전 방향으로 강제 이동 (역방향)
-                if (previousDirection != Vector3.zero)
-                {
-                    TestManager.Instance.player.Move(previousDirection, TestManager.Instance.player.MoveDelay);
-                }
+                // 실패
             }
         }
     }

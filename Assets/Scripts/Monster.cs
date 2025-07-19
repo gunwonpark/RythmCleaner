@@ -77,7 +77,7 @@ public class Monster : MonoBehaviour
         IsMoving = true;
 
         Vector3 targetPosition = transform.position + MoveDirection;
-
+        
         transform.DOMove(targetPosition, moveDelay)
             .SetEase(MoveEase)
             .OnComplete(() =>

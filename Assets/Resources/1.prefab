@@ -105,7 +105,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -150,11 +150,11 @@ MonoBehaviour:
   Data:
     ID: 0
     HP: 0
+  gridSize: 0
   MoveDirection: {x: 0, y: 0, z: 0}
   MoveEase: 6
   IsMoving: 0
-  MoveDistance: 1
+  MoveDistance: 2
   MoveDelay: 0.15
   PerMoveInterval: 0
   currentMoveInterval: 0
-  LimitMoveDistance: 0
