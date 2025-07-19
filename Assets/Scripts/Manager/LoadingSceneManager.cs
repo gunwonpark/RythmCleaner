@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,11 +27,8 @@ public class LoadingSceneManager  : MonoBehaviour
 
     [SerializeField] 
     private Image progressBar;
-    
+
     private string loadSceneName;
-    
-    [SerializeField] 
-    private TextMeshProUGUI loadingText;
 
     private static LoadingSceneManager Create() // 로딩 씬 프리팹 미리 생성
     {
@@ -56,7 +52,6 @@ public class LoadingSceneManager  : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;  // 씬 로딩이 완료 되었을 때, 콜백 내장 함수 실행(LoadSceneProcess 코루틴이 break되는 순간에 호출된다!)
         loadSceneName = sceneName;
         StartCoroutine(LoadSceneProcess());
-        StartCoroutine(TextType());
     }
 
     private IEnumerator LoadSceneProcess()
@@ -78,10 +73,9 @@ public class LoadingSceneManager  : MonoBehaviour
             else                    // 동기화가 0.9이상 완료 되었으면, 마지막은 1초동안 천천히 차오르도록 하고, 완료되면 넘어가도록 함.
             {
                 timer += Time.unscaledDeltaTime;
-                progressBar.fillAmount = Mathf.Lerp(0.8f, 1f, timer);
+                progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);
                 if (progressBar.fillAmount >= 1f)
                 {
-                    loadingText.gameObject.SetActive(false);
                     op.allowSceneActivation = true;
                     yield break;
                 }
@@ -111,21 +105,6 @@ public class LoadingSceneManager  : MonoBehaviour
         if (!isFadeIn)
         {
             gameObject.SetActive(false);
-        }
-    }
-
-    private IEnumerator TextType()
-    {
-        loadingText.gameObject.SetActive(true);
-    
-        while (true)
-        {
-            loadingText.text = "청소하러 가는 중.";
-            yield return new WaitForSeconds(0.2f);
-            loadingText.text = "청소하러 가는 중..";
-            yield return new WaitForSeconds(0.2f);
-            loadingText.text = "청소하러 가는 중...";
-            yield return new WaitForSeconds(0.2f);
         }
     }
     
