@@ -13,10 +13,6 @@ public class NodeSpawnManager : MonoBehaviour
     public float hitRange      = 0.5f;
     public float failRange     = 0.2f;
     
-    [Header("UI References")]
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI resultText;
-    
     [Header("Game Objects")]
     public SpriteRenderer successNodePrefab;
     public Transform      targetZone;
@@ -24,6 +20,9 @@ public class NodeSpawnManager : MonoBehaviour
     public Transform      rightSpawnPoint;  // 오른쪽 스폰 포인트
     public Transform      spawnPoint;       // 왼쪽 스폰 포인트
     public GameObject     moveNotePrefab;   // 오른쪽 노드 프리팹
+
+    [Header("UI References")]
+    public TextMeshProUGUI resultText;
 
     [Header("피드백 효과")]
     public GameObject successEffectPrefab; // 성공 프리팹
@@ -38,8 +37,6 @@ public class NodeSpawnManager : MonoBehaviour
 
     void Start()
     {
-        // UI 초기화
-        UpdateScoreUI();
         ShowResult("");
         
         // ★ 노드 생성 시작(=> 이것도 나중에 중앙 gamemanager 관리로 이동)
@@ -90,7 +87,7 @@ public class NodeSpawnManager : MonoBehaviour
             if (distance <= hitRange)
             {
                 // 성공!
-                score += 100;
+                GameManager.instance.Score += 100f; // 점수 증가
                 ShowResult($"Success! ({keyPressed} key)");
                 // 성공 이펙트 생성
                 Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
@@ -124,9 +121,6 @@ public class NodeSpawnManager : MonoBehaviour
             return false;
         }
         
-        // UI
-        UpdateScoreUI();
-
         return true;
     }
     
@@ -138,15 +132,7 @@ public class NodeSpawnManager : MonoBehaviour
         InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
         ShowResult("Fail! (Missed Attack Node)");
     }
-    
-    void UpdateScoreUI()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score : " + score.ToString();
-        }
-    }
-    
+
     void ShowResult(string result)
     {
         if (resultText != null)
