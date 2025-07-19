@@ -5,12 +5,6 @@ public class MainUIManager : MonoBehaviour
     public GameObject titleCanvas;
     public GameObject levelSelectCanvas;
     public GameObject explanationCanvas;
-
-    // 레벨 추가 후, 변경
-    public void LoadLevel(string levelName)
-    {
-        LoadingSceneManager.Instance.LoadScene("Merge");
-    }
     
     public void LevelSelectCanvasOn()
     {

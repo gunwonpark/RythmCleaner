@@ -1,12 +1,14 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    public List<LevelData> levelDataList;  
+    public LevelData       currentLevelData;   
 
     public bool isGameStart = false;
     public bool isGameOver  = false;
@@ -55,12 +57,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+        
         Application.targetFrameRate = 60;
     
-        instance = this;
+        // 저장된 PlayerPrefs값으로 현재 씬 세팅(리스트는 0번부터 시작하기 때문에, 1 빼주기)
+        currentLevelData = levelDataList[PlayerPrefs.GetInt("Level") - 1];
+        audioSource.clip = currentLevelData.audioClip;          // 음악 변경
+        beatCounter = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         // yield return new waitforseconds 3 2 1 GO 애니메이션 진행
         // 
@@ -71,14 +78,16 @@ public class GameManager : MonoBehaviour
         
         // 커서 변환 적용
         SetAttackCursor();
+
+        yield return null;
         
         StartCoroutine(BeatManagement()); // 비트 관리
     }
 
     private void Update()
     {
-        // 게임이 시작되지 않았거나, 게임 오버 상태라면 아무것도 하지 않음
-        if (!isGameStart || isGameOver)
+        // 사운드가 시작될 때, 시간도 같이 체크
+        if (!isSountStart)
             return;
 
         // 남은 시간이 0보다 크면 계속 시간을 감소시킴
@@ -101,7 +110,7 @@ public class GameManager : MonoBehaviour
         
         while (isGameStart && !isGameOver)
         {
-            if (beatCounter >= PatternGenerator.instance.levelData.createAndMoveCountBeat)
+            if (beatCounter >= currentLevelData.createAndMoveCountBeat)
             {
                 // 쓰레기 이동 진행
                 PatternGenerator.instance.GenerateNextPattern();

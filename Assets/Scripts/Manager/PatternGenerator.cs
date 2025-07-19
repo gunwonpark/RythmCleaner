@@ -5,7 +5,6 @@ public class PatternGenerator : MonoBehaviour
     public static PatternGenerator instance;
     
     [Header("설정")]
-    public LevelData  levelData;
     public GameObject circlePrefab;
     public Transform  centerPoint;
     
@@ -42,21 +41,21 @@ public class PatternGenerator : MonoBehaviour
     
     void InitializePatterns()
     {
-        if (levelData == null || levelData.stringData.Count == 0) return;
+        if (GameManager.instance.currentLevelData == null || GameManager.instance.currentLevelData.stringData.Count == 0) return;
         
         LoadCurrentStringData();
     }
     
     void LoadCurrentStringData()
     {
-        if (currentStringDataIndex >= levelData.stringData.Count)
+        if (currentStringDataIndex >= GameManager.instance.currentLevelData.stringData.Count)
         {
             Debug.Log("🎉 모든 StringData 패턴이 종료되었습니다!");
             CancelInvoke("GenerateNextPattern");
             return;
         }
         
-        StringData data = levelData.stringData[currentStringDataIndex];
+        StringData data = GameManager.instance.currentLevelData.stringData[currentStringDataIndex];
         Debug.Log($"📋 StringData [{currentStringDataIndex}] 로드 시작!");
         
         // 각 방향별 패턴 데이터를 줄별로 분리
@@ -139,7 +138,7 @@ public class PatternGenerator : MonoBehaviour
         currentStringDataIndex++;
        // Debug.Log($"🔄 다음 StringData [{currentStringDataIndex}]로 이동 시도...");
         
-        if (currentStringDataIndex >= levelData.stringData.Count)
+        if (currentStringDataIndex >= GameManager.instance.currentLevelData.stringData.Count)
         {
             //Debug.Log("🏁 모든 StringData 패턴이 종료되었습니다!");
             CancelInvoke("GenerateNextPattern");
@@ -281,7 +280,7 @@ public class PatternGenerator : MonoBehaviour
             circle.transform.SetParent(transform);
             Monster _monster = circle.GetComponent<Monster>();
             if (_monster != null)
-                _monster.SetMonsterData(direction,1,levelData.createAndMoveCountBeat,100);
+                _monster.SetMonsterData(direction,1,GameManager.instance.currentLevelData.createAndMoveCountBeat,11);
             TestManager.Instance.Monsters.Add(_monster);
         }
     }

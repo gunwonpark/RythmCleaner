@@ -8,7 +8,7 @@ public enum NoteType
 
 public class Note : MonoBehaviour
 {
-    private float    speed;
+    public  float    speed;
     private float    targetX;
     private bool     isMoving = false;
     private NoteType noteType;
@@ -23,11 +23,11 @@ public class Note : MonoBehaviour
                 transform.Translate(Vector3.right * (speed * Time.deltaTime));
                 
                 // 중앙에 도착했는지 확인 (타겟존을 지나쳤을 때)
-                if (transform.position.x >= targetX)
+                if (transform.position.x > targetX + NodeSpawnManager.Instance.hitRange)
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
                     NodeSpawnManager.Instance.OnNoteMissed();
-                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this);
                     GameManager.instance.CurrnetNodeDestoryCheck(noteType);
                     Destroy(gameObject);
                     return;
@@ -36,7 +36,7 @@ public class Note : MonoBehaviour
                 // 화면을 벗어나면 삭제
                 if (transform.position.x > targetX + 10f)
                 {
-                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this);
                     Destroy(gameObject);
                 }
             }
@@ -46,11 +46,11 @@ public class Note : MonoBehaviour
                 transform.Translate(Vector3.left * (speed * Time.deltaTime));
                 
                 // 중앙에 도착했는지 확인 (타겟존을 지나쳤을 때)
-                if (transform.position.x <= targetX)
+                if (transform.position.x < targetX - NodeSpawnManager.Instance.hitRange)
                 {
                     // 중앙에 도착했으므로 실패 처리 후 삭제
                     NodeSpawnManager.Instance.OnNoteMissed();
-                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this);
                     GameManager.instance.CurrnetNodeDestoryCheck(noteType);
                     Destroy(gameObject);
                     return;
@@ -59,7 +59,7 @@ public class Note : MonoBehaviour
                 // 화면을 벗어나면 삭제
                 if (transform.position.x < targetX - 10f)
                 {
-                    NodeSpawnManager.Instance.RemoveNoteFromList(this); // 🚀 리스트에서 제거
+                    NodeSpawnManager.Instance.RemoveNoteFromList(this);
                     Destroy(gameObject);
                 }
             }

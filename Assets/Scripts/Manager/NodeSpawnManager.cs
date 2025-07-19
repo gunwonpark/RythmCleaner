@@ -8,10 +8,8 @@ public class NodeSpawnManager : MonoBehaviour
     public static NodeSpawnManager Instance;
 
     [Header("Game Settings")]
-    public float noteSpeed     = 5f;
-    public float spawnInterval = 0.5f;
-    public float hitRange      = 0.5f;
-    public float failRange     = 0.2f;
+    public float hitRange  = 0.5f;
+    public float failRange = 0.2f;
     
     [Header("Game Objects")]
     public SpriteRenderer successNodePrefab;
@@ -51,8 +49,8 @@ public class NodeSpawnManager : MonoBehaviour
     IEnumerator SpawnNotesOnBeat()
     {
         // 🚀 최적화: BPM을 기반으로 1비트당 시간 간격 계산
-        float beatInterval = 60f / 100f; // BPM 100 기준
-        WaitForSeconds waitTime = new WaitForSeconds(beatInterval); // 캐싱으로 GC 방지
+        float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 레벨에 따라 변경됨
+        WaitForSeconds waitTime = new WaitForSeconds(beatInterval);                 // 캐싱으로 GC 방지
 
         // 게임이 시작되고 끝나기 전까지 무한 반복
         while (GameManager.instance.isGameStart && !GameManager.instance.isGameOver)
@@ -72,9 +70,10 @@ public class NodeSpawnManager : MonoBehaviour
         {
             GameObject leftNote = Instantiate(attackNodePrefab, spawnPoint.position, Quaternion.identity);
             Note leftNoteScript = leftNote.GetComponent<Note>();
+            leftNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
             if (leftNoteScript != null)
             {
-                leftNoteScript.Initialize(noteSpeed, targetZone.position.x, NoteType.LeftNote);
+                leftNoteScript.Initialize(GameManager.instance.currentLevelData.nodeSpeed, targetZone.position.x, NoteType.LeftNote);
                 leftNotes.Add(leftNoteScript); // 리스트에 추가하여 캐싱
             }
         }
@@ -84,9 +83,10 @@ public class NodeSpawnManager : MonoBehaviour
         {
             GameObject rightNote = Instantiate(moveNotePrefab, rightSpawnPoint.position, Quaternion.identity);
             Note rightNoteScript = rightNote.GetComponent<Note>();
+            rightNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
             if (rightNoteScript != null)
             {
-                rightNoteScript.Initialize(noteSpeed, targetZone.position.x, NoteType.RightNote);
+                rightNoteScript.Initialize(GameManager.instance.currentLevelData.nodeSpeed, targetZone.position.x, NoteType.RightNote);
                 rightNotes.Add(rightNoteScript); // 리스트에 추가하여 캐싱
             }
         }
@@ -127,6 +127,7 @@ public class NodeSpawnManager : MonoBehaviour
                 targetNotes.RemoveAt(i);
                 Destroy(noteScript.gameObject);
                 hit = true;
+                Debug.Log("입력 성공");
                 break;
             }
             // 실패 시 이펙트 호출
@@ -140,6 +141,7 @@ public class NodeSpawnManager : MonoBehaviour
                 // 리스트에서 제거 후 오브젝트 삭제
                 targetNotes.RemoveAt(i);
                 Destroy(noteScript.gameObject);
+                Debug.Log("입력 실패");
                 return false;
             }
         }
@@ -148,7 +150,7 @@ public class NodeSpawnManager : MonoBehaviour
         if (!hit)
         {
             successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
-            InputManager.instance.failDelayTimer = InputManager.instance.failDelay; // 타이머 ON
+            InputManager.instance.failColorDelayTimer = InputManager.instance.failColorDelay; // 타이머 ON
             ShowResult($"Fail! ({keyPressed} key)");
             return false;
         }
@@ -161,7 +163,7 @@ public class NodeSpawnManager : MonoBehaviour
     {
         // 왼쪽 노드 실패: 실패 처리 + 이전 방향으로 이동
         successNodePrefab.color = new Color(0.54f, 0.54f, 0.54f);
-        InputManager.instance.failDelayTimer = InputManager.instance.failDelay;
+        InputManager.instance.failColorDelayTimer = InputManager.instance.failColorDelay;
         ShowResult("Fail! (Missed Attack Node)");
     }
     

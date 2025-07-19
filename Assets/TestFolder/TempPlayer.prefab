@@ -109,9 +109,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1714930467
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1100518483029294565, guid: a77f212876b6a39488ecd1387dd4c639, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   UseTestBullet: 0
   TestBulletCount: 3
   MoveDelay: 0.15
+  JumpHeight: 0.3
   MoveDistance: 2
   moveEase: 6
   IsMoving: 0
@@ -152,6 +153,8 @@ MonoBehaviour:
   followers:
   - {fileID: 0}
   positionHistory: []
+  PerCreateTailCount: 4
+  curCatchedMonsterCount: 0
   Animator: {fileID: 4188741565368099474}
 --- !u!95 &4188741565368099474
 Animator:

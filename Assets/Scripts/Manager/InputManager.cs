@@ -1,33 +1,28 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
 
-    public float failDelay = 0.1f;
-    [HideInInspector] public float failDelayTimer;
+    public float failColorDelay = 0.1f; // 단순히 컬러만 변환 // 키 입력 불가는 아님
+    [HideInInspector] public float failColorDelayTimer;
 
     private void Awake()
     {
         instance = this;
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
-        // 실패 입력 불가
-        failDelayTimer -= Time.deltaTime;
-        if (failDelayTimer >= 0)
-            return;
-        
         // 성공 노드 색 복구
-        if(NodeSpawnManager.Instance.successNodePrefab.color != Color.white)
-            NodeSpawnManager.Instance.successNodePrefab.color = Color.white;
+        failColorDelayTimer -= Time.deltaTime;
+        if (failColorDelayTimer < 0)
+        {
+            if(NodeSpawnManager.Instance.successNodePrefab.color != Color.white)
+                NodeSpawnManager.Instance.successNodePrefab.color = Color.white;
+        }
         
         // 공격 노드 => 왼쪽 마우스 클릭
         if (Input.GetMouseButtonDown(0))

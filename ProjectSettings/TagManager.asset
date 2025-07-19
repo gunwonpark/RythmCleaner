@@ -46,5 +46,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 1260583169
+    locked: 0
+  - name: character
+    uniqueID: 2580036829
+    locked: 0
+  - name: effect
+    uniqueID: 566344899
+    locked: 0
+  - name: nodeUI
+    uniqueID: 3903779383
+    locked: 0
   m_RenderingLayers:
   - Default

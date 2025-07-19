@@ -35,7 +35,7 @@ public class LoadingSceneManager  : MonoBehaviour
         return Instantiate(Resources.Load<LoadingSceneManager>("UI/Loading Canvas"));
     }
     
-    // 활성화된 스크립트 인스턴스가 로드될 때 Awake가 호출됩니다. -> Static이기 때문에, 정적으로 생성 될 때, Awake가 호출된다.
+    // 활성화된  스크립트 인스턴스가 로드될 때 Awake가 호출됩니다. -> Static이기 때문에, 정적으로 생성 될 때, Awake가 호출된다.
     private void Awake()
     {
         if (Instance != this)
