@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public enum Sound
 {
@@ -21,15 +22,36 @@ public class SoundManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindAnyObjectByType<SoundManager>();
+
                 if (_instance == null)
                 {
                     GameObject obj = new GameObject("@SoundManager");
                     _instance = obj.AddComponent<SoundManager>();
-                    DontDestroyOnLoad(obj);
                 }
             }
             return _instance;
         }
+    }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        Init();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 씬이 로드되면 모든 사운드 초기화
+        Clear();
     }
 
     #region AudioMixer
@@ -106,7 +128,7 @@ public class SoundManager : MonoBehaviour
 
     private GameObject _root = null;
 
-    private const int MAX_EFFECT_COUNT = 10;
+    private const int MAX_EFFECT_COUNT = 20;
     public void Init()
     {
         if (_root != null)
