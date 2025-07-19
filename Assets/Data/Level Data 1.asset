@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   audioClip: {fileID: 0}
-  countBeat: 3
+  countBeat: 4
   nodeSpeed: 0
   stringData:
   - upData: '00000000000

@@ -39,6 +39,8 @@ public class Monster : MonoBehaviour
 
     public int LimitMoveDistance;
 
+
+    public bool IsMoveOnce = false; // 한번 움직였는지 체크하는 변수
     private void Awake()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,12 +70,27 @@ public class Monster : MonoBehaviour
         
         if (currentMoveInterval == PerMoveInterval)
         {
+            IsMoveOnce = true;
             currentMoveInterval = 0;
         }
         else
         {
-            transform.DOJump(transform.position, JumpHeight, 1, moveDelay)
-                .SetEase(MoveEase);
+            Sequence sequence = DOTween.Sequence();
+            sequence.Join(transform.DOJump(transform.position, JumpHeight, 1, moveDelay)
+                .SetEase(MoveEase));
+
+            if (!IsMoveOnce)
+            {
+                float targetScale = 0f;
+                switch (currentMoveInterval)
+                {
+                    case 1: targetScale = 0.3f; break;
+                    case 2: targetScale = 0.6f; break;
+                    case 3: targetScale = 1f; break;
+                }
+                sequence.Join(transform.DOScale(targetScale, moveDelay).SetEase(MoveEase));
+            }
+
             return;
         }
 
