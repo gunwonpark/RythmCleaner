@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7733349302727995116}
   m_Layer: 0
   m_Name: Success Node
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,10 +74,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7739539963352513270, guid: 75c9bc34db01acc4fa3d6151f9a151eb, type: 3}
+  m_SortingLayerID: -391187913
+  m_SortingLayer: 4
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 2921595062378236947, guid: 7763ddfca13c5834cb70749937bd2716, type: 3}
   m_Color: {r: 1, g: 0.8700229, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,4 +123,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.75

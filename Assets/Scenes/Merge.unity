@@ -541,6 +541,7 @@ MonoBehaviour:
   isSountStart: 0
   audioSource: {fileID: 248227470}
   CurrentRound: 0
+  TotalCunsumTime: 0
   KillDustCount: 0
   EndUI: {fileID: 464245883}
 --- !u!4 &248227469
@@ -2904,7 +2905,19 @@ PrefabInstance:
       objectReference: {fileID: 36579979}
     - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3331,10 +3344,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Success Node
       objectReference: {fileID: 0}
-    - target: {fileID: 629755166610293227, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
-      propertyPath: m_TagString
-      value: Node
-      objectReference: {fileID: 0}
     - target: {fileID: 1182906261311839959, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3375,21 +3384,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -391187913
-      objectReference: {fileID: 0}
     - target: {fileID: 7733349302727995116, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
       propertyPath: m_Radius
-      value: 0.75
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733349302727995116, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4821,7 +4822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e72ef1147c15d49afe67ed4d918bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitRange: 0.5
+  hitRange: 1.5
   failRange: 0.2
   successNodePrefab: {fileID: 1036164398}
   targetZone: {fileID: 1307860644}
@@ -4831,6 +4832,8 @@ MonoBehaviour:
   moveNotePrefab: {fileID: 6312974342316710025, guid: 24d88a28ad74df6448dbf8a25faa9751, type: 3}
   successEffectPrefab: {fileID: 4660366030024482369, guid: b3b296e496b29e5428f8522cbd1f1da7, type: 3}
   failEffectPrefab: {fileID: 6369941880252170291, guid: 143088760d36620458ba833cf8da3d6a, type: 3}
+  bpm: 100
+  leadTime: 1.5
 --- !u!1 &1557133861
 GameObject:
   m_ObjectHideFlags: 0

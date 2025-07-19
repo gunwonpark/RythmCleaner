@@ -16,7 +16,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 68c236dc7da524e4cb7471797f436db0, type: 3}
   soundBeat: 100
   createAndMoveCountBeat: 4
-  nodeSpeed: 6.8
+  nodeSpeed: 5
   stringData:
   - upData: 00000000000
     downData: 00000000000
