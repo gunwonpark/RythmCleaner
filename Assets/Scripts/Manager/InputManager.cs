@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
         // 공격 노드 => 왼쪽 마우스 클릭
         if (Input.GetMouseButtonDown(0))
         {
-            bool attackHitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.LeftNote, "mouse click");  // 공격 무브 방향 미사용 
+            bool attackHitSuccess = NodeSpawnManager.Instance.CheckHit(NodeType.LeftNode, "mouse click");  // 공격 무브 방향 미사용 
             
             if (attackHitSuccess)
             {
@@ -73,7 +73,7 @@ public class InputManager : MonoBehaviour
         {
             // 키를 누르면, CheckHit를 하는데, CheckHit에서 노드가 삭제되기 전에 방향을 먼저 바꿔줘야
             // moveDirection이 먼저 바뀌어야, 알맞게 이동 비트에 맞춰서 이동함
-            NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed, playerMoveDirection);
+            NodeSpawnManager.Instance.CheckHit(NodeType.RightNode, keyPressed, playerMoveDirection);
             // bool hitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed);
             //
             // if (hitSuccess)
