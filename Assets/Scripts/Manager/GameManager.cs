@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             UpdateRemainTime(); // UI 업데이트
         }
     }
-    public int CurrentRound;
+    public int   CurrentRound;
     public float TotalCunsumTime = 0f; // 마지막에 총 소모된 시간 보여주는 변수
 
     private float score = 0f;
@@ -63,16 +63,12 @@ public class GameManager : MonoBehaviour
     
         // 저장된 PlayerPrefs값으로 현재 씬 세팅(리스트는 0번부터 시작하기 때문에, 1 빼주기)
         currentLevelData = levelDataList[PlayerPrefs.GetInt("Level") - 1];
-        audioSource.clip = currentLevelData.audioClip;          // 음악 변경
-        beatCounter = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
+        audioSource.clip = currentLevelData.audioClip;               // 음악 변경
+        beatCounter      = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
     }
 
     private IEnumerator Start()
     {
-        // yield return new waitforseconds 3 2 1 GO 애니메이션 진행
-        // 
-        //
-        
         isGameStart = true;
         remainTIme  = 60f;
         
@@ -80,6 +76,8 @@ public class GameManager : MonoBehaviour
         SetAttackCursor();
 
         yield return null;
+        
+        isSountStart = true;
         
         StartCoroutine(BeatManagement()); // 비트 관리
     }
@@ -101,27 +99,26 @@ public class GameManager : MonoBehaviour
             GameClear();
         }
     }
-
-    // 🚀 최적화된 비트 관리 - 더 효율적인 대기 시간
+    
+    // 패턴 비트 관리(지속 체크)
     IEnumerator BeatManagement()
     {
-        // 60fps 기준으로 적절한 대기 시간 설정 (매 프레임 체크는 과도함)
-        WaitForSeconds waitTime = new WaitForSeconds(0.016f); // 대략 60fps
-        
         while (isGameStart && !isGameOver)
         {
+            // beatCounter가 행동 카운트 createAndMoveCountBeat를 넘어가면, 다음 패턴 진행 
             if (beatCounter >= currentLevelData.createAndMoveCountBeat)
             {
-                // 쓰레기 이동 진행
+                // 패턴 적 생성 진행
                 PatternGenerator.instance.GenerateNextPattern();
                 
                 // 비트 초기화
                 beatCounter = 0;
             }
-            yield return waitTime; // 🚀 고정된 대기 시간으로 최적화
+            yield return 0.016f; // 🚀 고정된 대기 시간으로 최적화(60)
         }
     }
-
+    
+    // 플레이어 이동 관리
     private void PlayerBeatMove()
     {
         TestManager.Instance.player.Move(TestManager.Instance.player.moveDirection, TestManager.Instance.player.MoveDelay);
@@ -141,31 +138,24 @@ public class GameManager : MonoBehaviour
     }
     
     // 좌우 노드 체크(=> 비트 관리)
-    public void CurrnetNodeDestoryCheck(NoteType inputType)
+    public void CurrnetNodeDestoryCheck(NodeType inputType)
     {
         // 좌우 노드 삭제 체크 
-        if (inputType == NoteType.LeftNote)
+        if (inputType == NodeType.LeftNode)
             leftNodeDestory  = true;
-        else if (inputType == NoteType.RightNote)
+        else if (inputType == NodeType.RightNode)
             rightNodeDestory = true;
         
         // 초기화
         if (rightNodeDestory && leftNodeDestory)
         {
-            //🚀 사운드 시작 최적화 (중복 호출 방지)
-            if (!isSountStart && audioSource != null && !audioSource.isPlaying)
-            {
-                isSountStart = true;
-                Debug.Log("🎵 사운드 시작!");
-                audioSource.Play();
-            }
-            
             leftNodeDestory  = false;
             rightNodeDestory = false;
             beatCounter++;
 
-            PlayerBeatMove();    // 플레이어 비트 이동
-            EnemyBeatMove();     // 적 비트 이동
+            // 1비트 즉, 노드 타이밍 마다 체크할 작업들!!!
+            PlayerBeatMove(); // 플레이어 비트 이동
+            EnemyBeatMove();  // 적 방향 이동 진행
         }
     }
 

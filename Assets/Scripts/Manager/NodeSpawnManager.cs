@@ -27,17 +27,18 @@ public class NodeSpawnManager : MonoBehaviour
     public GameObject failEffectPrefab;    // 실패 프리팹
 
     [Header("최적화 - 노트 관리")]
-    private List<Note> leftNotes = new List<Note>();   // 왼쪽 노트들 캐싱
-    private List<Note> rightNotes = new List<Note>();  // 오른쪽 노트들 캐싱
+    private List<Node> leftNotes = new List<Node>();   // 왼쪽 노트들 캐싱
+    private List<Node> rightNotes = new List<Node>();  // 오른쪽 노트들 캐싱
 
-    // 🎯 타이밍 측정용 변수들
-    [Header("타이밍 디버그")]
-    private float lastSpawnTime = 0f;        // 마지막 생성 시간
-    private float expectedInterval = 0f;     // 예상 간격
-    private int spawnCount = 0;              // 생성 횟수
-    private float totalError = 0f;           // 총 오차
-    private float maxError = 0f;             // 최대 오차
-    private float minError = float.MaxValue; // 최소 오차
+    // 🎵 간단하고 확실한 600ms 리듬 시스템
+    [Header("🎵 600ms 간격 리듬 시스템")]
+    public double bpm      = 100.0;              // BPM
+    public float  leadTime = 1.5f;               // 노트 생성 리드 타임 (초)
+    
+    private double musicStartDSPTime = 0.0;      // 음악 시작 DSP Time
+    private double secPerBeat = 0.6;             // 100 BPM = 600ms = 0.6초
+    private bool   isPlayingMusic = false;       // 음악 재생 중 여부
+    private int    beatCount = 0;                // 비트 카운터
 
     private int score = 0;
 
@@ -50,158 +51,171 @@ public class NodeSpawnManager : MonoBehaviour
     {
         ShowResult("");
         
-        // ★ 노드 생성 시작(=> 이것도 나중에 중앙 gamemanager 관리로 이동)
-        // InvokeRepeating("SpawnNote", 0.5f, spawnInterval);
-        StartCoroutine(SpawnNotesOnBeat());
+        // GameManager 사운드 시작 신호 대기
+        StartCoroutine(WaitForSoundStart());
     }
 
-    IEnumerator SpawnNotesOnBeat()
+    // GameManager 사운드 시작 신호 대기
+    IEnumerator WaitForSoundStart()
     {
-        // 🚀 최적화: BPM을 기반으로 1비트당 시간 간격 계산
-        float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 레벨에 따라 변경됨
-        WaitForSeconds waitTime = new WaitForSeconds(beatInterval);                 // 캐싱으로 GC 방지
-
-        // 🎯 타이밍 측정 초기화
-        expectedInterval = beatInterval;
-        lastSpawnTime = Time.time;
-        spawnCount = 0;
-        totalError = 0f;
-        maxError = 0f;
-        minError = float.MaxValue;
-        
-        Debug.Log($"📊 [타이밍 측정] 시작 - 예상 간격: {expectedInterval:F4}초 ({GameManager.instance.currentLevelData.soundBeat} BPM)");
-
-        // 게임이 시작되고 끝나기 전까지 무한 반복
-        while (GameManager.instance.isGameStart && !GameManager.instance.isGameOver)
+        while (!GameManager.instance.isSountStart)
         {
-            // 2. 다음 비트까지 대기 (캐싱된 WaitForSeconds 사용)
-            yield return waitTime;
-
-            // 3. 비트 시간에 맞춰 노드 생성 함수 호출
-            SpawnNote();
+            yield return null; // 매 프레임 체크
         }
         
-        // 🎯 최종 통계 출력
-        if (spawnCount > 1)
-        {
-            float avgError = totalError / (spawnCount - 1);
-            Debug.Log($"📊 [최종 타이밍 통계] 총 생성: {spawnCount}회, 평균 오차: {avgError * 1000:F2}ms, " +
-                      $"최대 오차: {maxError * 1000:F2}ms, 최소 오차: {minError * 1000:F2}ms");
-        }
+        // 사운드 시작 신호를 받으면 리듬 시스템 시작
+        StartRhythmSystem();
     }
-
-    void SpawnNote()
+    
+    // 🎵 즉시 음악 재생 + 즉시 노드 생성 시스템
+    void StartRhythmSystem()
     {
-        // 🎯 타이밍 측정 및 오차 계산
-        float currentTime = Time.time;
-        spawnCount++;
+        // LevelData에서 BPM 가져오기
+        bpm = GameManager.instance.currentLevelData.soundBeat;
+        secPerBeat = 60.0 / bpm; // 100 BPM = 0.6초 = 600ms
         
-        if (spawnCount > 1) // 첫 번째는 기준점이므로 제외
+        // 🎵 음악 즉시 재생!
+        musicStartDSPTime = AudioSettings.dspTime;
+        GameManager.instance.audioSource.Play();
+        isPlayingMusic = true;
+        
+        Debug.Log($"🎵 [즉시 재생 리듬 시스템]");
+        Debug.Log($"   BPM: {bpm}, 1비트: {secPerBeat * 1000:F0}ms");
+        Debug.Log($"   음악 시작: 즉시!");
+        Debug.Log($"   노드 생성: 0ms, 600ms, 1200ms...");
+        
+        // 즉시 노드 생성 코루틴 시작
+        StartCoroutine(SpawnNodesEvery600ms());
+    }
+    
+        // 🎯 즉시 시작 + 절대 시간 기준 완벽 비트 동기화
+    IEnumerator SpawnNodesEvery600ms()
+    {
+        Debug.Log("🚀 즉시 노드 생성 시작! (0ms, 600ms, 1200ms...)");
+        
+        // 음악이 재생 중인 동안 계속 노드 생성
+        while (isPlayingMusic && GameManager.instance.audioSource.isPlaying)
         {
-            float actualInterval = currentTime - lastSpawnTime;
-            float error = Mathf.Abs(actualInterval - expectedInterval);
+            // 🔥 핵심: 절대 시간 기준 정확한 비트 계산 (드리프트 방지)
+            double exactBeatTime = musicStartDSPTime + (beatCount * secPerBeat);
+            double nodeArrivalTime = exactBeatTime + leadTime; // 노드가 중앙에 도착할 시간
             
-            totalError += error;
-            maxError = Mathf.Max(maxError, error);
-            minError = Mathf.Min(minError, error);
+            // 🎯 즉시 노드 생성: 노드가 nodeArrivalTime에 정확히 도착하도록
+            SpawnNoteWithPerfectTiming(nodeArrivalTime);
             
-            // 🎯 실시간 오차 로그 (매 5번째마다 출력)
-            if (spawnCount % 5 == 0)
+            beatCount++;
+            
+            // 다음 비트까지 대기 (절대 시간 기준)
+            double nextBeatTime = musicStartDSPTime + (beatCount * secPerBeat);
+            while (AudioSettings.dspTime < nextBeatTime)
             {
-                float avgError = totalError / (spawnCount - 1);
-                Debug.Log($"📊 [타이밍 #{spawnCount:D2}] 실제간격: {actualInterval * 1000:F2}ms, " +
-                          $"예상간격: {expectedInterval * 1000:F2}ms, " +
-                          $"오차: {error * 1000:F2}ms, " +
-                          $"평균오차: {avgError * 1000:F2}ms");
+                yield return null;
             }
+            
+            Debug.Log($"🎵 비트 {beatCount}: 노드 생성 완료, 다음 {secPerBeat * 1000:F0}ms 후");
         }
         
-        lastSpawnTime = currentTime;
-
-        // 🎯 비트에 맞는 정확한 이동 시간 계산
-        float beatInterval = 60f / GameManager.instance.currentLevelData.soundBeat; // 1비트당 시간
+        Debug.Log("🎵 음악 종료 - 노드 생성 중지");
+        isPlayingMusic = false;
+    }
+    
+    // 🎯 즉시 생성 + 완벽한 도착 타이밍 계산
+    public void SpawnNoteWithPerfectTiming(double nodeArrivalTime)
+    {
+        // 현재 DSP 시간
+        double currentDSPTime = AudioSettings.dspTime;
         
-        Debug.Log($"🎵 BPM: {GameManager.instance.currentLevelData.soundBeat}, 이동시간: {beatInterval:F3}초");
+        // 거리 계산
+        float leftDistance = Vector3.Distance(spawnPoint.position, targetZone.position);
+        float rightDistance = Vector3.Distance(rightSpawnPoint.position, targetZone.position);
         
-        // 왼쪽 공격 노드 생성
+        // 🔥 핵심: 정확한 도착 시간까지 남은 시간 계산
+        double exactTravelTime = nodeArrivalTime - currentDSPTime;
+        
+        // 🎯 완벽 속도 계산: 속도 = 거리 / 정확한 남은 시간
+        float perfectLeftSpeed = (float)(leftDistance / exactTravelTime);
+        float perfectRightSpeed = (float)(rightDistance / exactTravelTime);
+        
+        Debug.Log($"🎯 [즉시 생성] 도착: {nodeArrivalTime:F3}, 이동시간: {exactTravelTime * 1000:F1}ms, " +
+                  $"속도: L{perfectLeftSpeed:F1} R{perfectRightSpeed:F1}");
+        
+        // 왼쪽 노드 생성
         if (attackNodePrefab != null && spawnPoint != null)
         {
             GameObject leftNote = Instantiate(attackNodePrefab, spawnPoint.position, Quaternion.identity);
-            Note leftNoteScript = leftNote.GetComponent<Note>();
-            leftNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
-            if (leftNoteScript != null)
+            Node leftNodeScript = leftNote.GetComponent<Node>();
+            if (leftNodeScript != null)
             {
-                // 시작위치, 목표위치, 이동시간으로 초기화
-                leftNoteScript.InitializeWithTime(spawnPoint.position, new Vector3(targetZone.position.x, spawnPoint.position.y, spawnPoint.position.z), beatInterval, NoteType.LeftNote);
-                leftNotes.Add(leftNoteScript); // 리스트에 추가하여 캐싱
+                leftNodeScript.speed = perfectLeftSpeed;
+                leftNodeScript.Initialize(perfectLeftSpeed, targetZone.position.x, NodeType.LeftNode);
+                leftNotes.Add(leftNodeScript);
             }
         }
         
-        // 오른쪽 무브 노드 생성 (동시에)
+        // 오른쪽 노드 생성
         if (moveNotePrefab != null && rightSpawnPoint != null)
         {
             GameObject rightNote = Instantiate(moveNotePrefab, rightSpawnPoint.position, Quaternion.identity);
-            Note rightNoteScript = rightNote.GetComponent<Note>();
-            rightNoteScript.speed = GameManager.instance.currentLevelData.nodeSpeed; // 노드 속도 변경
-            if (rightNoteScript != null)
+            Node rightNodeScript = rightNote.GetComponent<Node>();
+            if (rightNodeScript != null)
             {
-                // 시작위치, 목표위치, 이동시간으로 초기화
-                rightNoteScript.InitializeWithTime(rightSpawnPoint.position, new Vector3(targetZone.position.x, rightSpawnPoint.position.y, rightSpawnPoint.position.z), beatInterval, NoteType.RightNote);
-                rightNotes.Add(rightNoteScript); // 리스트에 추가하여 캐싱
+                rightNodeScript.speed = perfectRightSpeed;
+                rightNodeScript.Initialize(perfectRightSpeed, targetZone.position.x, NodeType.RightNode);
+                rightNotes.Add(rightNodeScript);
             }
         }
     }
     
-    public bool CheckHit(NoteType inputType, string keyPressed, Vector3Int playerMoveDirection = default)
+    public bool CheckHit(NodeType inputType, string keyPressed, Vector3Int playerMoveDirection = default)
     {
         // 🚀 최적화: 캐싱된 리스트 사용 (FindGameObjectsWithTag 제거!)
-        List<Note> targetNotes = (inputType == NoteType.LeftNote) ? leftNotes : rightNotes;
+        List<Node> targetNotes = (inputType == NodeType.LeftNode) ? leftNotes : rightNotes;
         bool hit = false;
         
         // 역순으로 순회하여 삭제 시 인덱스 문제 방지
         for (int i = targetNotes.Count - 1; i >= 0; i--)
         {
-            Note noteScript = targetNotes[i];
-            if (noteScript == null || noteScript.gameObject == null)
+            Node nodeScript = targetNotes[i];
+            if (nodeScript == null || nodeScript.gameObject == null)
             {
                 targetNotes.RemoveAt(i); // null 참조 제거
                 continue;
             }
             
-            float distance = Mathf.Abs(noteScript.transform.position.x - targetZone.position.x);
+            float distance = Mathf.Abs(nodeScript.transform.position.x - targetZone.position.x);
             
             if (distance <= hitRange)
             {
                 // 성공!
                 GameManager.instance.Score += 100f;
                 ShowResult($"Success! ({keyPressed} key)");
-                Instantiate(successEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                Instantiate(successEffectPrefab, nodeScript.transform.position, Quaternion.identity);
                 
                 // 이동 무브는 파괴 전 먼저 방향 바꿔줘야 함!
-                if(inputType == NoteType.RightNote)
+                if(inputType == NodeType.RightNode)
                     TestManager.Instance.player.moveDirection = playerMoveDirection;
                 
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
                 
                 // 리스트에서 제거 후 오브젝트 삭제
                 targetNotes.RemoveAt(i);
-                Destroy(noteScript.gameObject);
+                Destroy(nodeScript.gameObject);
                 hit = true;
-                Debug.Log("입력 성공");
+                //Debug.Log("입력 성공");
                 break;
             }
             // 실패 시 이펙트 호출
             else if(distance <= hitRange + failRange)
             {
                 ShowResult($"Fail! ({keyPressed} key)");
-                Instantiate(failEffectPrefab, noteScript.transform.position, Quaternion.identity);
+                Instantiate(failEffectPrefab, nodeScript.transform.position, Quaternion.identity);
                 
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
                 
                 // 리스트에서 제거 후 오브젝트 삭제
                 targetNotes.RemoveAt(i);
-                Destroy(noteScript.gameObject);
-                Debug.Log("입력 실패");
+                Destroy(nodeScript.gameObject);
+                //Debug.Log("입력 실패");
                 return false;
             }
         }
@@ -228,12 +242,12 @@ public class NodeSpawnManager : MonoBehaviour
     }
     
     // 🚀 노트가 삭제될 때 리스트에서도 제거하는 메서드
-    public void RemoveNoteFromList(Note note)
+    public void RemoveNoteFromList(Node node)
     {
-        if (note.GetNoteType() == NoteType.LeftNote)
-            leftNotes.Remove(note);
+        if (node.GetNodeType() == NodeType.LeftNode)
+            leftNotes.Remove(node);
         else
-            rightNotes.Remove(note);
+            rightNotes.Remove(node);
     }
 
     void ShowResult(string result)
