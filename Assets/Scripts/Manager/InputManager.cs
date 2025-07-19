@@ -16,6 +16,9 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.isGameOver)
+            return;
+
         // 성공 노드 색 복구
         failColorDelayTimer -= Time.deltaTime;
         if (failColorDelayTimer < 0)

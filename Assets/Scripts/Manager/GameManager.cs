@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,8 +24,9 @@ public class GameManager : MonoBehaviour
     public Texture2D AttackCursurTexture;
 
     [Header("UI References")]
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI RoundText;
     public TextMeshProUGUI remainTimeText;
+    public TextMeshProUGUI midText; 
     
     [Header("현재 게임 정보")]
     public  float EnableTime = 60f; // 라운드당 가능한 시간
@@ -44,16 +47,9 @@ public class GameManager : MonoBehaviour
     public int   CurrentRound;
     public float TotalCunsumTime = 0f; // 마지막에 총 소모된 시간 보여주는 변수
 
-    private float score = 0f;
-    public float Score
-    {
-        get { return score; }
-        set
-        {
-            score = value;
-            UpdateScoreUI(); // UI 업데이트
-        }
-    }
+    public int KillDustCount = 0;
+
+    public UI_GameEnd EndUI; // 게임 종료 UI
 
     private void Awake()
     {
@@ -70,10 +66,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator Start()
     {
         isGameStart = true;
-        remainTIme  = 60f;
-        
+        RemainTime = 60f;
+        CurrentRound = currentLevelData.level; // 현재 라운드 설정
+        RoundText.text = $"Round : {CurrentRound}"; // UI에 현재 라운드 표시
+        midText.text = $"Round {CurrentRound}"; // 중앙 텍스트 표시
+
+        yield return WaitAndGo(); // 게임 시작 대기
         // 커서 변환 적용
         SetAttackCursor();
+        StartCoroutine(NodeSpawnManager.Instance.SpawnNotesOnBeat()); // 노드 생성 시작
 
         yield return null;
         
@@ -82,11 +83,25 @@ public class GameManager : MonoBehaviour
         StartCoroutine(BeatManagement()); // 비트 관리
     }
 
+    private IEnumerator WaitAndGo()
+    {
+        midText.transform.DOScale(1, 1f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(2f);
+        midText.text = "START!";
+        midText.DOFade(0, 1f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.3f);
+    }
+
     private void Update()
     {
         // 사운드가 시작될 때, 시간도 같이 체크
         if (!isSountStart)
             return;
+
+        if(isGameOver)
+        {
+            return;
+        }
 
         // 남은 시간이 0보다 크면 계속 시간을 감소시킴
         if (RemainTime > 0)
@@ -140,6 +155,10 @@ public class GameManager : MonoBehaviour
     // 좌우 노드 체크(=> 비트 관리)
     public void CurrnetNodeDestoryCheck(NodeType inputType)
     {
+        if (isGameOver)
+        {
+            return;
+        }
         // 좌우 노드 삭제 체크 
         if (inputType == NodeType.LeftNode)
             leftNodeDestory  = true;
@@ -175,13 +194,37 @@ public class GameManager : MonoBehaviour
         
         Debug.Log("🔴 게임 오버!");
         
+        if(CurrentRound == 1)
+        {
+            SaveManager.instance.Round1RemainTime = (int)RemainTime;
+            SaveManager.instance.TotalScore = (int)(60f - RemainTime) * 100;
+        }
+        else if(CurrentRound == 2)
+        {
+            SaveManager.instance.Round2RemainTime = (int)RemainTime;
+            SaveManager.instance.TotalScore = (int)(60 + SaveManager.instance.Round1RemainTime +  60f - RemainTime) * 100;
+        }
+        else if(CurrentRound == 3)
+        {
+            SaveManager.instance.Round3RemainTime = (int)RemainTime;
+            SaveManager.instance.TotalScore = (int)(180f + SaveManager.instance.Round1RemainTime + SaveManager.instance.Round2RemainTime +  60f - RemainTime) * 100;
+        }
+
+        SaveManager.instance.TotalClearRound = CurrentRound;
+        SaveManager.instance.TotalDustCount += KillDustCount;
         // 커서 초기화
         ResetCursor();
 
-        // TODO : 다른 필요한 로직들 ex) 노드 생성 중지, UI 팝업 띄어주기 등
-        // 로직을 보았을때 노드 생성을 중지 하면 몬스터 움직임도 멈춤
+        // 실패 UI 띄어 주기
+        EndUI.SetData();
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            EndUI.DoAnimation();
+        });
+
     }
 
+    [ContextMenu("GameClear")]
     public void GameClear()
     {
         // 이미 게임이 종료된 상태라면 중복 실행 방지
@@ -189,16 +232,39 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
 
-        float consumedTime = EnableTime - Mathf.Max(0, RemainTime);
-        TotalCunsumTime += consumedTime;
-        
         // 🚀 사운드 정지 최적화
         if (audioSource != null && audioSource.isPlaying)
         {
             audioSource.Stop();
         }
-        
-        Debug.Log($"🎉 게임 클리어! 소모 시간: {consumedTime:F2}초, 총 시간: {TotalCunsumTime:F2}초");
+
+        if (CurrentRound == 1)
+        {
+            SaveManager.instance.Round1RemainTime = (int)RemainTime;
+            StartCoroutine(MoveNextLevel(2));
+            return;
+        }
+        else if (CurrentRound == 2)
+        {
+            SaveManager.instance.Round2RemainTime = (int)RemainTime;
+            StartCoroutine(MoveNextLevel(3));
+            return;
+        }
+        else if (CurrentRound == 3)
+        {
+            SaveManager.instance.Round3RemainTime = (int)RemainTime;
+            SaveManager.instance.TotalScore = (int)(360f + SaveManager.instance.Round1RemainTime + SaveManager.instance.Round2RemainTime + 
+                SaveManager.instance.Round3RemainTime) * 100;
+        }
+
+        SaveManager.instance.TotalClearRound = CurrentRound; // 현재 라운드 저장
+        SaveManager.instance.TotalDustCount += KillDustCount;
+        // UI 띄우기
+        EndUI.SetData();
+        EndUI.transform.DOMove(new Vector2(960, 580), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            EndUI.DoAnimation();
+        });
 
         // 커서 초기화
         ResetCursor();
@@ -206,19 +272,21 @@ public class GameManager : MonoBehaviour
         // TODO: 게임 클리어 UI 팝업, 다음 라운드로 넘어가는 로직 등 추가
     }
 
-    void UpdateScoreUI()
+    private IEnumerator MoveNextLevel(int v)
     {
-        if (scoreText != null)
-        {
-            scoreText.text = $"Score : {score:F0}"; // 🚀 string interpolation으로 최적화
-        }
+        midText.color = new Color(midText.color.r, midText.color.g, midText.color.b, 1f); // 투명도 초기화
+        midText.text = "Clear!";
+        midText.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f); // 크기 초기화
+        midText.transform.DOScale(1, 1f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(3f);
+        SaveManager.instance.SaveSelectLevel(v); // 다음 레벨로 이동
     }
 
     void UpdateRemainTime()
     {
         if (remainTimeText != null)
         {
-            remainTimeText.text = $"Remain Time : {Mathf.Max(0, remainTIme):F2}"; // 🚀 string interpolation으로 최적화
+            remainTimeText.text = $"남은 업무 시간 : {Mathf.Max(0, remainTIme):F2}"; //
         }
     }
 

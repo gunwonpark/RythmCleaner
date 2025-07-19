@@ -10,7 +10,11 @@ public class PatternGenerator : MonoBehaviour
     
     [Header("간격 설정")]
     public float distanceFromCenter = 10f;  // 중심에서 거리
-    
+
+    [Header("특수 로직")]
+    public bool FirstMonsterMoveForce = true;
+    private bool isFirstMove = false; // 첫 번째 몬스터 이동 여부
+
     // 각 방향별 현재 인덱스
     private int currentUpRow;           // 위: 행 인덱스 (마지막→0으로 감소)
     private int currentDownRow = 0;     // 아래: 행 인덱스 (0→마지막으로 증가)
@@ -106,8 +110,9 @@ public class PatternGenerator : MonoBehaviour
         currentLeftCol--;   // 왼쪽: 감소 (마지막→0)
         currentRightCol++;  // 오른쪽: 증가 (0→마지막)
         
+        isFirstMove = true; // 첫 번째 이동 완료
         // Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
-        
+
         // 현재 패턴이 모두 끝났는지 확인
         if (IsCurrentPatternFinished())
         {
@@ -170,12 +175,12 @@ public class PatternGenerator : MonoBehaviour
         
         for (int col = 0; col < line.Length; col++)
         {
-            if (line[col] == '1')
+            if (line[col] != '0')
             {
                 float x = center.x + (col - (line.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 float y = center.y + distanceFromCenter;
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.down);    // 위쪽은 아래로 이동
+                CreateCircle(pos, Vector3Int.down, line[col]);    // 위쪽은 아래로 이동
                 circleCount++;
                 //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
@@ -203,12 +208,12 @@ public class PatternGenerator : MonoBehaviour
         
         for (int col = 0; col < line.Length; col++)
         {
-            if (line[col] == '1')
+            if (line[col] != '0')
             {
                 float x = center.x + (col - (line.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 float y = center.y - distanceFromCenter;
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.up); // 아래는 위로 이동
+                CreateCircle(pos, Vector3Int.up, line[col]); // 아래는 위로 이동
                 circleCount++;
                 //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
@@ -231,12 +236,12 @@ public class PatternGenerator : MonoBehaviour
         for (int row = 0; row < leftLines.Length; row++)
         {
             string line = leftLines[row].Trim();
-            if (currentLeftCol < line.Length && line[currentLeftCol] == '1')
+            if (currentLeftCol < line.Length && line[currentLeftCol] != '0')
             {
                 float x = center.x - distanceFromCenter;
                 float y = center.y + (row - (leftLines.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.right); // 왼쪽은 오른쪽으로 이동
+                CreateCircle(pos, Vector3Int.right, line[currentLeftCol]); // 왼쪽은 오른쪽으로 이동
                 circleCount++;
                 //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentLeftCol]}'), 위치 ({x:F1}, {y:F1})");
             }
@@ -259,12 +264,12 @@ public class PatternGenerator : MonoBehaviour
         for (int row = 0; row < rightLines.Length; row++)
         {
             string line = rightLines[row].Trim();
-            if (currentRightCol < line.Length && line[currentRightCol] == '1')
+            if (currentRightCol < line.Length && line[currentRightCol] != '0')
             {
                 float x = center.x + distanceFromCenter;
                 float y = center.y + (row - (rightLines.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.left);    // 오른쪽은 왼쪽으로 이동
+                CreateCircle(pos, Vector3Int.left, line[currentRightCol]);    // 오른쪽은 왼쪽으로 이동
                 circleCount++;
                 //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentRightCol]}'), 위치 ({x:F1}, {y:F1})");
             }
@@ -272,15 +277,22 @@ public class PatternGenerator : MonoBehaviour
         //Debug.Log($"[오른쪽] 총 {circleCount}개 원 생성 완료");
     }
     
-    void CreateCircle(Vector3 position, Vector3Int direction)
+    void CreateCircle(Vector3 position, Vector3Int direction, int id)
     {
+        id = id - '0';
         if (circlePrefab != null)
         {
             GameObject circle = Instantiate(circlePrefab, position, Quaternion.identity);
             circle.transform.SetParent(transform);
             Monster _monster = circle.GetComponent<Monster>();
             if (_monster != null)
-                _monster.SetMonsterData(direction,1,GameManager.instance.currentLevelData.createAndMoveCountBeat,11);
+            {
+                _monster.SetMonsterData(direction, id, GameManager.instance.currentLevelData.createAndMoveCountBeat,11);
+                if (isFirstMove == false && FirstMonsterMoveForce)
+                {
+                    _monster.MoveForce(); // 첫 번째 턴 몬스터 강제이동
+                }
+            }
             TestManager.Instance.Monsters.Add(_monster);
         }
     }

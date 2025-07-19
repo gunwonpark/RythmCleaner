@@ -5,15 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Merge.unity
+    guid: 4bba73cbc4e5ee545b62f46ac3a4e4d5
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 97d4705abb1629a488b440081016b7e8
   - enabled: 0
     path: Assets/Scenes/Node.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
     path: Assets/Scenes/Loading Scene/Loading Scene 1.unity
     guid: bf7ed5868241d2649b055f08218f8313
-  - enabled: 1
-    path: Assets/Scenes/Merge.unity
-    guid: 4bba73cbc4e5ee545b62f46ac3a4e4d5
   - enabled: 0
     path: Assets/Scenes/PlayerTestScene.unity
     guid: aa12e417ba0ce27459947b59280b4690

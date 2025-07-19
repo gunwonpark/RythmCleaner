@@ -24,6 +24,7 @@ public class TestManager : MonoBehaviour
    
     public void OnMonsterDie()
     {
+        GameManager.instance.KillDustCount++;
         player.AddTail();
     }
 }

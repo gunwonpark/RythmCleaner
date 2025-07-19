@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
 
     private int hp = 1;
 
+    public bool IsDead = false;
     [Header("변하는 몬스터 데이터")]
     public int HP
     {
@@ -21,8 +22,15 @@ public class Monster : MonoBehaviour
             hp = value;
             if (hp <= 0)
             {
+                if (IsDead) return; // 이미 죽은 몬스터는 다시 죽지 않도록
+                IsDead = true;
+                Collider.enabled = false; // 몬스터가 죽으면 Collider 비활성화
                 TestManager.Instance.OnMonsterDie();
-                Destroy(gameObject); // 몬스터가 죽으면 오브젝트 제거
+                SpriteRenderer.DOFade(0, 0.5f).SetEase(Ease.Linear)
+                    .OnComplete(() =>
+                    {
+                        Destroy(gameObject);
+                    });
             }
         }
     }
@@ -42,11 +50,17 @@ public class Monster : MonoBehaviour
     public int LimitMoveDistance;
     public float minScale = 0.3f; // 최소 크기
 
+    public Collider2D Collider;
 
     public bool IsMoveOnce = false; // 한번 움직였는지 체크하는 변수
     private void Awake()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        Collider = GetComponent<Collider2D>();
+        Collider.enabled = false;
+        Color color = SpriteRenderer.color;
+        color.a = 0.5f; // 초기 투명도 설정
+        SpriteRenderer.color = color; // 초기 투명도 적용
     }
 
     // 처음 세팅해 줄때 왼쪽에서 생성된 오브젝트면 moveDirection을 오른쪽으로 해주면 된다
@@ -57,7 +71,29 @@ public class Monster : MonoBehaviour
         Data = TestManager.Instance.MonsterDatas.GetMonsterData(id);
         PerMoveInterval = perMoveInterval;
         LimitMoveDistance = gridSize;
-        SpriteRenderer.sprite = Data.Sprite;
+        try
+        {
+            SpriteRenderer.sprite = Data.Sprite;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"몬스터 스프라이트 설정 실패: {id}");
+            // 기본 스프라이트로 설정하거나 다른 처리를 할 수 있습니다.
+            SpriteRenderer.sprite = null; // 또는 기본 스프라이트로 설정
+        }
+    }
+
+    public void MoveForce()
+    {
+        IsMoveOnce = true; // 한번 움직였다고 설정
+        this.transform.localScale = Vector3.one;// 원래크기로 두기
+        SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 1f); // 투명도 1로 설정
+        transform.DOJump(transform.position + MoveDirection, JumpHeight, 1, 0.15f)
+            .SetEase(MoveEase)
+            .OnComplete(() =>
+            {
+                IsMoving = false; // 이동 완료 후 IsMoving 상태 해제
+            });
     }
 
     public void Move(float moveDelay)
@@ -107,6 +143,14 @@ public class Monster : MonoBehaviour
         }
 
         IsMoving = true;
+
+        if(Collider.enabled == false)
+        {
+            Collider.enabled = true; // 이동 시작 시 Collider 활성화
+            Color color = SpriteRenderer.color;
+            color.a = 1f; // 이동 시작 시 투명도 1로 설정
+            SpriteRenderer.color = color; // 투명도 적용
+        }
 
         Vector3 targetPosition = transform.position + MoveDirection;
         

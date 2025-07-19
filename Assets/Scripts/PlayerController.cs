@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         int bulletCount = followers.Count;
 
-        if (bulletCount <= 0 && IsTestMode == false)
+        if (bulletCount <= 0 && !IsTestMode)
         {
             return;
         }
@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
             bulletCount = TestBulletCount;
         }
 
-        // 꼬리가 1개일때는 그냥 한발만 발사
         if (bulletCount == 1)
         {
             float angle = Mathf.Atan2(AttackDirection.y, AttackDirection.x) * Mathf.Rad2Deg;
@@ -131,22 +130,22 @@ public class PlayerController : MonoBehaviour
         }
 
         float centerAngle = Mathf.Atan2(AttackDirection.y, AttackDirection.x) * Mathf.Rad2Deg;
-        float totalSpreadAngle = (bulletCount - 1) * spreadAngle;
-        float startAngle = centerAngle - totalSpreadAngle / 2f;
+        Quaternion centerRotation = Quaternion.Euler(0, 0, centerAngle - 90f);
+        Bullet centerBullet = Instantiate(AttackBullet, AttackPoint.position, centerRotation);
+        centerBullet.Shoot(AttackDirection);
 
-        // 꼬리 개수만큼 총알 발사
-        for (int i = 0; i < bulletCount; i++)
+        int remainingBullets = bulletCount - 1;
+        float spreadRange = 30f; // 좌우 30도씩, 총 60도 범위
+
+        for (int i = 0; i < remainingBullets; i++)
         {
-            // 현재 총알의 발사 각도 계산
-            float currentAngle = startAngle + i * spreadAngle;
-            Quaternion rotation = Quaternion.Euler(0, 0, currentAngle - 90f);
+            float randomAngle = Random.Range(centerAngle - spreadRange, centerAngle + spreadRange);
 
-            // 총알 생성
+            Quaternion rotation = Quaternion.Euler(0, 0, randomAngle - 90f);
+            float randomAngleRad = randomAngle * Mathf.Deg2Rad;
+            Vector2 bulletDirection = new Vector2(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad));
+
             Bullet bullet = Instantiate(AttackBullet, AttackPoint.position, rotation);
-
-            // 해당 각도로 발사
-            float currentAngleRad = currentAngle * Mathf.Deg2Rad;
-            Vector2 bulletDirection = new Vector2(Mathf.Cos(currentAngleRad), Mathf.Sin(currentAngleRad));
             bullet.Shoot(bulletDirection);
         }
     }

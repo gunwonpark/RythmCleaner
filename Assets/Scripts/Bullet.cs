@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("총알 속도")]
-    public float speed = 15f;
+    public float speed = 20f;
     public string monsterTag = "Monster"; // 충돌을 감지할 대상의 태그
 
     public Rigidbody2D rb;
