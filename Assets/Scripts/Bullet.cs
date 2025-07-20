@@ -42,5 +42,12 @@ public class Bullet : MonoBehaviour
 
             Destroy(gameObject); // 충돌 시 총알 제거
         }
+        else if(other.CompareTag("Wall"))
+        {
+            Debug.Log("벽과 충돌!");
+            Instantiate(DamageEffect, transform.position, Quaternion.identity); // 데미지 이펙트 생성
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Water_Crashed);
+            Destroy(gameObject); // 벽과 충돌 시 총알 제거
+        }
     }
 }
