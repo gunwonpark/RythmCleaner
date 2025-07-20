@@ -39,6 +39,7 @@ public class InputManager : MonoBehaviour
                 Vector2 direction  = (mousePosition - TestManager.Instance.player.transform.position).normalized;
                 TestManager.Instance.player.AttackDirection = direction;
                 TestManager.Instance.player.Attack(TestManager.Instance.player.AttackDelay, direction);
+                // AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash, 0.5f);
             }
             else
             {

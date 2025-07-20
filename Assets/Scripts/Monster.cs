@@ -83,18 +83,6 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void MoveForce()
-    {
-        IsMoveOnce = true; // 한번 움직였다고 설정
-        this.transform.localScale = Vector3.one;// 원래크기로 두기
-        SpriteRenderer.color = new Color(SpriteRenderer.color.r, SpriteRenderer.color.g, SpriteRenderer.color.b, 1f); // 투명도 1로 설정
-        transform.DOJump(transform.position + MoveDirection, JumpHeight, 1, 0.15f)
-            .SetEase(MoveEase)
-            .OnComplete(() =>
-            {
-                IsMoving = false; // 이동 완료 후 IsMoving 상태 해제
-            });
-    }
 
     public void Move(float moveDelay)
     {

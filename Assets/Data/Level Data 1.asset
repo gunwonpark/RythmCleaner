@@ -14,11 +14,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   audioClip: {fileID: 8300000, guid: d09f4af461d638042a1fe32db6543e0a, type: 3}
-  soundBeat: 90.5
+  soundBeat: 90.35
   createAndMoveCountBeat: 8
   nodeSpeed: 6.8
   mapSprite: {fileID: -7243958306871752742, guid: 07cb5c7ced0b8a348aa4de903a07ce67, type: 3}
   stringData:
+  - upData: 00000100000
+    downData: 00000100000
+    leftData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      1
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      1
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
   - upData: 00011121000
     downData: 00031111000
     leftData: '0
@@ -151,11 +195,55 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 01111141120
-    downData: 01112411110
+  - upData: 00000000000
+    downData: 00000000000
     leftData: '0
 
-      3
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+    rightData: '0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0
+
+      0'
+  - upData: 00111141100
+    downData: 00112411100
+    leftData: '0
+
+      0
 
       1
 
@@ -171,12 +259,12 @@ MonoBehaviour:
 
       1
 
-      1
+      0
 
       0'
     rightData: '0
 
-      1
+      0
 
       2
 
@@ -192,7 +280,7 @@ MonoBehaviour:
 
       1
 
-      1
+      0
 
       0'
   - upData: 00000000000
@@ -371,75 +459,31 @@ MonoBehaviour:
       0
 
       0'
-  - upData: 00000000000
-    downData: 00000000000
+  - upData: 03214112310
+    downData: 04311124320
     leftData: '0
 
-      0
+      3
 
-      0
+      4
 
-      0
+      2
 
-      0
+      1
 
-      0
+      1
 
-      0
+      3
 
-      0
+      1
 
-      0
+      4
 
-      0
+      2
 
       0'
     rightData: '0
 
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0'
-  - upData: 13214112314
-    downData: 24311124321
-    leftData: '1
-
-      3
-
-      4
-
-      2
-
-      1
-
-      1
-
-      3
-
-      1
-
-      4
-
-      2
-
-      1'
-    rightData: '2
-
       1
 
       1
@@ -457,49 +501,5 @@ MonoBehaviour:
       2
 
       1
-
-      2'
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: '0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0'
-    rightData: '0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
-
-      0
 
       0'

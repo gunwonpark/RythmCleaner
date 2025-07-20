@@ -1932,7 +1932,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 145591c986cd60c47b2e8242415882bf, type: 3}
   - {fileID: 8300000, guid: a1b0c3f9a80d8624d917ade7fa70cda7, type: 3}
   - {fileID: 8300000, guid: 83407a28066fc5b4b893553ab67218ab, type: 3}
-  sfxVolume: 0.5
+  sfxVolume: 1
   channelNumber: 10
 --- !u!1 &1149519117
 GameObject:

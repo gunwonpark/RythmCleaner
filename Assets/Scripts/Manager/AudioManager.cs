@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
     
     [Header("----- SFX ------")]
     public  AudioClip[]   sfxClips;           
-    public  float         sfxVolume;          
+    //public  float         sfxVolume;          
     public  int           channelNumber;        // 최대 효과음이 몇개까지 동시에 나게 할 것인지
     private AudioSource[] sfxPlayers;           // 채널 수 만큼, 만들어짐
     private int           currentChannelNumber; // 현재, 사용한 채널값
@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[index] = sfxObject.AddComponent<AudioSource>();
             sfxPlayers[index].playOnAwake           = false;
             sfxPlayers[index].bypassListenerEffects = true;      // 해당 상태가 true이면, AudioHighPassFilter의 영향을 받지 않음.
-            sfxPlayers[index].volume                = sfxVolume;
+            //sfxPlayers[index].volume                = sfxVolume;
         }
     }
     
@@ -62,7 +62,7 @@ public class AudioManager : MonoBehaviour
             bgmPlayer.Stop();
     }
 
-    public void PlaySfx(Sfx sfx)
+    public void PlaySfx(Sfx sfx, float volume)
     {
         // sfxPlayers.Length는 channels 숫자와 같음
         for (int index = 0; index < sfxPlayers.Length; index++) 
@@ -77,6 +77,7 @@ public class AudioManager : MonoBehaviour
             currentChannelNumber = loopIndex;                // currentChannelNumber 갱신
             sfxPlayers[loopIndex].clip = sfxClips[(int)sfx]; // 클립 변경
             sfxPlayers[loopIndex].Play();                    // 재생
+            sfxPlayers[index].volume = volume;               // 커스텀 볼륨
             break;
         }
     }

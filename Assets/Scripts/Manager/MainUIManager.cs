@@ -27,7 +27,7 @@ public class MainUIManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {   
-        AudioManager.instance.PlaySfx(0);
+        AudioManager.instance.PlaySfx(0, 0.5f);
         
         titleCanvas.gameObject.SetActive(true);
         levelSelectCanvas.gameObject.SetActive(false);

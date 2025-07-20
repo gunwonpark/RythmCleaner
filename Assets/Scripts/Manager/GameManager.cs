@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitAndGo()
     {
         midText.transform.DOScale(1, 1f).SetEase(Ease.OutBounce);
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.RoundNumber);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.RoundNumber, 0.5f);
         yield return new WaitForSeconds(2f);
         midText.text = "START!";
         midText.DOFade(0, 1f).SetEase(Ease.Linear);
@@ -152,24 +152,15 @@ public class GameManager : MonoBehaviour
     {
         // 🚀 최적화: null 체크와 역순 순회로 안전하게 처리
         var monsters = TestManager.Instance.Monsters;
-        bool isMove = false;
         for (int i = monsters.Count - 1; i >= 0; i--)
         {
             if (monsters[i] != null)
             {
-                isMove = true;
-                if(IsFirstSpawned == false)
-                {
-                    monsters[i].MoveForce();
-                }
                 monsters[i].Move(0.15f);
             }
             else
                 monsters.RemoveAt(i); // null 참조 제거
         }
-
-        if (isMove)
-            IsFirstSpawned = true;
     }
     
     // 좌우 노드 체크(=> 비트 관리)
@@ -216,7 +207,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over, 0.5f);
         isGameOver = true;
         
         // 🚀 사운드 정지 최적화
@@ -286,7 +277,7 @@ public class GameManager : MonoBehaviour
             SaveManager.instance.TotalScore = (int)(360f + SaveManager.instance.Round1RemainTime + SaveManager.instance.Round2RemainTime + 
                 SaveManager.instance.Round3RemainTime) * 100;
             
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Clear);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Clear, 0.5f);
         }
 
         SaveManager.instance.TotalClearRound = CurrentRound; // 현재 라운드 저장
