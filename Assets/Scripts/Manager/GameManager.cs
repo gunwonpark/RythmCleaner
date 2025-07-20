@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
 
     public UI_GameEnd EndUI; // 게임 종료 UI
 
+    public SpriteRenderer mapSprite;
+
     private void Awake()
     {
         instance = this;
@@ -63,6 +65,8 @@ public class GameManager : MonoBehaviour
         currentLevelData = levelDataList[PlayerPrefs.GetInt("Level") - 1];
         audioSource.clip = currentLevelData.audioClip;          // 음악 변경
         beatCounter = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
+
+        mapSprite.sprite = currentLevelData.mapSprite; // 맵 스프라이트 설정
     }
 
     private IEnumerator Start()
