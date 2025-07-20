@@ -66,7 +66,7 @@ public class LoadingSceneManager  : MonoBehaviour
         while (!op.isDone)  // 불러오기가 완료되지 않았으면, 계속 진행
         {
             yield return null;
-            if (op.progress < 0.9f) // 0.9이하면 op.progress만큼 표시
+            if (op.progress < 0.8f) // 0.9이하면 op.progress만큼 표시
             {
                 progressBar.fillAmount = op.progress;
             }

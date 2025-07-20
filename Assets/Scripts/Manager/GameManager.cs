@@ -142,17 +142,30 @@ public class GameManager : MonoBehaviour
         TestManager.Instance.player.Move(TestManager.Instance.player.moveDirection, TestManager.Instance.player.MoveDelay);
     }
 
+    private bool IsFirstSpawned = false;
+
     private void EnemyBeatMove()
     {
         // 🚀 최적화: null 체크와 역순 순회로 안전하게 처리
         var monsters = TestManager.Instance.Monsters;
+        bool isMove = false;
         for (int i = monsters.Count - 1; i >= 0; i--)
         {
             if (monsters[i] != null)
+            {
+                isMove = true;
+                if(IsFirstSpawned == false)
+                {
+                    monsters[i].MoveForce();
+                }
                 monsters[i].Move(0.15f);
+            }
             else
                 monsters.RemoveAt(i); // null 참조 제거
         }
+
+        if (isMove)
+            IsFirstSpawned = true;
     }
     
     // 좌우 노드 체크(=> 비트 관리)

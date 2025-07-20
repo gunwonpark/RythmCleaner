@@ -3072,6 +3072,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3536,6 +3548,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2921595062378236947, guid: 7763ddfca13c5834cb70749937bd2716, type: 3}
     - target: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
       propertyPath: m_SortingLayer
       value: 4
@@ -4928,7 +4944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e72ef1147c15d49afe67ed4d918bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitRange: 0.5
+  hitRange: 1.5
   failRange: 0.2
   successNodePrefab: {fileID: 1036164398}
   targetZone: {fileID: 1307860644}

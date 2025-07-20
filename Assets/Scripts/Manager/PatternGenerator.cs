@@ -11,10 +11,6 @@ public class PatternGenerator : MonoBehaviour
     [Header("간격 설정")]
     public float distanceFromCenter = 10f;  // 중심에서 거리
 
-    [Header("특수 로직")]
-    public bool FirstMonsterMoveForce = true;
-    private bool isFirstMove = false; // 첫 번째 몬스터 이동 여부
-
     // 각 방향별 현재 인덱스
     private int currentUpRow;           // 위: 행 인덱스 (마지막→0으로 감소)
     private int currentDownRow = 0;     // 아래: 행 인덱스 (0→마지막으로 증가)
@@ -110,7 +106,7 @@ public class PatternGenerator : MonoBehaviour
         currentLeftCol++;   // 왼쪽: 증가 (0→마지막)
         currentRightCol--;  // 오른쪽: 감소 (마지막→0)
 
-        isFirstMove = true; // 첫 번째 이동 완료
+   
         // Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
 
         // 현재 패턴이 모두 끝났는지 확인
@@ -288,10 +284,6 @@ public class PatternGenerator : MonoBehaviour
             if (_monster != null)
             {
                 _monster.SetMonsterData(direction, id, GameManager.instance.currentLevelData.createAndMoveCountBeat,11);
-                if (isFirstMove == false && FirstMonsterMoveForce)
-                {
-                    _monster.MoveForce(); // 첫 번째 턴 몬스터 강제이동
-                }
             }
             TestManager.Instance.Monsters.Add(_monster);
         }
