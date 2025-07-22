@@ -25,7 +25,7 @@ public class Monster : MonoBehaviour
                 if (IsDead) return; // 이미 죽은 몬스터는 다시 죽지 않도록
                 IsDead = true;
                 Collider.enabled = false; // 몬스터가 죽으면 Collider 비활성화
-                TestManager.Instance.OnMonsterDie();
+                OnMonsterDie();
                 SpriteRenderer.DOFade(0, 0.5f).SetEase(Ease.Linear)
                     .OnComplete(() =>
                     {
@@ -68,7 +68,7 @@ public class Monster : MonoBehaviour
     public void SetMonsterData(Vector3Int moveDirection, int id, int perMoveInterval, int gridSize)
     {
         MoveDirection = moveDirection * MoveDistance;
-        Data = TestManager.Instance.MonsterDatas.GetMonsterData(id);
+        Data = GameManager.instance.monsterData.GetMonsterData(id);
         PerMoveInterval = perMoveInterval;
         LimitMoveDistance = gridSize;
         try
@@ -82,8 +82,7 @@ public class Monster : MonoBehaviour
             SpriteRenderer.sprite = null; // 또는 기본 스프라이트로 설정
         }
     }
-
-
+    
     public void Move(float moveDelay)
     {
         // 🚀 최적화: 불필요한 에러 로그 제거 (성능 향상)
@@ -153,5 +152,11 @@ public class Monster : MonoBehaviour
     public void TakeDamage(int damage)
     {
         HP -= damage;
+    }
+    
+    public void OnMonsterDie()
+    {
+        GameManager.instance.KillDustCount++;
+        PlayerController.instance.AddTail();
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -22,22 +23,27 @@ public class GameManager : MonoBehaviour
     public bool rightNodeDestory = false;   // 좌우 노드 다 삭제되야, 비트 증가
 
     [Header("커서 관리")]
-    public Texture2D AttackCursurTexture;
+    public Texture2D attackCursorTexture;
+    
+    [Header("몬스터 관리")]
+    public MonsterDatas  monsterData;
+    public List<Monster> monsters = new List<Monster>();
 
     [Header("UI References")]
     public TextMeshProUGUI RoundText;
     public TextMeshProUGUI remainTimeText;
     public TextMeshProUGUI midText;
-    public Slider remainTimeSlider;
-    public Slider tailSlider;
+    public Slider          remainTimeSlider;
+    public Slider          tailSlider;
     
     [Header("현재 게임 정보")]
-    public float EnableTime = 60f; // 라운드당 가능한 시간
-    private float remainTIme; // 현재 남아있는 시간
+    public  float EnableTime = 60f; // 라운드당 가능한 시간
+    private float remainTIme;       // 현재 남아있는 시간
 
     [Header("사운드 시작 관리")]
-    public bool isSountStart = false;
+    public bool        isSoundStart = false;
     public AudioSource audioSource;
+    
     public float RemainTime
     {
         get { return remainTIme; }
@@ -101,7 +107,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // 사운드가 시작될 때, 시간도 같이 체크
-        if (!isSountStart)
+        if (!isSoundStart)
             return;
 
         if(isGameOver)
@@ -143,7 +149,7 @@ public class GameManager : MonoBehaviour
 
     private void PlayerBeatMove()
     {
-        TestManager.Instance.player.Move(TestManager.Instance.player.moveDirection, TestManager.Instance.player.MoveDelay);
+        PlayerController.instance.Move(PlayerController.instance.moveDirection, PlayerController.instance.MoveDelay);
     }
 
     private bool IsFirstSpawned = false;
@@ -151,7 +157,7 @@ public class GameManager : MonoBehaviour
     private void EnemyBeatMove()
     {
         // 🚀 최적화: null 체크와 역순 순회로 안전하게 처리
-        var monsters = TestManager.Instance.Monsters;
+        var monsters = GameManager.instance.monsters;
         for (int i = monsters.Count - 1; i >= 0; i--)
         {
             if (monsters[i] != null)
@@ -180,9 +186,9 @@ public class GameManager : MonoBehaviour
         if (rightNodeDestory && leftNodeDestory)
         {
             //🚀 사운드 시작 최적화 (중복 호출 방지)
-            if (!isSountStart && audioSource != null && !audioSource.isPlaying)
+            if (!isSoundStart && audioSource != null && !audioSource.isPlaying)
             {
-                isSountStart = true;
+                isSoundStart = true;
                 Debug.Log("🎵 사운드 시작!");
                 audioSource.Play();
             }
@@ -319,8 +325,8 @@ public class GameManager : MonoBehaviour
     #region 커서 변경 함수
     public void SetAttackCursor()
     {
-        Vector2 centerHotspot = new Vector2(AttackCursurTexture.width / 2f, AttackCursurTexture.height / 2f);
-        Cursor.SetCursor(AttackCursurTexture, centerHotspot, CursorMode.ForceSoftware);
+        Vector2 centerHotspot = new Vector2(attackCursorTexture.width / 2f, attackCursorTexture.height / 2f);
+        Cursor.SetCursor(attackCursorTexture, centerHotspot, CursorMode.ForceSoftware);
     }
 
     public void ResetCursor()

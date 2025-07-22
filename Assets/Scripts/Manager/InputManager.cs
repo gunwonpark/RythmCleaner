@@ -36,10 +36,9 @@ public class InputManager : MonoBehaviour
             {
                 // 성공: 마우스 방향으로 공격 실행
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction  = (mousePosition - TestManager.Instance.player.transform.position).normalized;
-                TestManager.Instance.player.AttackDirection = direction;
-                TestManager.Instance.player.Attack(TestManager.Instance.player.AttackDelay, direction);
-                // AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash, 0.5f);
+                Vector2 direction  = (mousePosition - PlayerController.instance.transform.position).normalized;
+                PlayerController.instance.AttackDirection = direction;
+                PlayerController.instance.Attack(PlayerController.instance.AttackDelay, direction);
             }
             else
             {
@@ -78,16 +77,6 @@ public class InputManager : MonoBehaviour
             // 키를 누르면, CheckHit를 하는데, CheckHit에서 노드가 삭제되기 전에 방향을 먼저 바꿔줘야
             // moveDirection이 먼저 바뀌어야, 알맞게 이동 비트에 맞춰서 이동함
             NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed, playerMoveDirection);
-            // bool hitSuccess = NodeSpawnManager.Instance.CheckHit(NoteType.RightNote, keyPressed);
-            //
-            // if (hitSuccess)
-            // {
-            //     TestManager.Instance.player.moveDirection = moveDirection;
-            // }
-            // else
-            // {
-            //     // 실패
-            // }
         }
     }
 }

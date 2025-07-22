@@ -285,7 +285,7 @@ public class PatternGenerator : MonoBehaviour
             {
                 _monster.SetMonsterData(direction, id, GameManager.instance.currentLevelData.createAndMoveCountBeat,11);
             }
-            TestManager.Instance.Monsters.Add(_monster);
+            GameManager.instance.monsters.Add(_monster);
         }
     }
     

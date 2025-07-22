@@ -105,7 +105,7 @@ public class NodeSpawnManager : MonoBehaviour
                 
                 // 이동 무브는 파괴 전 먼저 방향 바꿔줘야 함!
                 if(inputType == NoteType.RightNote)
-                    TestManager.Instance.player.moveDirection = playerMoveDirection;
+                    PlayerController.instance.moveDirection = playerMoveDirection;
                 
                 GameManager.instance.CurrnetNodeDestoryCheck(inputType);
                 
@@ -113,7 +113,7 @@ public class NodeSpawnManager : MonoBehaviour
                 targetNotes.RemoveAt(i);
                 Destroy(noteScript.gameObject);
                 hit = true;
-                Debug.Log("입력 성공");
+                //Debug.Log("입력 성공");
                 break;
             }
             // 실패 시 이펙트 호출
@@ -126,7 +126,7 @@ public class NodeSpawnManager : MonoBehaviour
                 // 리스트에서 제거 후 오브젝트 삭제
                 targetNotes.RemoveAt(i);
                 Destroy(noteScript.gameObject);
-                Debug.Log("입력 실패");
+                //Debug.Log("입력 실패");
                 return false;
             }
         }

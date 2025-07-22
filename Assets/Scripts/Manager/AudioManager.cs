@@ -17,7 +17,6 @@ public class AudioManager : MonoBehaviour
     
     [Header("----- SFX ------")]
     public  AudioClip[]   sfxClips;           
-    //public  float         sfxVolume;          
     public  int           channelNumber;        // 최대 효과음이 몇개까지 동시에 나게 할 것인지
     private AudioSource[] sfxPlayers;           // 채널 수 만큼, 만들어짐
     private int           currentChannelNumber; // 현재, 사용한 채널값

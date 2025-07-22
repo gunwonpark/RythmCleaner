@@ -22,11 +22,8 @@ public class LoadingSceneManager  : MonoBehaviour
         }
     }
     
-    [SerializeField] 
-    private CanvasGroup canvasGroup;
-
-    [SerializeField] 
-    private Image progressBar;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Image       progressBar;
 
     private string loadSceneName;
 

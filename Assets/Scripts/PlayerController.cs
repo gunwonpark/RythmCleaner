@@ -1,10 +1,14 @@
 using DG.Tweening;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [Header("Test Mode일경우")]
     public bool IsTestMode = false;
     public bool UseTestBullet = false; // 테스트 모드일때 꼬리개수만큼 총알을 발사할지 테스트 총알개수를 발사할지
@@ -35,6 +39,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("플레이어 애니메이션")]
     public Animator Animator;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Update()
     {
         LookAtMousePointer();

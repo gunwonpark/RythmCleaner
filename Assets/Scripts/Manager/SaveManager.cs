@@ -59,7 +59,7 @@ public class SaveManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Level", selectLevel);
         Debug.Log("저장한 값은 =>" + PlayerPrefs.GetInt("Level"));
-        LoadingSceneManager.Instance.LoadScene("Merge");
+        LoadingSceneManager.Instance.LoadScene("Game");
     }
 
     public void SaveScores()
