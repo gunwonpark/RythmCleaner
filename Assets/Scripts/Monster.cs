@@ -77,7 +77,7 @@ public class Monster : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"몬스터 스프라이트 설정 실패: {id}");
+            Debug.LogError($"몬스터 스프라이트 설정 실패: {id}" + e);
             // 기본 스프라이트로 설정하거나 다른 처리를 할 수 있습니다.
             SpriteRenderer.sprite = null; // 또는 기본 스프라이트로 설정
         }

@@ -1,21 +1,22 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PatternGenerator : MonoBehaviour
 {
     public static PatternGenerator instance;
     
     [Header("설정")]
-    public GameObject circlePrefab;
+    public GameObject dustPrefab;
     public Transform  centerPoint;
     
     [Header("간격 설정")]
     public float distanceFromCenter = 10f;  // 중심에서 거리
 
     // 각 방향별 현재 인덱스
-    private int currentUpRow;           // 위: 행 인덱스 (마지막→0으로 감소)
-    private int currentDownRow = 0;     // 아래: 행 인덱스 (0→마지막으로 증가)
-    private int currentLeftCol = 0;     // 왼쪽: 열 인덱스 (0→마지막으로 증가)
-    private int currentRightCol;        // 오른쪽: 열 인덱스 (마지막→0으로 감소)
+    private int currentUpRow;           // 위     : 행 인덱스 (마지막→0으로 감소)
+    private int currentDownRow = 0;     // 아래   : 행 인덱스 (0→마지막으로 증가)
+    private int currentLeftCol = 0;     // 왼쪽   : 열 인덱스 (0→마지막으로 증가)
+    private int currentRightCol;        // 오른쪽 : 열 인덱스 (마지막→0으로 감소)
     
     // StringData 인덱스 관리
     private int currentStringDataIndex = 0; // 현재 사용 중인 StringData 인덱스
@@ -25,7 +26,8 @@ public class PatternGenerator : MonoBehaviour
     private string[] downLines;
     private string[] leftLines;
     private string[] rightLines;
-    private int maxLeftCols = 0;
+    
+    private int maxLeftCols  = 0;
     private int maxRightCols = 0;
 
     private void Awake()
@@ -41,7 +43,8 @@ public class PatternGenerator : MonoBehaviour
     
     void InitializePatterns()
     {
-        if (GameManager.instance.currentLevelData == null || GameManager.instance.currentLevelData.stringData.Count == 0) return;
+        if (GameManager.instance.currentLevelData == null || GameManager.instance.currentLevelData.stringData.Count == 0) 
+            return;
         
         LoadCurrentStringData();
     }
@@ -77,12 +80,10 @@ public class PatternGenerator : MonoBehaviour
         }
         
         // 시작 인덱스 설정
-        currentUpRow    = upLines.Length - 1;   // 위: 마지막 행부터 시작
-        currentDownRow  = 0;                    // 아래: 첫 번째 행부터 시작
-        currentLeftCol  = 0;                    // 왼쪽: 첫 번째 열부터 시작
-        currentRightCol = maxRightCols - 1;     // 오른쪽: 마지막 열부터 시작
-        
-        // Debug.Log($"패턴 로드 완료 - Up:{upLines.Length}행, Down:{downLines.Length}행, Left:{maxLeftCols}열, Right:{maxRightCols}열");
+        currentUpRow    = upLines.Length - 1;   // 위     : 마지막 행부터 시작
+        currentDownRow  = 0;                    // 아래   : 첫 번째 행부터 시작
+        currentLeftCol  = 0;                    // 왼쪽   : 첫 번째 열부터 시작
+        currentRightCol = maxRightCols - 1;     // 오른쪽 : 마지막 열부터 시작
     }
     
     // 비트 관리에서 실행
@@ -90,10 +91,6 @@ public class PatternGenerator : MonoBehaviour
     public void GenerateNextPattern()
     {
         Vector3 center = centerPoint ? centerPoint.position : transform.position;
-        
-        // Debug.Log($"=== Beat {levelData.createAndMoveCountBeat} 도달! 패턴 생성 ===");
-        // Debug.Log($"현재 인덱스 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
-        
         // 각 방향별로 현재 줄/열 생성
         GenerateUpLine(center);      // 위: 행 우선
         GenerateDownLine(center);    // 아래: 행 우선
@@ -101,14 +98,11 @@ public class PatternGenerator : MonoBehaviour
         GenerateRightColumn(center); // 오른쪽: 열 우선 (세로)
         
         // 다음 줄/열로 이동 (각 방향별로 다르게)
-        currentUpRow--;     // 위: 감소 (마지막→0)
-        currentDownRow++;   // 아래: 증가 (0→마지막)
-        currentLeftCol++;   // 왼쪽: 증가 (0→마지막)
-        currentRightCol--;  // 오른쪽: 감소 (마지막→0)
-
-   
-        // Debug.Log($"다음 인덱스로 이동 - Up:{currentUpRow}, Down:{currentDownRow}, Left:{currentLeftCol}, Right:{currentRightCol}");
-
+        currentUpRow--;     // 위     : 감소 (마지막→0)
+        currentDownRow++;   // 아래   : 증가 (0→마지막)
+        currentLeftCol++;   // 왼쪽   : 증가 (0→마지막)
+        currentRightCol--;  // 오른쪽 : 감소 (마지막→0)
+        
         // 현재 패턴이 모두 끝났는지 확인
         if (IsCurrentPatternFinished())
         {
@@ -125,29 +119,20 @@ public class PatternGenerator : MonoBehaviour
         
         bool allFinished = upFinished && downFinished && leftFinished && rightFinished;
         
-        if (allFinished)
-        {
-            // Debug.Log($"✅ 현재 StringData [{currentStringDataIndex}] 패턴 완료!");
-            // Debug.Log($"   - Up: {upFinished}, Down: {downFinished}, Left: {leftFinished}, Right: {rightFinished}");
-        }
-        
         return allFinished;
     }
     
     void MoveToNextStringData()
     {
         currentStringDataIndex++;
-       // Debug.Log($"🔄 다음 StringData [{currentStringDataIndex}]로 이동 시도...");
         
         if (currentStringDataIndex >= GameManager.instance.currentLevelData.stringData.Count)
         {
-            //Debug.Log("🏁 모든 StringData 패턴이 종료되었습니다!");
             CancelInvoke("GenerateNextPattern");
         }
         else
         {
             LoadCurrentStringData();
-            // Debug.Log($"🆕 StringData [{currentStringDataIndex}] 시작!");
         }
     }
     
@@ -155,18 +140,15 @@ public class PatternGenerator : MonoBehaviour
     {
         if (upLines == null || currentUpRow < 0 || currentUpRow >= upLines.Length) 
         {
-            // Debug.Log($"[위쪽] 생성 중단 - currentUpRow: {currentUpRow}, 총 행 수: {(upLines != null ? upLines.Length : 0)}");
             return;
         }
         
         string line = upLines[currentUpRow].Trim();
         if (string.IsNullOrEmpty(line)) 
         {
-            //Debug.Log($"[위쪽] 빈 줄 - Row {currentUpRow}");
             return;
         }
         
-        //Debug.Log($"[위쪽] Row {currentUpRow} 생성 - 패턴: '{line}'");
         int circleCount = 0;
         
         for (int col = 0; col < line.Length; col++)
@@ -176,19 +158,16 @@ public class PatternGenerator : MonoBehaviour
                 float x = center.x + (col - (line.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 float y = center.y + distanceFromCenter;
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.down, line[col]);    // 위쪽은 아래로 이동
+                CreateDust(pos, Vector3Int.down, line[col]); // 위쪽은 아래로 이동
                 circleCount++;
-                //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
         }
-        //Debug.Log($"[위쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateDownLine(Vector3 center)
     {
         if (downLines == null || currentDownRow < 0 || currentDownRow >= downLines.Length) 
         {
-            //Debug.Log($"[아래쪽] 생성 중단 - currentDownRow: {currentDownRow}, 총 행 수: {(downLines != null ? downLines.Length : 0)}");
             return;
         }
         
@@ -199,7 +178,6 @@ public class PatternGenerator : MonoBehaviour
             return;
         }
         
-        //Debug.Log($"[아래쪽] Row {currentDownRow} 생성 - 패턴: '{line}'");
         int circleCount = 0;
         
         for (int col = 0; col < line.Length; col++)
@@ -209,23 +187,19 @@ public class PatternGenerator : MonoBehaviour
                 float x = center.x + (col - (line.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 float y = center.y - distanceFromCenter;
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.up, line[col]); // 아래는 위로 이동
+                CreateDust(pos, Vector3Int.up, line[col]); // 아래는 위로 이동
                 circleCount++;
-                //Debug.Log($"  → 원 생성: Col {col}, 위치 ({x:F1}, {y:F1})");
             }
         }
-        //Debug.Log($"[아래쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateLeftColumn(Vector3 center)
     {
         if (leftLines == null || currentLeftCol < 0 || currentLeftCol >= maxLeftCols) 
         {
-            //Debug.Log($"[왼쪽] 생성 중단 - currentLeftCol: {currentLeftCol}, 최대 열 수: {maxLeftCols}");
             return;
         }
         
-        //Debug.Log($"[왼쪽] Col {currentLeftCol} 생성 시작");
         int circleCount = 0;
         
         // 현재 열(currentLeftCol)에 해당하는 모든 행을 세로로 처리
@@ -237,23 +211,19 @@ public class PatternGenerator : MonoBehaviour
                 float x = center.x - distanceFromCenter;
                 float y = center.y + (row - (leftLines.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.right, line[currentLeftCol]); // 왼쪽은 오른쪽으로 이동
+                CreateDust(pos, Vector3Int.right, line[currentLeftCol]); // 왼쪽은 오른쪽으로 이동
                 circleCount++;
-                //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentLeftCol]}'), 위치 ({x:F1}, {y:F1})");
             }
         }
-        //Debug.Log($"[왼쪽] 총 {circleCount}개 원 생성 완료");
     }
     
     void GenerateRightColumn(Vector3 center)
     {
         if (rightLines == null || currentRightCol < 0 || currentRightCol >= maxRightCols) 
         {
-            //Debug.Log($"[오른쪽] 생성 중단 - currentRightCol: {currentRightCol}, 최대 열 수: {maxRightCols}");
             return;
         }
         
-        //Debug.Log($"[오른쪽] Col {currentRightCol} 생성 시작");
         int circleCount = 0;
         
         // 현재 열(currentRightCol)에 해당하는 모든 행을 세로로 처리
@@ -265,20 +235,18 @@ public class PatternGenerator : MonoBehaviour
                 float x = center.x + distanceFromCenter;
                 float y = center.y + (row - (rightLines.Length - 1) * 0.5f) * 2f; // 간격 없이, 중앙 정렬
                 Vector3 pos = new Vector3(x, y, center.z);
-                CreateCircle(pos, Vector3Int.left, line[currentRightCol]);    // 오른쪽은 왼쪽으로 이동
+                CreateDust(pos, Vector3Int.left, line[currentRightCol]);    // 오른쪽은 왼쪽으로 이동
                 circleCount++;
-                //Debug.Log($"  → 원 생성: Row {row} (패턴: '{line[currentRightCol]}'), 위치 ({x:F1}, {y:F1})");
             }
         }
-        //Debug.Log($"[오른쪽] 총 {circleCount}개 원 생성 완료");
     }
     
-    void CreateCircle(Vector3 position, Vector3Int direction, int id)
+    void CreateDust(Vector3 position, Vector3Int direction, int id)
     {
         id = id - '0';
-        if (circlePrefab != null)
+        if (dustPrefab != null)
         {
-            GameObject circle = Instantiate(circlePrefab, position, Quaternion.identity);
+            GameObject circle = Instantiate(dustPrefab, position, Quaternion.identity);
             circle.transform.SetParent(transform);
             Monster _monster = circle.GetComponent<Monster>();
             if (_monster != null)

@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         PlayerController.instance.Move(PlayerController.instance.moveDirection, PlayerController.instance.MoveDelay);
     }
 
-    private bool IsFirstSpawned = false;
+    // private bool IsFirstSpawned = false;
 
     private void EnemyBeatMove()
     {
@@ -170,16 +170,16 @@ public class GameManager : MonoBehaviour
     }
     
     // 좌우 노드 체크(=> 비트 관리)
-    public void CurrnetNodeDestoryCheck(NoteType inputType)
+    public void CurrnetNodeDestoryCheck(NodeType inputType)
     {
         if (isGameOver)
         {
             return;
         }
         // 좌우 노드 삭제 체크 
-        if (inputType == NoteType.LeftNote)
+        if (inputType == NodeType.LeftNote)
             leftNodeDestory  = true;
-        else if (inputType == NoteType.RightNote)
+        else if (inputType == NodeType.RightNote)
             rightNodeDestory = true;
         
         // 초기화
