@@ -59,7 +59,7 @@ public class PatternGenerator : MonoBehaviour
         }
         
         StringData data = GameManager.instance.currentLevelData.stringData[currentStringDataIndex];
-        Debug.Log($"📋 StringData [{currentStringDataIndex}] 로드 시작!");
+        // Debug.Log($"📋 StringData [{currentStringDataIndex}] 로드 시작!");
         
         // 각 방향별 패턴 데이터를 줄별로 분리
         upLines    = data.upData.Split('\n');

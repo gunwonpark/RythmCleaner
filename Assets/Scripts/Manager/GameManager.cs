@@ -1,11 +1,17 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+
+public enum NodeType
+{
+    LeftNote,  // 왼쪽에서 생성   => 마우스로 타격
+    RightNote  // 오른쪽에서 생성 => 방향키로 타격
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -19,8 +25,8 @@ public class GameManager : MonoBehaviour
     
     [Header("비트관리")]
     public int  beatCounter      = 0;       // 노드 생성 때, 카운트 증가
-    public bool leftNodeDestory  = false;   // 좌우 노드 다 삭제되야, 비트 증가
-    public bool rightNodeDestory = false;   // 좌우 노드 다 삭제되야, 비트 증가
+    public bool leftNodeDestroy  = false;   // 좌우 노드 다 삭제되야, 비트 증가
+    public bool rightNodeDestroy = false;   // 좌우 노드 다 삭제되야, 비트 증가
 
     [Header("커서 관리")]
     public Texture2D attackCursorTexture;
@@ -41,7 +47,6 @@ public class GameManager : MonoBehaviour
     private float remainTIme;       // 현재 남아있는 시간
 
     [Header("사운드 시작 관리")]
-    public bool        isSoundStart = false;
     public AudioSource audioSource;
     
     public float RemainTime
@@ -69,29 +74,24 @@ public class GameManager : MonoBehaviour
     
         // 저장된 PlayerPrefs값으로 현재 씬 세팅(리스트는 0번부터 시작하기 때문에, 1 빼주기)
         currentLevelData = levelDataList[PlayerPrefs.GetInt("Level") - 1];
-        audioSource.clip = currentLevelData.audioClip;          // 음악 변경
-        beatCounter = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
+        audioSource.clip = currentLevelData.audioClip;               // 음악 변경
+        beatCounter      = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
 
         mapSprite.sprite = currentLevelData.mapSprite; // 맵 스프라이트 설정
     }
 
     private IEnumerator Start()
     {
-
-        isGameStart = true;
-        RemainTime = 60f;
-        CurrentRound = currentLevelData.level; // 현재 라운드 설정
+        isGameStart    = true;
+        RemainTime     = 60;
+        CurrentRound   = currentLevelData.level;    // 현재 라운드 설정
         RoundText.text = $"Round : {CurrentRound}"; // UI에 현재 라운드 표시
-        midText.text = $"Round {CurrentRound}"; // 중앙 텍스트 표시
+        midText.text   = $"Round {CurrentRound}";   // 중앙 텍스트 표시
+        SetAttackCursor();                          // 커서 변환 적용
 
-        yield return WaitAndGo(); // 게임 시작 대기
-        // 커서 변환 적용
-        SetAttackCursor();
-        StartCoroutine(NodeSpawnManager.Instance.SpawnNotesOnBeat()); // 노드 생성 시작
-
-        yield return null;
+        yield return WaitAndGo(); // 게임 시작 대기 애니메이션
         
-        StartCoroutine(BeatManagement()); // 비트 관리
+        AudioSyncManager.instance.PrepareGame(); // 오디오 시간 기반 게임 시작
     }
 
     private IEnumerator WaitAndGo()
@@ -107,33 +107,42 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // 사운드가 시작될 때, 시간도 같이 체크
-        if (!isSoundStart)
-            return;
-
-        if(isGameOver)
+        if (AudioSyncManager.instance.musicStarted)
         {
-            return;
+            // 남은 시간이 0보다 크면 계속 시간을 감소시킴
+            if (RemainTime >= 0)
+            {
+                RemainTime -= Time.deltaTime; // Time.deltaTime은 한 프레임당 걸린 시간
+            }
         }
-
-        // 남은 시간이 0보다 크면 계속 시간을 감소시킴
-        if (RemainTime > 0)
+        
+        // 게임 종료 체크
+        if(RemainTime < 0)
         {
-            RemainTime -= Time.deltaTime; // Time.deltaTime은 한 프레임당 걸린 시간
-        }
-        else
-        {
-            // 남은 시간이 0 이하가 되면 게임 클리어 처리
             GameClear();
         }
     }
-
-    // 🚀 최적화된 비트 관리 - 더 효율적인 대기 시간
-    IEnumerator BeatManagement()
+    
+    private void PlayerBeatMove()
     {
-        // 60fps 기준으로 적절한 대기 시간 설정 (매 프레임 체크는 과도함)
-        WaitForSeconds waitTime = new WaitForSeconds(0.016f); // 대략 60fps
-        
-        while (isGameStart && !isGameOver)
+        PlayerController.instance.Move(PlayerController.instance.moveDirection, PlayerController.instance.MoveDelay);
+    }
+    
+    private void EnemyBeatMove()
+    {
+        var monsters = instance.monsters;
+        for (int i = monsters.Count - 1; i >= 0; i--)
+        {
+            if (monsters[i] != null)
+                monsters[i].Move(0.15f);
+            else
+                monsters.RemoveAt(i);
+        }
+    }
+    
+    private void BeatManagement()
+    {
+        if (isGameStart && !isGameOver)
         {
             if (beatCounter >= currentLevelData.createAndMoveCountBeat)
             {
@@ -143,62 +152,31 @@ public class GameManager : MonoBehaviour
                 // 비트 초기화
                 beatCounter = 0;
             }
-            yield return waitTime; // 🚀 고정된 대기 시간으로 최적화
         }
-    }
-
-    private void PlayerBeatMove()
-    {
-        PlayerController.instance.Move(PlayerController.instance.moveDirection, PlayerController.instance.MoveDelay);
-    }
-
-    // private bool IsFirstSpawned = false;
-
-    private void EnemyBeatMove()
-    {
-        // 🚀 최적화: null 체크와 역순 순회로 안전하게 처리
-        var monsters = GameManager.instance.monsters;
-        for (int i = monsters.Count - 1; i >= 0; i--)
-        {
-            if (monsters[i] != null)
-            {
-                monsters[i].Move(0.15f);
-            }
-            else
-                monsters.RemoveAt(i); // null 참조 제거
-        }
-    }
+    }    
     
     // 좌우 노드 체크(=> 비트 관리)
-    public void CurrnetNodeDestoryCheck(NodeType inputType)
+    public void CurrentNodeDestroyCheck(NodeType inputType)
     {
-        if (isGameOver)
+        if (isGameOver || !AudioSyncManager.instance.musicStarted || !isGameStart)
         {
             return;
         }
+        
         // 좌우 노드 삭제 체크 
-        if (inputType == NodeType.LeftNote)
-            leftNodeDestory  = true;
-        else if (inputType == NodeType.RightNote)
-            rightNodeDestory = true;
+        if      (inputType == NodeType.LeftNote)  leftNodeDestroy  = true;
+        else if (inputType == NodeType.RightNote) rightNodeDestroy = true;
         
         // 초기화
-        if (rightNodeDestory && leftNodeDestory)
+        if (rightNodeDestroy && leftNodeDestroy)
         {
-            //🚀 사운드 시작 최적화 (중복 호출 방지)
-            if (!isSoundStart && audioSource != null && !audioSource.isPlaying)
-            {
-                isSoundStart = true;
-                Debug.Log("🎵 사운드 시작!");
-                audioSource.Play();
-            }
-            
-            leftNodeDestory  = false;
-            rightNodeDestory = false;
+            leftNodeDestroy  = false;
+            rightNodeDestroy = false;
             beatCounter++;
 
             PlayerBeatMove();    // 플레이어 비트 이동
             EnemyBeatMove();     // 적 비트 이동
+            BeatManagement();    // 패턴 생성
         }
     }
 
@@ -288,6 +266,7 @@ public class GameManager : MonoBehaviour
 
         SaveManager.instance.TotalClearRound = CurrentRound; // 현재 라운드 저장
         SaveManager.instance.TotalDustCount += KillDustCount;
+        
         // UI 띄우기
         EndUI.SetData();
         EndUI.Win();

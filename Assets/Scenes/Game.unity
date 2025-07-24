@@ -486,8 +486,8 @@ MonoBehaviour:
   isGameStart: 0
   isGameOver: 0
   beatCounter: 0
-  leftNodeDestory: 0
-  rightNodeDestory: 0
+  leftNodeDestroy: 0
+  rightNodeDestroy: 0
   attackCursorTexture: {fileID: 2800000, guid: 6547fc10afca88d46afd6570dbedffa5, type: 3}
   monsterData: {fileID: 11400000, guid: 88228e85a9de42c4282bcb477d7fc8a1, type: 2}
   monsters: []
@@ -497,7 +497,6 @@ MonoBehaviour:
   remainTimeSlider: {fileID: 57924056543655848}
   tailSlider: {fileID: 5514883843933120542}
   EnableTime: 60
-  isSoundStart: 0
   audioSource: {fileID: 248227470}
   CurrentRound: 0
   KillDustCount: 0
@@ -2561,6 +2560,10 @@ PrefabInstance:
       propertyPath: 'followers.Array.data[0]'
       value: 
       objectReference: {fileID: 36579979}
+    - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2958,11 +2961,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1177278112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1036164398 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6231684596653325922, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
-  m_PrefabInstance: {fileID: 1049607581}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1049607581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4098,7 +4096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396559123}
   m_Layer: 0
-  m_Name: MoveNode Spawn Point
+  m_Name: Right Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4129,7 +4127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1430504902}
   m_Layer: 0
-  m_Name: AttackNode Spawn Point
+  m_Name: Left Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4214,7 +4212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1536721463
 Transform:
   m_ObjectHideFlags: 0
@@ -4242,16 +4240,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e72ef1147c15d49afe67ed4d918bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitRange: 1.25
-  failRange: 0.2
-  successNode: {fileID: 1036164398}
-  targetZone: {fileID: 1307860644}
-  attackNodePrefab: {fileID: 6312974342316710025, guid: 6929d6bfde806374a9fb90d1cf696c26, type: 3}
-  rightSpawnPoint: {fileID: 1396559123}
-  spawnPoint: {fileID: 1430504902}
-  moveNotePrefab: {fileID: 6312974342316710025, guid: 24d88a28ad74df6448dbf8a25faa9751, type: 3}
-  successEffectPrefab: {fileID: 4660366030024482369, guid: b3b296e496b29e5428f8522cbd1f1da7, type: 3}
-  failEffectPrefab: {fileID: 6369941880252170291, guid: 143088760d36620458ba833cf8da3d6a, type: 3}
+--- !u!1 &1546168047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 629755166610293227, guid: 967e3d1810c126740bd2a64b34bf2bda, type: 3}
+  m_PrefabInstance: {fileID: 1049607581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1557133861
 GameObject:
   m_ObjectHideFlags: 0
@@ -4339,6 +4332,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1567104910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567104912}
+  - component: {fileID: 1567104911}
+  m_Layer: 0
+  m_Name: AudioSync Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1567104911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567104910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f602763815bec944093469efb4215061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 248227470}
+  successNodeGameObject: {fileID: 1546168047}
+  leftPrefab: {fileID: 9137273882815207772, guid: e823b685559d6b1499a8d598ef39c114, type: 3}
+  leftSpawnPoint: {fileID: 1430504902}
+  rightPrefab: {fileID: 6160283631417966569, guid: 4c4751741296a274eae1f9c235404909, type: 3}
+  rightSpawnPoint: {fileID: 1396559123}
+  nodeSpeed: 5
+  spawnOffset: 2
+  rightNodes: []
+  leftNodes: []
+  showDebugInfo: 0
+--- !u!4 &1567104912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567104910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579918168
 GameObject:
   m_ObjectHideFlags: 0
@@ -4431,8 +4479,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032f410b5d2094c4eb899dc0963d4756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  failColorDelay: 0.1
-  failColorDelayTimer: 0
+  hitRange: 1.25
+  successEffectPrefab: {fileID: 4660366030024482369, guid: b3b296e496b29e5428f8522cbd1f1da7, type: 3}
+  failEffectPrefab: {fileID: 6369941880252170291, guid: 143088760d36620458ba833cf8da3d6a, type: 3}
 --- !u!4 &1595762002
 Transform:
   m_ObjectHideFlags: 0
@@ -6044,10 +6093,11 @@ SceneRoots:
   - {fileID: 606575716}
   - {fileID: 720182083}
   - {fileID: 248227469}
-  - {fileID: 1536721463}
   - {fileID: 2027039560}
   - {fileID: 1595762002}
   - {fileID: 696062860}
+  - {fileID: 1567104912}
+  - {fileID: 1536721463}
   - {fileID: 1579918169}
   - {fileID: 3011926994908068415}
   - {fileID: 1944430331}

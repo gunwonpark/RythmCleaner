@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 2
   audioClip: {fileID: 8300000, guid: 2d328f84fa2aa4640a5e586dac07fe17, type: 3}
-  soundBeat: 95.5
+  soundBeat: 95
   createAndMoveCountBeat: 6
   nodeSpeed: 6.8
   mapSprite: {fileID: -3537580891591011323, guid: b91ca757e56472a41beb6d64a564bac7, type: 3}
