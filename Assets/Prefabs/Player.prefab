@@ -230,7 +230,7 @@ MonoBehaviour:
   IsMoving: 0
   moveDirection: {x: 0, y: 1, z: 0}
   AttackBullet: {fileID: 6438880239008984544, guid: dd8aa420e2c1e0046b219bc140a37b2f, type: 3}
-  AttackDelay: 0.5
+  AttackDelay: 0
   AttackDirection: {x: 1, y: 0}
   spreadAngle: 15
   AttackPoint: {fileID: 2423388952254229957}

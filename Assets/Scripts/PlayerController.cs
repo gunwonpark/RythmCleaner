@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("이동 로직")]
     public float MoveDelay = 0.15f; // 움직임에 걸리는 시간
     public float JumpHeight = 0.3f; // 점프 높이
-    public int MoveDistance = 1; // 이동할 거리
+    public int MoveDistance = 1; // 이동할 거리f
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
     public Vector3Int moveDirection = Vector3Int.up; // 이번 비트에 이동할 방향(처음은 위로 이동)

@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class RhythmNode : MonoBehaviour
 {
-    [Header("노드 시각적 설정")]
-    public Color nodeColor = Color.red;
-    
     private NodeType _nodeType;
     
     // 이동 관련 변수들
@@ -19,7 +16,7 @@ public class RhythmNode : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     
     void Start()
-    {
+    {   
         // 컴포넌트 설정
         SetupVisuals();
     }
@@ -32,7 +29,6 @@ public class RhythmNode : MonoBehaviour
         {
             spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         }
-        spriteRenderer.color = nodeColor;
     }
     
     public void Initialize(Vector3 start, Vector3 target, double hitTime, float speed, NodeType nodeType)
@@ -73,10 +69,14 @@ public class RhythmNode : MonoBehaviour
         transform.position  = newPosition;
         
         // 목표 지점 도착 확인(노드가 중앙에 도착하고, 여유시간을 줘서, 너무 빡빡하게 사라지지 않도록 함...)
-        if (progress >= 1.1f || timeToTarget <= -0.2f)
+        // + 100ms 여유시간
+        if (timeToTarget <= -0.1f)
         {
-            // Debug.Log(progress + " 도달 및 " + timeToTarget + "시간 도달 제거");
-            ReachTarget();
+            if(progress >= 1.0f) // 도착 progress 확인인
+            {
+                // Debug.Log(progress + " 도달 및 " + timeToTarget + "시간 도달 제거");
+                ReachTarget();
+            }
         }
         
         // 너무 늦게 도착한 경우 제거

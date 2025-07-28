@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        isGameStart    = true;
         RemainTime     = 60;
         CurrentRound   = currentLevelData.level;    // 현재 라운드 설정
         RoundText.text = $"Round : {CurrentRound}"; // UI에 현재 라운드 표시
@@ -90,6 +89,8 @@ public class GameManager : MonoBehaviour
         SetAttackCursor();                          // 커서 변환 적용
 
         yield return WaitAndGo(); // 게임 시작 대기 애니메이션
+        
+        isGameStart = true;
         
         AudioSyncManager.instance.PrepareGame(); // 오디오 시간 기반 게임 시작
     }
@@ -101,7 +102,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         midText.text = "START!";
         midText.DOFade(0, 1f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);    // DOFade 시간보다 길게 설정해야 함. 일단을 동일하게 1F로 설정
     }
 
     private void Update()
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
     // 좌우 노드 체크(=> 비트 관리)
     public void CurrentNodeDestroyCheck(NodeType inputType)
     {
-        if (isGameOver || !AudioSyncManager.instance.musicStarted || !isGameStart)
+        if (isGameOver || !isGameStart)
         {
             return;
         }

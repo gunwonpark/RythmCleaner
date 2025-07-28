@@ -2560,10 +2560,6 @@ PrefabInstance:
       propertyPath: 'followers.Array.data[0]'
       value: 
       objectReference: {fileID: 36579979}
-    - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4371,6 +4367,7 @@ MonoBehaviour:
   spawnOffset: 2
   rightNodes: []
   leftNodes: []
+  musicStarted: 0
   showDebugInfo: 0
 --- !u!4 &1567104912
 Transform:
@@ -5804,7 +5801,7 @@ SpriteRenderer:
   m_SortingLayerID: 1260583169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6964565648693895049, guid: a1b478a723fe40946858b7ad3152a2e0, type: 3}
+  m_Sprite: {fileID: -3537580891591011323, guid: b91ca757e56472a41beb6d64a564bac7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
