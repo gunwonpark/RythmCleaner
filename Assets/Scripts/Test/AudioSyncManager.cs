@@ -140,12 +140,6 @@ public class AudioSyncManager : MonoBehaviour
             Debug.Log($"🎵 음악 시작! 정확한 시간: {AudioSettings.dspTime:F6} (예정: {songStartTime:F6})");
         }
         
-        // // 음악이 끝났으면 노드 생성 중단
-        // if (musicStarted)
-        // {
-        //     return;
-        // }
-        
         // 현재 오디오 시간 계산 (음악 시작 이전에는 음수가 됨)
         double currentAudioTime = AudioSettings.dspTime - songStartTime;
         
