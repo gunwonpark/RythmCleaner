@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
     public int MoveDistance = 1; // 이동할 거리f
     public Ease moveEase = Ease.OutQuad;
     public bool IsMoving;
-    public Vector3Int moveDirection = Vector3Int.up; // 이번 비트에 이동할 방향(처음은 위로 이동)
+    public Vector3Int moveDirection         = Vector3Int.up;   // 이번 비트에 이동할 방향(처음은 위로 이동)
+    public Vector3Int previousMoveDirection = Vector3Int.down; // 직전에 이동한 방향과 반대 방향을 저장해서, 다음 비트에 입력하지 못하도록 함.(up으로 이동하면, Down 잠금. Right로 이동하면, Left 잠금.......) 
 
     [Header("공격로직")]
     public Bullet AttackBullet;
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
     // 플레이어의 쓰레기 봉투 개수에 따라 한번에 여러개의 불렛을 원뿔 각도로 발사하도록 수정해야 된다.
     public void Attack(float attackDelay, Vector2 attackDirection)
     {
-        AttackDelay = attackDelay;
+        AttackDelay     = attackDelay;
         AttackDirection = attackDirection;
         
         Animator.SetTrigger("Attack");

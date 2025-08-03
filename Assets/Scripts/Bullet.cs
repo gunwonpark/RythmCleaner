@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         {
             IsAttack = true;
             
-            Debug.Log(other.name + " 몬스터와 충돌!");
+            // Debug.Log(other.name + " 몬스터와 충돌!");
             //AudioManager.instance.PlaySfx(AudioManager.Sfx.Water_Crashed, 0.5f);
            
             // 🚀 최적화: GetComponent 캐싱과 null 체크 추가
