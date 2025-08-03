@@ -28,10 +28,10 @@ public class UI_Title : MonoBehaviour
     public Sprite howToPlayOriginSprite;
     public Sprite howToPlayClickSprite;
 
-    public RectTransform startRectTransform;
-    public RectTransform creditRectTransform;
-    public RectTransform exitRectTransform;
-    public RectTransform howToPlayRectTransform;
+    // public RectTransform startRectTransform;
+    // public RectTransform creditRectTransform;
+    // public RectTransform exitRectTransform;
+    // public RectTransform howToPlayRectTransform;
 
     private void Start()
     {
@@ -45,16 +45,16 @@ public class UI_Title : MonoBehaviour
 
     private void OnHowToPlayButtonClicked()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash,0.25f);
-        howToPlayRectTransform.sizeDelta = new Vector2(360, 320);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash,0.5f);
+        //howToPlayRectTransform.sizeDelta = new Vector2(360, 320);
         howToPlayImage.sprite = howToPlayClickSprite;
         howToPlayObject.SetActive(true);
     }
 
     private void OnExitButtonClicked()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash, 0.25f);
-        exitRectTransform.sizeDelta = new Vector2(360, 320);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash,0.5f);
+        //exitRectTransform.sizeDelta = new Vector2(360, 320);
         StartCoroutine(ExitButton());
     }
 
@@ -67,16 +67,16 @@ public class UI_Title : MonoBehaviour
 
     private void OnCreditButtonClicked()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash, 0.25f);
-        creditRectTransform.sizeDelta = new Vector2(360, 320);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash,0.5f);
+        //creditRectTransform.sizeDelta = new Vector2(360, 320);
         creditImage.sprite = creditClickSprite;
         creditObject.SetActive(true);
     }
 
     private void OnStartButtonClicked()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash, 0.25f);
-        startRectTransform.sizeDelta = new Vector2(360, 320);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Splash,0.5f);
+        //startRectTransform.sizeDelta = new Vector2(360, 320);
         StartCoroutine(StartButton());
     }
     
@@ -88,15 +88,15 @@ public class UI_Title : MonoBehaviour
     }
     private void OnDisableCreditButtonClicked()
     {
-        AudioManager.instance.PlaySfx(0,0.5f);
-        creditRectTransform.sizeDelta = new Vector2(360, 146);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Back_Button,0.5f);
+        //creditRectTransform.sizeDelta = new Vector2(360, 146);
         creditImage.sprite = creditOriginSprite;
         creditObject.SetActive(false);
     }
     private void OnDisableHowtoPlayButtonClicked()
     {
         AudioManager.instance.PlaySfx(0, 0.5f);
-        howToPlayRectTransform.sizeDelta = new Vector2(360, 146);
+        //howToPlayRectTransform.sizeDelta = new Vector2(360, 146);
         howToPlayImage.sprite = howToPlayOriginSprite;
         howToPlayObject.SetActive(false);
     }

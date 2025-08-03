@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4876de163dc68074b92994ff733c01a5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Editor/Resources/SSU/Hints/Hue.asset
+  uploadId: 764641

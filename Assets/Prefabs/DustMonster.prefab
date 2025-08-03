@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 617587661299318929}
   - component: {fileID: 8932704559664371743}
-  - component: {fileID: 3071830284454700307}
   - component: {fileID: 686656679393509107}
+  - component: {fileID: 5956886136448816524}
   m_Layer: 0
   m_Name: DustMonster
   m_TagString: Monster
@@ -89,8 +89,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3071830284454700307
-BoxCollider2D:
+--- !u!114 &686656679393509107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4196824138133104825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f341b365da7fb514eb85240242f19c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 0}
+  Data:
+    ID: 0
+    HP: 0
+    Sprite: {fileID: 0}
+  IsDead: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
+  MoveEase: 6
+  IsMoving: 0
+  MoveDistance: 2
+  JumpHeight: 0.3
+  MoveDelay: 0.15
+  PerMoveInterval: 0
+  currentMoveInterval: 0
+  CurrentMoveCount: 0
+  IsEnd: 0
+  LimitMoveDistance: 0
+  minScale: 0.3
+  Collider: {fileID: 0}
+  IsMoveOnce: 0
+--- !u!58 &5956886136448816524
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,46 +156,4 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.535, y: 1.26}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.25, y: 1.25}
-  m_EdgeRadius: 0
---- !u!114 &686656679393509107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196824138133104825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f341b365da7fb514eb85240242f19c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 0}
-  Data:
-    ID: 0
-    HP: 0
-    Sprite: {fileID: 0}
-  IsDead: 0
-  MoveDirection: {x: 0, y: 0, z: 0}
-  MoveEase: 6
-  IsMoving: 0
-  MoveDistance: 2
-  JumpHeight: 0.3
-  MoveDelay: 0.15
-  PerMoveInterval: 0
-  currentMoveInterval: 0
-  CurrentMoveCount: 0
-  IsEnd: 0
-  LimitMoveDistance: 0
-  minScale: 0.3
-  Collider: {fileID: 0}
-  IsMoveOnce: 0
+  m_Radius: 0.25

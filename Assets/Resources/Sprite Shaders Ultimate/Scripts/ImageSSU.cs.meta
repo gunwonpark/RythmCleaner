@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 810387798b61a1f41bb4fc933ad1fb98
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: -55
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/ImageSSU.cs
+  uploadId: 764641

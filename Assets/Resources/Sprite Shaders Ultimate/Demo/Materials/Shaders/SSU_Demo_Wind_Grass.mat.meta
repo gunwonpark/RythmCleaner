@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 997d8c71ec12ff0438a6c669fed80c87
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Materials/Shaders/SSU_Demo_Wind_Grass.mat
+  uploadId: 764641

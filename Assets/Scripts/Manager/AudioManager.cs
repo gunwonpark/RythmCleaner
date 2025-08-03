@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour
             currentChannelNumber = loopIndex;                // currentChannelNumber 갱신
             sfxPlayers[loopIndex].clip = sfxClips[(int)sfx]; // 클립 변경
             sfxPlayers[loopIndex].Play();                    // 재생
-            sfxPlayers[index].volume = volume;               // 커스텀 볼륨
+            sfxPlayers[loopIndex].volume = volume;               // 커스텀 볼륨
             break;
         }
     }

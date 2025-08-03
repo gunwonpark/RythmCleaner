@@ -9,6 +9,8 @@ TagManager:
   - Tail
   - Wall
   - Node
+  - RedLine
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -19,9 +21,9 @@ TagManager:
   - 
   - Monster
   - Node
-  - 
-  - 
-  - 
+  - Player
+  - RedLine
+  - Bullet
   - 
   - 
   - 

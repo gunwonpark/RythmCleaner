@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 818e89473bfe65444a44bc1ad4725ed0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Scripts/Demo_VectorFollow.cs
+  uploadId: 764641

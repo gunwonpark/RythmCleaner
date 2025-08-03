@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bf58a6b86c49e9748958b9aab7092ff2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Materials/Shaders/SSU_Demo_Smoke.mat
+  uploadId: 764641

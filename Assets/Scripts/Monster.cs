@@ -156,6 +156,7 @@ public class Monster : MonoBehaviour
     
     public void OnMonsterDie()
     {
+        Collider.enabled = false;
         GameManager.instance.KillDustCount++;
         PlayerController.instance.AddTail();
     }

@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 6131524450271505764}
   - component: {fileID: 7334504337901954959}
   - component: {fileID: 2215431998016276295}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.25
+  m_Radius: 0.5
 --- !u!50 &7334504337901954959
 Rigidbody2D:
   serializedVersion: 5
@@ -229,6 +229,7 @@ MonoBehaviour:
   moveEase: 6
   IsMoving: 0
   moveDirection: {x: 0, y: 1, z: 0}
+  previousMoveDirection: {x: 0, y: -1, z: 0}
   AttackBullet: {fileID: 6438880239008984544, guid: dd8aa420e2c1e0046b219bc140a37b2f, type: 3}
   AttackDelay: 0
   AttackDirection: {x: 1, y: 0}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3fd2e70ce56da334ab989845055dc428
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Materials/Shaders/SSU_Demo_Halftone.mat
+  uploadId: 764641

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d15bc5bbde7c4e54f8ad7e155ba0daac
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Editor/Resources/SSU/Hints/Inner
+    Outline.asset
+  uploadId: 764641

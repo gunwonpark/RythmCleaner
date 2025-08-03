@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4d08bcded230470409c7e609b4f8c601
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Editor/Resources/SSU/Hints/Ping-Pong
+    Glow.asset
+  uploadId: 764641

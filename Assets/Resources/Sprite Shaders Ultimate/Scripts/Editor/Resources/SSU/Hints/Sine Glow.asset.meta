@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 53beccb78b1461a439dbff6622f514de
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Editor/Resources/SSU/Hints/Sine
+    Glow.asset
+  uploadId: 764641

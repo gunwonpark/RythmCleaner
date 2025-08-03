@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        yield return new WaitForSeconds(1);
+    
         RemainTime     = 60;
         CurrentRound   = currentLevelData.level;    // 현재 라운드 설정
         RoundText.text = $"Round : {CurrentRound}"; // UI에 현재 라운드 표시
