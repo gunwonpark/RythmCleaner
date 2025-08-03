@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f2ee19b6ac424e444acee8f598cfde9b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Materials/Shaders/SSU_Demo_Metal.mat
+  uploadId: 764641

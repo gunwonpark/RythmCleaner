@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fef11cc385924f545b49af9df8aa58a6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Editor/Resources/SSU/Hints/Source
+    Alpha Dissolve.asset
+  uploadId: 764641

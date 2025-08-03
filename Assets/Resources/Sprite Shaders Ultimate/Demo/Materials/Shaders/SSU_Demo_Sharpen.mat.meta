@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c8a05b0c277680449821b494e2260c1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Demo/Materials/Shaders/SSU_Demo_Sharpen.mat
+  uploadId: 764641

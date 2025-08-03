@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1f51da7edd80c06488c56d28bc096dec
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/ASE/_Generic/ColorMultiply.asset
+  uploadId: 764641

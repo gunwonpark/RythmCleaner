@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b15eab6ac2243544e88d612a592c101b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/ASE/Color/_PingPongGlow.asset
+  uploadId: 764641

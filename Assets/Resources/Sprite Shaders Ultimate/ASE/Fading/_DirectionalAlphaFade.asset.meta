@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 65c65af0f3ba9814bae500501cf3b956
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/ASE/Fading/_DirectionalAlphaFade.asset
+  uploadId: 764641

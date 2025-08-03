@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9fa14830c2cebb942b11ced84dbab634
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 158988
+  packageName: Sprite Shaders Ultimate
+  packageVersion: 6.16
+  assetPath: Assets/Sprite Shaders Ultimate/Scripts/Interactive/InteractiveWindSSU.cs
+  uploadId: 764641
