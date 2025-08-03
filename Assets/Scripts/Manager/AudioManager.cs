@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
     {
         Back_Button , Game_Clear, Game_Over, RoundNumber, Splash, Water_Crashed
     }
+
+    public bool isMainMenu;
     
     [Header("----- BGM -----")]
     public  List<AudioClip>     bgmClip;    // 0번 메인메뉴(ThemeSong ), 1번 인게임
@@ -36,7 +38,8 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.playOnAwake = false;
         bgmPlayer.loop = true;
         bgmPlayer.volume = bgmVolume;
-        // PlayBgm(0,true);
+        if(isMainMenu)
+            PlayBgm(0,true);
 
         // 효과음 플레이어 초기화
         GameObject sfxObject       = new GameObject("SfxPlayer");
