@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         // 저장된 PlayerPrefs값으로 현재 씬 세팅(리스트는 0번부터 시작하기 때문에, 1 빼주기)
         currentLevelData = levelDataList[PlayerPrefs.GetInt("Level") - 1];
         audioSource.clip = currentLevelData.audioClip;               // 음악 변경
-        beatCounter      = currentLevelData.createAndMoveCountBeat;  // 비터카운트값 변경
+        beatCounter      = 0;  // 0부터 시작해서 createAndMoveCountBeat까지 카운트
 
         mapSprite.sprite = currentLevelData.mapSprite; // 맵 스프라이트 설정
     }
@@ -93,6 +93,12 @@ public class GameManager : MonoBehaviour
         yield return WaitAndGo(); // 게임 시작 대기 애니메이션
         
         isGameStart = true;
+        
+        // 게임 시작과 동시에 첫 번째 패턴 생성
+        if (PatternGenerator.instance != null)
+        {
+            PatternGenerator.instance.GenerateNextPattern();
+        }
         
         AudioSyncManager.instance.PrepareGame(); // 오디오 시간 기반 게임 시작
     }
@@ -149,6 +155,9 @@ public class GameManager : MonoBehaviour
         {
             if (beatCounter >= currentLevelData.createAndMoveCountBeat)
             {
+                // 디버그 로그: 패턴 생성 및 이동
+                Debug.Log("생성 및 이동!");
+                
                 // 쓰레기 이동 진행
                 PatternGenerator.instance.GenerateNextPattern();
                 
@@ -176,6 +185,10 @@ public class GameManager : MonoBehaviour
             leftNodeDestroy  = false;
             rightNodeDestroy = false;
             beatCounter++;
+
+            // 디버그 로그: 현재 패턴과 비트 카운터
+            int currentPatternNumber = PatternGenerator.instance != null ? PatternGenerator.instance.CurrentStringDataIndex : 1;
+            Debug.Log($"패턴 {currentPatternNumber} / 비트 {beatCounter}");
 
             PlayerBeatMove();    // 플레이어 비트 이동
             EnemyBeatMove();     // 적 비트 이동

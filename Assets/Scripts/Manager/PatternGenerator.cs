@@ -21,6 +21,9 @@ public class PatternGenerator : MonoBehaviour
     // StringData 인덱스 관리
     private int currentStringDataIndex = 0; // 현재 사용 중인 StringData 인덱스
     
+    // 외부에서 접근 가능하도록 프로퍼티 추가
+    public int CurrentStringDataIndex => currentStringDataIndex;
+    
     // 각 방향별 패턴 데이터
     private string[] upLines;
     private string[] downLines;
@@ -61,29 +64,37 @@ public class PatternGenerator : MonoBehaviour
         StringData data = GameManager.instance.currentLevelData.stringData[currentStringDataIndex];
         // Debug.Log($"📋 StringData [{currentStringDataIndex}] 로드 시작!");
         
-        // 각 방향별 패턴 데이터를 줄별로 분리
-        upLines    = data.upData.Split('\n');
-        downLines  = data.downData.Split('\n');
-        leftLines  = data.leftData.Split('\n');
-        rightLines = data.rightData.Split('\n');
+        // 새로운 방식: 단일 문자열 패턴을 배열로 변환
+        // Up/Down: 단일 문자열을 배열로 감싸기
+        upLines = new string[] { data.upData.Trim() };
+        downLines = new string[] { data.downData.Trim() };
         
-        // 좌우 최대 열 수 계산 (초기화)
-        maxLeftCols  = 0;
-        maxRightCols = 0;
-        for (int i = 0; i < leftLines.Length; i++)
+        // Left/Right: 11글자 문자열을 각 글자별로 배열 변환 (세로 처리용)
+        string leftTrimmed = data.leftData.Trim();
+        string rightTrimmed = data.rightData.Trim();
+        
+        leftLines = new string[leftTrimmed.Length];
+        rightLines = new string[rightTrimmed.Length];
+        
+        for (int i = 0; i < leftTrimmed.Length; i++)
         {
-            maxLeftCols = Mathf.Max(maxLeftCols, leftLines[i].Trim().Length);
+            leftLines[i] = leftTrimmed[i].ToString();
         }
-        for (int i = 0; i < rightLines.Length; i++)
+        
+        for (int i = 0; i < rightTrimmed.Length; i++)
         {
-            maxRightCols = Mathf.Max(maxRightCols, rightLines[i].Trim().Length);
+            rightLines[i] = rightTrimmed[i].ToString();
         }
+        
+        // 좌우 최대 열 수 계산 (각 줄이 1글자씩이므로)
+        maxLeftCols = 1;
+        maxRightCols = 1;
         
         // 시작 인덱스 설정
-        currentUpRow    = upLines.Length - 1;   // 위     : 마지막 행부터 시작
-        currentDownRow  = 0;                    // 아래   : 첫 번째 행부터 시작
+        currentUpRow    = upLines.Length - 1;   // 위     : 0 (배열 길이 1)
+        currentDownRow  = 0;                    // 아래   : 0 (배열 길이 1)
         currentLeftCol  = 0;                    // 왼쪽   : 첫 번째 열부터 시작
-        currentRightCol = maxRightCols - 1;     // 오른쪽 : 마지막 열부터 시작
+        currentRightCol = maxRightCols - 1;     // 오른쪽 : 0 (열 수 1)
     }
     
     // 비트 관리에서 실행
@@ -128,10 +139,13 @@ public class PatternGenerator : MonoBehaviour
         
         if (currentStringDataIndex >= GameManager.instance.currentLevelData.stringData.Count)
         {
+            Debug.Log("🎉 모든 패턴 완료!");
             CancelInvoke("GenerateNextPattern");
         }
         else
         {
+            // 디버그 로그: 새 패턴 시작
+            Debug.Log($"📋 패턴 {currentStringDataIndex} 시작!");
             LoadCurrentStringData();
         }
     }
@@ -241,10 +255,10 @@ public class PatternGenerator : MonoBehaviour
         }
     }
     
-    void CreateDust(Vector3 position, Vector3Int direction, int id)
+    void CreateDust(Vector3 position, Vector3Int direction, char charId)
     {
-        id = id - '0';
-        if (dustPrefab != null)
+        int id = charId - '0'; // char를 int로 변환
+        if (dustPrefab != null && id > 0) // 0이 아닌 경우만 생성
         {
             GameObject circle = Instantiate(dustPrefab, position, Quaternion.identity);
             circle.transform.SetParent(transform);
