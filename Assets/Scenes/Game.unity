@@ -2121,6 +2121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfa4b79fe7db724fb90b726de4b78f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMainMenu: 0
   bgmClip:
   - {fileID: 8300000, guid: a545106ed3828f244847f57415b5c5b6, type: 3}
   bgmVolume: 1
@@ -2725,9 +2726,17 @@ PrefabInstance:
       propertyPath: 'followers.Array.data[0]'
       value: 
       objectReference: {fileID: 36579979}
+    - target: {fileID: 2423388952254229957, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_Radius
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131524450271505764, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6626267345361870175, guid: 1e6c11d70c1c2454ebbc77982d4b7c63, type: 3}
       propertyPath: m_LocalPosition.x

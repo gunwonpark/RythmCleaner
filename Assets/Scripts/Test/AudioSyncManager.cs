@@ -32,6 +32,10 @@ public class AudioSyncManager : MonoBehaviour
     private double nextBeatTime;    // 다음 비트가 나올 dspTime
     private float  secondsPerBeat;  // 한 비트당 시간 (초)
     private int    currentBeat = 0; // 현재 비트 카운터
+    
+    // 외부 접근용 프로퍼티들
+    public double SongStartTime => songStartTime;
+    public double GameStartTime => gameStartTime;
     // private List<RhythmNode> activeNodes = new List<RhythmNode>();
     
     // 타겟 표시기 관련

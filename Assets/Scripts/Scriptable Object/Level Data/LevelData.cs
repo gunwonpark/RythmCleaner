@@ -18,15 +18,15 @@ public class LevelData : ScriptableObject
 [Serializable]
 public class StringData
 {
-    [TextArea(10, 1)]
+    [TextArea(1, 1)]
     public string upData;
     
-    [TextArea(10, 1)]
+    [TextArea(1, 1)]
     public string downData;
     
-    [TextArea(10, 1)]
+    [TextArea(1, 1)]
     public string leftData;
     
-    [TextArea(10, 1)]
+    [TextArea(1, 1)]
     public string rightData;
 }

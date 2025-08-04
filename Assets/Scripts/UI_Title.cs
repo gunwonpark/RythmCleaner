@@ -95,7 +95,7 @@ public class UI_Title : MonoBehaviour
     }
     private void OnDisableHowtoPlayButtonClicked()
     {
-        AudioManager.instance.PlaySfx(0, 1f);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Back_Button, 1f);
         //howToPlayRectTransform.sizeDelta = new Vector2(360, 146);
         howToPlayImage.sprite = howToPlayOriginSprite;
         howToPlayObject.SetActive(false);
