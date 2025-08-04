@@ -43,8 +43,10 @@ public class GameManager : MonoBehaviour
     public Slider          tailSlider;
     
     [Header("현재 게임 정보")]
-    public  float EnableTime = 60f; // 라운드당 가능한 시간
+    public  float EnableTime = 60f; // 라운드당 가능한 시간 (음악 길이로 자동 설정됨)
     private float remainTIme;       // 현재 남아있는 시간
+    private double gameAudioStartTime; // 게임 시작 시의 오디오 시간
+    private float musicTotalLength;    // 음악 총 길이
 
     [Header("사운드 시작 관리")]
     public AudioSource audioSource;
@@ -77,6 +79,14 @@ public class GameManager : MonoBehaviour
         audioSource.clip = currentLevelData.audioClip;               // 음악 변경
         beatCounter      = 0;  // 0부터 시작해서 createAndMoveCountBeat까지 카운트
 
+        // 음악 길이에 따라 게임 시간 설정
+        if (currentLevelData.audioClip != null)
+        {
+            musicTotalLength = currentLevelData.audioClip.length;
+            EnableTime = musicTotalLength;
+            Debug.Log($"🎵 음악 길이: {musicTotalLength:F2}초, 게임 시간으로 설정됨");
+        }
+
         mapSprite.sprite = currentLevelData.mapSprite; // 맵 스프라이트 설정
     }
 
@@ -84,7 +94,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
     
-        RemainTime     = 60;
+        RemainTime     = EnableTime; // 음악 길이로 설정된 시간으로 초기화
         CurrentRound   = currentLevelData.level;    // 현재 라운드 설정
         RoundText.text = $"Round : {CurrentRound}"; // UI에 현재 라운드 표시
         midText.text   = $"Round {CurrentRound}";   // 중앙 텍스트 표시
@@ -99,6 +109,9 @@ public class GameManager : MonoBehaviour
         {
             PatternGenerator.instance.GenerateNextPattern();
         }
+        
+        // 게임 시작 시의 오디오 시간 기록 (현재 시점)
+        gameAudioStartTime = AudioSettings.dspTime;
         
         AudioSyncManager.instance.PrepareGame(); // 오디오 시간 기반 게임 시작
     }
@@ -118,17 +131,40 @@ public class GameManager : MonoBehaviour
         // 사운드가 시작될 때, 시간도 같이 체크
         if (AudioSyncManager.instance.musicStarted)
         {
-            // 남은 시간이 0보다 크면 계속 시간을 감소시킴
-            if (RemainTime >= 0)
-            {
-                RemainTime -= Time.deltaTime; // Time.deltaTime은 한 프레임당 걸린 시간
-            }
+            // 음악 진행 시간 계산 (음악 시작부터의 실제 진행 시간)
+            double musicProgressTime = AudioSettings.dspTime - AudioSyncManager.instance.SongStartTime;
+            
+            // 남은 시간 = 음악 총 길이 - 음악 진행 시간
+            float targetTime = musicTotalLength - (float)musicProgressTime;
+            
+            // 부드러운 전환을 위해 lerp 사용 (급격한 변화 방지)
+            RemainTime = Mathf.Lerp(RemainTime, targetTime, Time.deltaTime * 2f);
         }
         
-        // 게임 종료 체크
-        if(RemainTime < 0)
+        // 게임 종료 체크 (게임이 시작된 후에만 체크)
+        if (isGameStart && !isGameOver)
         {
-            GameClear();
+            // 음악이 실제로 진행된 시간 계산
+            double musicProgressTime = AudioSyncManager.instance.musicStarted ? 
+                AudioSettings.dspTime - AudioSyncManager.instance.SongStartTime : 0;
+            
+            // 디버그: 음악 진행 상황 표시 (5초마다)
+            // if (musicProgressTime > 0 && (int)musicProgressTime % 5 == 0 && (int)musicProgressTime != 0)
+            // {
+            //     Debug.Log($"🎵 음악 진행: {musicProgressTime:F1}초 / {musicTotalLength:F1}초");
+            // }
+            
+            // 게임 종료 조건
+            bool timeUp = RemainTime <= 0;
+            bool musicEnded = AudioSyncManager.instance.musicStarted && 
+                             AudioSyncManager.instance.SongStartTime > 0 && 
+                             musicProgressTime >= musicTotalLength;
+            
+            if (timeUp || musicEnded)
+            {
+                Debug.Log($"🎮 게임 종료! 시간끝:{timeUp}, 음악끝:{musicEnded}, 진행시간:{musicProgressTime:F2}초");
+                GameClear();
+            }
         }
     }
     

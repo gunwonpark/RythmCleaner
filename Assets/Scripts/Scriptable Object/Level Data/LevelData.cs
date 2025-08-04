@@ -19,18 +19,14 @@ public class LevelData : ScriptableObject
 public class StringData
 {
     [TextArea(1, 1)]
-    [Tooltip("위쪽 패턴 (가로 11개): 0~4로 구성, 예: 01234012340")]
     public string upData;
     
     [TextArea(1, 1)]
-    [Tooltip("아래쪽 패턴 (가로 11개): 0~4로 구성, 예: 10234102341")]
     public string downData;
     
     [TextArea(1, 1)]
-    [Tooltip("왼쪽 패턴 (세로 11개): 0~4로 구성, 예: 01234012340")]
     public string leftData;
     
     [TextArea(1, 1)]
-    [Tooltip("오른쪽 패턴 (세로 11개): 0~4로 구성, 예: 10234102341")]
     public string rightData;
 }
