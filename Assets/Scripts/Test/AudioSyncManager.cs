@@ -148,7 +148,7 @@ public class AudioSyncManager : MonoBehaviour
         double currentAudioTime = AudioSettings.dspTime - songStartTime;
         
         // 게임 시작부터 일정한 간격으로 노드 생성 (음악 시작 여부와 무관)
-        if (AudioSettings.dspTime >= nextBeatTime - spawnOffset)
+        if (AudioSettings.dspTime >= nextBeatTime - spawnOffset && !GameManager.instance.isGameOver)
         {
             SpawnNodeForBeat(currentBeat);
             
