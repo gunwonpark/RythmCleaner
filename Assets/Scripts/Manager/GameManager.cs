@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // 사운드가 시작될 때, 시간도 같이 체크
-        if (AudioSyncManager.instance.musicStarted)
+        if (AudioSyncManager.instance.musicStarted && !isGameOver)
         {
             // 음악 진행 시간 계산 (음악 시작부터의 실제 진행 시간)
             double musicProgressTime = AudioSettings.dspTime - AudioSyncManager.instance.SongStartTime;
@@ -272,6 +272,7 @@ public class GameManager : MonoBehaviour
 
         SaveManager.instance.TotalClearRound = CurrentRound;
         SaveManager.instance.TotalDustCount += KillDustCount;
+
         // 커서 초기화
         ResetCursor();
 

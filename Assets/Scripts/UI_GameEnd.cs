@@ -34,6 +34,7 @@ public class UI_GameEnd : MonoBehaviour
     public Animator SuccessAnimator;
 
     public GameObject SuccessObject;
+    public GameObject BackgroundPanel;
     public void SetData()
     {
         // 최종 점수 설정
@@ -54,6 +55,8 @@ public class UI_GameEnd : MonoBehaviour
         exitButton.onClick.AddListener(OnExitButtonClicked);
         // 점수 등록 가능하게 표시
         registerButton.onClick.AddListener(RegisterScore);
+
+        BackgroundPanel.SetActive(true);
     }
 
     public void Win()
