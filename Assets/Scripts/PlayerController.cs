@@ -148,14 +148,27 @@ public class PlayerController : MonoBehaviour
         int remainingBullets = bulletCount - 1;
         float spreadRange = 30f; // 좌우 30도씩, 총 60도 범위
 
-        for (int i = 0; i < remainingBullets; i++)
-        {
-            float randomAngle = Random.Range(centerAngle - spreadRange, centerAngle + spreadRange);
+        int leftBullets = remainingBullets / 2;
+        int rightBullets = remainingBullets - leftBullets;
 
+        // 왼쪽 총알 발사
+        for (int i = 0; i < leftBullets; i++)
+        {
+            float randomAngle = Random.Range(centerAngle - spreadRange, centerAngle);
             Quaternion rotation = Quaternion.Euler(0, 0, randomAngle - 90f);
             float randomAngleRad = randomAngle * Mathf.Deg2Rad;
             Vector2 bulletDirection = new Vector2(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad));
+            Bullet bullet = Instantiate(AttackBullet, AttackPoint.position, rotation);
+            bullet.Shoot(bulletDirection);
+        }
 
+        // 오른쪽 총알 발사
+        for(int i = 0; i < rightBullets; i++)
+        {
+            float randomAngle = Random.Range(centerAngle, centerAngle + spreadRange);
+            Quaternion rotation = Quaternion.Euler(0, 0, randomAngle - 90f);
+            float randomAngleRad = randomAngle * Mathf.Deg2Rad;
+            Vector2 bulletDirection = new Vector2(Mathf.Cos(randomAngleRad), Mathf.Sin(randomAngleRad));
             Bullet bullet = Instantiate(AttackBullet, AttackPoint.position, rotation);
             bullet.Shoot(bulletDirection);
         }

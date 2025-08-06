@@ -14,7 +14,7 @@ public class UI_Title : MonoBehaviour
     public Button DisableHowtoPlay;
 
     public GameObject creditObject;
-    public GameObject howToPlayObject;
+    public GameObject howToPlayObject; 
 
     public Image startImage;
     public Image creditImage;

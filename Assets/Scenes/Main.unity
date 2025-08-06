@@ -871,6 +871,10 @@ MonoBehaviour:
   exitClickSprite: {fileID: -8579904585380678351, guid: ec41991f3b24e5840b1ff67e782d2943, type: 3}
   howToPlayOriginSprite: {fileID: 6710553229728333652, guid: e363e9fa2efc5144e9d1fc4f1c3af0aa, type: 3}
   howToPlayClickSprite: {fileID: 9014606026721907878, guid: 009717c8b33d6b442bc5f269e74e77e3, type: 3}
+  startRectTransform: {fileID: 0}
+  creditRectTransform: {fileID: 0}
+  exitRectTransform: {fileID: 0}
+  howToPlayRectTransform: {fileID: 0}
 --- !u!1 &1017087654
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfa4b79fe7db724fb90b726de4b78f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMainMenu: 1
   bgmClip:
   - {fileID: 8300000, guid: a545106ed3828f244847f57415b5c5b6, type: 3}
   bgmVolume: 1
@@ -1178,7 +1181,7 @@ GameObject:
   - component: {fileID: 1548741645}
   - component: {fileID: 1548741644}
   m_Layer: 0
-  m_Name: SaceManager
+  m_Name: SaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
