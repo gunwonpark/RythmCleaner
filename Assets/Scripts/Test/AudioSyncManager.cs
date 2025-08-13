@@ -47,6 +47,12 @@ public class AudioSyncManager : MonoBehaviour
     [Header("디버그")]
     public bool showDebugInfo = true;
 
+    private bool isPaused = false;
+
+    // 퍼즈 딜레이 시간 계산
+    private double previousPauseTime = 0f;
+    private double pauseDelayTime = 0f;
+    public double PauseDelayTime => pauseDelayTime;
     private void Awake()
     {
         instance = this;
@@ -89,10 +95,10 @@ public class AudioSyncManager : MonoBehaviour
         
         // 음악을 예약된 시간에 시작 => dspTimed으로 설정
         audioSource.PlayScheduled(songStartTime);
-        
+
         // 음악 시작 시점을 dspTime으로 정확히 감지하는 코루틴 시작
         StartCoroutine(WaitForMusicStart());
-        
+
         Debug.Log($"게임 시작: {gameStartTime:F2}");
         Debug.Log($"첫 노드 이동 시간: {travelTime:F2}초");
         Debug.Log($"첫 노드 도착 예정 시간: {firstNodeArrivalTime:F2}");
@@ -131,6 +137,12 @@ public class AudioSyncManager : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(AudioSettings.dspTime);
+        if (isPaused)
+        {
+            return; // 게임이 일시정지 상태이면 업데이트 하지 않음
+        }
+
         // 게임이 시작되지 않았으면 아무것도 하지 않음
         if (!GameManager.instance.isGameStart)
         {
@@ -151,10 +163,10 @@ public class AudioSyncManager : MonoBehaviour
         if (AudioSettings.dspTime >= nextBeatTime - spawnOffset && !GameManager.instance.isGameOver)
         {
             SpawnNodeForBeat(currentBeat);
-            
+            Debug.Log("비트 생성");
             // 다음 비트 시간 계산
             currentBeat++;
-            nextBeatTime = songStartTime + (currentBeat * secondsPerBeat);
+            nextBeatTime = songStartTime + pauseDelayTime + (currentBeat * secondsPerBeat);
         }
     }
     
@@ -225,5 +237,32 @@ public class AudioSyncManager : MonoBehaviour
             Debug.Log("Miss...");
             // Miss는 색상 변경 없음
         }
+    }
+
+    public void PauseGame()
+    {
+        if (isPaused) return; // 이미 일시정지 상태면 아무것도 하지 않음
+
+        Time.timeScale = 0;
+        isPaused = true;
+
+        previousPauseTime = AudioSettings.dspTime; 
+
+        audioSource.Pause(); // 오디오 일시정지
+        Debug.Log("게임이 일시정지되었습니다.");
+    }
+
+    public void ResumeGame()
+    {
+        if (!isPaused) return; // 일시정지 상태가 아니면 아무것도 하지 않음
+
+        Time.timeScale = 1;
+        isPaused = false;
+
+        pauseDelayTime += AudioSettings.dspTime - previousPauseTime; // 일시정지 시간 계산
+        nextBeatTime = songStartTime + pauseDelayTime + (currentBeat * secondsPerBeat); // 다음 비트 시간 재계산
+
+        audioSource.UnPause(); // 오디오 재개
+        Debug.Log("게임이 재개되었습니다.");
     }
 } 

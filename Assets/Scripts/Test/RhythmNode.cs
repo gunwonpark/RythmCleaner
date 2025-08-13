@@ -47,6 +47,11 @@ public class RhythmNode : MonoBehaviour
     
     void Update()
     {
+        if(GameManager.instance.IsPaused == true)
+        {
+            return; // 일시정지 상태에서는 업데이트 하지 않음
+        }
+
         if (!isInitialized || hasReachedTarget) 
             return;
         
@@ -54,7 +59,7 @@ public class RhythmNode : MonoBehaviour
         double currentAudioTime = AudioSettings.dspTime;
         
         // 목표 시간과의 차이 계산
-        double timeToTarget = targetHitTime - currentAudioTime;
+        double timeToTarget = targetHitTime + AudioSyncManager.instance.PauseDelayTime - currentAudioTime;
         
         // 거리와 시간을 이용해 정확한 위치 계산
         float totalDistance = Vector3.Distance(startPosition, targetPosition);

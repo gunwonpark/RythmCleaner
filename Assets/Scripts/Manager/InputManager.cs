@@ -20,6 +20,11 @@ public class InputManager : MonoBehaviour
     
     private void Update()
     {
+        if(Time.timeScale == 0)
+        {
+            return; // 게임이 일시정지 상태면 입력 처리 중단
+        }
+
         if (GameManager.instance.isGameOver)
             return;
         

@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviour
 
     public SpriteRenderer mapSprite;
 
+    // 게임 진행 관리
+    private bool isPaused = false; // 게임 일시정지 상태
+    public bool IsPaused => isPaused;
+
     private void Awake()
     {
         instance = this;
@@ -128,11 +132,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(isPaused)
+        {
+            return;
+        }
+
         // 사운드가 시작될 때, 시간도 같이 체크
         if (AudioSyncManager.instance.musicStarted && !isGameOver)
         {
             // 음악 진행 시간 계산 (음악 시작부터의 실제 진행 시간)
-            double musicProgressTime = AudioSettings.dspTime - AudioSyncManager.instance.SongStartTime;
+            double musicProgressTime = AudioSettings.dspTime - AudioSyncManager.instance.PauseDelayTime - AudioSyncManager.instance.SongStartTime;
             
             // 남은 시간 = 음악 총 길이 - 음악 진행 시간
             float targetTime = musicTotalLength - (float)musicProgressTime;
@@ -146,7 +155,7 @@ public class GameManager : MonoBehaviour
         {
             // 음악이 실제로 진행된 시간 계산
             double musicProgressTime = AudioSyncManager.instance.musicStarted ? 
-                AudioSettings.dspTime - AudioSyncManager.instance.SongStartTime : 0;
+                AudioSettings.dspTime - AudioSyncManager.instance.PauseDelayTime - AudioSyncManager.instance.SongStartTime : 0;
             
             // 디버그: 음악 진행 상황 표시 (5초마다)
             // if (musicProgressTime > 0 && (int)musicProgressTime % 5 == 0 && (int)musicProgressTime != 0)
@@ -352,6 +361,18 @@ public class GameManager : MonoBehaviour
             remainTimeText.text = $"{(int)Mathf.Max(0, remainTIme)}"; 
         }
         remainTimeSlider.value = Mathf.Clamp01(remainTIme / EnableTime); // 슬라이더 값 업데이트
+    }
+
+    public void PauseGame()
+    {
+        AudioSyncManager.instance.PauseGame();
+        isPaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        AudioSyncManager.instance.ResumeGame();
+        isPaused = false;
     }
 
     #region 커서 변경 함수
