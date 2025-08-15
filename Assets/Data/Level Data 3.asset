@@ -18,99 +18,95 @@ MonoBehaviour:
   createAndMoveCountBeat: 4
   mapSprite: {fileID: -6964565648693895049, guid: a1b478a723fe40946858b7ad3152a2e0, type: 3}
   stringData:
-  - upData: 11100111110
-    downData: 00000000000
+  - upData: 00000200000
+    downData: 00000200000
+    leftData: 00000100000
+    rightData: 00000300000
+  - upData: 20000000002
+    downData: 30000000002
     leftData: 00000000000
     rightData: 00000000000
-  - upData: 00000100000
+  - upData: 00003020000
+    downData: 00003020000
+    leftData: 00002010000
+    rightData: 00001040000
+  - upData: 00000000000
     downData: 00000000000
-    leftData: 10000000000
+    leftData: 20000000004
+    rightData: 20000000001
+  - upData: 00002120000
+    downData: 00001340000
+    leftData: 00001420000
+    rightData: 00004120000
+  - upData: 20000000001
+    downData: 40000000002
+    leftData: 00000000000
+    rightData: 00000000000
+  - upData: 00030102000
+    downData: 00010104000
+    leftData: 00010401000
+    rightData: 00020101000
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: 20000000004
+    rightData: 10000000001
+  - upData: 00031221000
+    downData: 00014112000
+    leftData: 00041231000
+    rightData: 00041212000
+  - upData: 30000000001
+    downData: 10000000004
+    leftData: 00000000000
+    rightData: 00000000000
+  - upData: 00402030100
+    downData: 00102010400
+    leftData: 00402030100
+    rightData: 00402020100
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: 40000000003
+    rightData: 20000000001
+  - upData: 00421312400
+    downData: 00243112100
+    leftData: 00432131400
+    rightData: 00234131400
+  - upData: 30000000001
+    downData: 10000000002
+    leftData: 00000000000
+    rightData: 00000000000
+  - upData: 02030101030
+    downData: 02010301020
+    leftData: 02010401020
+    rightData: 02010403040
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: 30000000001
+    rightData: 10000000004
+  - upData: 04321312130
+    downData: 04141311210
+    leftData: 00000000000
+    rightData: 00000000000
+  - upData: 20000000002
+    downData: 10000000004
+    leftData: 00000000000
     rightData: 00000000000
   - upData: 00000000000
     downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00010002000
-    downData: 00040001000
-    leftData: 00000000000
-    rightData: 00000000000
+    leftData: 02314133240
+    rightData: 03124123120
   - upData: 00000000000
     downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 04210001130
-    downData: 01120001140
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 04011011010
-    downData: 01013011020
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00102310100
-    downData: 00101110400
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00010001000
-    downData: 00010001000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000100000
-    downData: 00000100000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00100000400
-    downData: 00100000100
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00011121000
-    downData: 00011111000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000100000
-    downData: 00000100000
-    leftData: 00000000000
-    rightData: 00000000000
+    leftData: 20000000001
+    rightData: 40000000001
+  - upData: 00000241140
+    downData: 03231200000
+    leftData: 00000221120
+    rightData: 01411100000
   - upData: 00000200000
     downData: 00000100000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000100000
-    downData: 00000300000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000200000
-    downData: 00000100000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 42113142131
-    downData: 42433312112
-    leftData: 00000000000
-    rightData: 00000000000
+    leftData: 00000300000
+    rightData: 00000100000
+  - upData: 00000000000
+    downData: 00000000000
+    leftData: 00031242000
+    rightData: 00012112000

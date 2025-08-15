@@ -18,47 +18,43 @@ MonoBehaviour:
   createAndMoveCountBeat: 8
   mapSprite: {fileID: -7243958306871752742, guid: 07cb5c7ced0b8a348aa4de903a07ce67, type: 3}
   stringData:
-  - upData: 00000100000
-    downData: 00000100000
+  - upData: 00002110000
+    downData: 00001210000
+    leftData: 00003120000
+    rightData: 00001410000
+  - upData: 20000000001
+    downData: 30000000004
     leftData: 00000000000
     rightData: 00000000000
-  - upData: 00011121000
-    downData: 00031111000
-    leftData: 00000000000
-    rightData: 00000000000
+  - upData: 00021112000
+    downData: 00013221000
+    leftData: 00014131000
+    rightData: 00021311000
   - upData: 00000000000
     downData: 00000000000
+    leftData: 40000000002
+    rightData: 10000000001
+  - upData: 03110001220
+    downData: 01120001310
+    leftData: 01140003210
+    rightData: 02210001110
+  - upData: 40000000001
+    downData: 10000000003
     leftData: 00000000000
     rightData: 00000000000
+  - upData: 00014111000
+    downData: 00022212000
+    leftData: 00012411000
+    rightData: 00031132000
   - upData: 00000000000
     downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
+    leftData: 20000000001
+    rightData: 10000000001
+  - upData: 00003110000
+    downData: 00001120000
+    leftData: 00001140000
+    rightData: 00001110000
   - upData: 00000000000
     downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00111141100
-    downData: 00112411100
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 11120001114
-    downData: 11310001111
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 00000000000
-    downData: 00000000000
-    leftData: 00000000000
-    rightData: 00000000000
-  - upData: 03214112310
-    downData: 04311124320
-    leftData: 00000000000
-    rightData: 00000000000
+    leftData: 00021013000
+    rightData: 00041022000
