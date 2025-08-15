@@ -2462,6 +2462,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1177278112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861007189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3903472223144636325, guid: cb426f58956ec024d8cda260ee328ce8, type: 3}
+  m_PrefabInstance: {fileID: 3011926994908068415}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &888423250
 GameObject:
   m_ObjectHideFlags: 0
@@ -6085,6 +6096,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3903472223144636325, guid: cb426f58956ec024d8cda260ee328ce8, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6096331789901811835, guid: cb426f58956ec024d8cda260ee328ce8, type: 3}
       propertyPath: m_Name
       value: UI_Canvas
@@ -6177,6 +6192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9127058802743549811, guid: cb426f58956ec024d8cda260ee328ce8, type: 3}
+      propertyPath: pauseButton
+      value: 
+      objectReference: {fileID: 861007189}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

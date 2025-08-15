@@ -35,6 +35,8 @@ public class UI_GameEnd : MonoBehaviour
 
     public GameObject SuccessObject;
     public GameObject BackgroundPanel;
+    
+    public Button pauseButton;
     public void SetData()
     {
         // 최종 점수 설정
