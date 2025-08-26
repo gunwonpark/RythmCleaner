@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("공격로직")]
     public Bullet AttackBullet;
-    public float AttackDelay = 0.5f; // 공격에 걸리는 시간
+    public float AttackDelay = 0.4f; // 공격에 걸리는 시간
     public Vector2 AttackDirection = Vector2.right; // 공격 방향
     public float spreadAngle = 15f;
     public Transform AttackPoint; // 공격이 시작되는 위치
@@ -117,7 +117,8 @@ public class PlayerController : MonoBehaviour
     {
         AttackDelay     = attackDelay;
         AttackDirection = attackDirection;
-        
+
+        AttackEvent();
         Animator.SetTrigger("Attack");
     }
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Serialization;
 
 public class AudioSyncManager : MonoBehaviour
 {

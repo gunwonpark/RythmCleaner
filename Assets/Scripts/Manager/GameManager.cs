@@ -72,6 +72,9 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false; // 게임 일시정지 상태
     public bool IsPaused => isPaused;
 
+    private int currentBeadCount = 0;
+    private bool IsLastBeatEnd = false;
+
     private void Awake()
     {
         instance = this;
@@ -133,13 +136,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(isPaused)
+        if(isPaused || isGameOver)
         {
             return;
         }
 
         // 사운드가 시작될 때, 시간도 같이 체크
-        if (AudioSyncManager.instance.musicStarted && !isGameOver)
+        if (AudioSyncManager.instance.musicStarted)
         {
             // 음악 진행 시간 계산 (음악 시작부터의 실제 진행 시간)
             double musicProgressTime = AudioSettings.dspTime - AudioSyncManager.instance.PauseDelayTime - AudioSyncManager.instance.SongStartTime;
@@ -152,7 +155,7 @@ public class GameManager : MonoBehaviour
         }
         
         // 게임 종료 체크 (게임이 시작된 후에만 체크)
-        if (isGameStart && !isGameOver)
+        if (isGameStart)
         {
             // 음악이 실제로 진행된 시간 계산
             double musicProgressTime = AudioSyncManager.instance.musicStarted ? 
@@ -173,6 +176,20 @@ public class GameManager : MonoBehaviour
             if (timeUp || musicEnded)
             {
                 Debug.Log($"🎮 게임 종료! 시간끝:{timeUp}, 음악끝:{musicEnded}, 진행시간:{musicProgressTime:F2}초");
+                GameClear();
+            }
+        }
+
+        if(currentLevelData.stringData.Count <= currentBeadCount)
+        {
+            IsLastBeatEnd = true;
+        }
+
+        if(IsLastBeatEnd)
+        {
+            // 필드에 남아있는 몬스터가 없으면 게임 클리어
+            if(monsters.TrueForAll(m => ReferenceEquals(m, null)))
+            {
                 GameClear();
             }
         }
@@ -206,7 +223,8 @@ public class GameManager : MonoBehaviour
                 
                 // 쓰레기 이동 진행
                 PatternGenerator.instance.GenerateNextPattern();
-                
+                currentBeadCount++;
+
                 // 비트 초기화
                 beatCounter = 0;
             }
