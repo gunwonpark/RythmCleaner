@@ -104,22 +104,6 @@ public class AudioSyncManager : MonoBehaviour
         Debug.Log($"음악 시작 예정 시간: {songStartTime:F2}");
     }
     
-    // void SpawnFirstNodes()
-    // {
-    //     // 첫 번째 비트(비트 0)의 노드들을 양쪽에서 생성
-    //     double firstBeatHitTime = songStartTime; // 첫 번째 비트는 음악 시작과 동시에
-    //     
-    //     // 왼쪽에서 노드 생성
-    //     CreateNodeFromPosition(leftSpawnPoint.position,  leftPrefab, firstBeatHitTime, 0, "Left", NodeType.LeftNote);
-    //     
-    //     // 오른쪽에서 노드 생성  
-    //     CreateNodeFromPosition(rightSpawnPoint.position, rightPrefab, firstBeatHitTime, 0, "Right", NodeType.RightNote);
-    //     
-    //     // 다음 비트는 1부터 시작
-    //     currentBeat = 1;
-    // }
-    
-    
     // 음악 시작 시점을 정확히 감지하는 코루틴
     IEnumerator WaitForMusicStart()
     {
@@ -131,6 +115,7 @@ public class AudioSyncManager : MonoBehaviour
         
         // 음악이 시작된 정확한 순간에 디버그 출력
         musicStarted = true;
+        GameManager.instance.EndUI.pauseButton.interactable = true;  // WaitAndGo끝나기 전에 퍼즈버튼 누를 수 없도록 수정
         Debug.Log($"🎵 음악 시작! 정확한 시간: {AudioSettings.dspTime:F2} (예정: {songStartTime:F2})");
     }
 

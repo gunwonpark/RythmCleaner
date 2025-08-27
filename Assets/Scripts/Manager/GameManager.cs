@@ -110,7 +110,6 @@ public class GameManager : MonoBehaviour
         yield return WaitAndGo(); // 게임 시작 대기 애니메이션
         
         isGameStart = true;
-        EndUI.pauseButton.interactable = true;  // WaitAndGo끝나기 전에 퍼즈버튼 누를 수 없도록 수정
         
         // 게임 시작과 동시에 첫 번째 패턴 생성
         if (PatternGenerator.instance != null)
